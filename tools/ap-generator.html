@@ -195,6 +195,22 @@ document.getElementById('g47f').addEventListener('submit',function(e){e.preventD
       <label><input type="checkbox" id="f_health">대표·부모 건강 이슈</label>
       <label><input type="checkbox" id="f_giftHistory">자녀에게 증여한 이력</label>
     </div>
+    <div class="muted" style="margin:10px 0 4px">노무 신호 (노무사 협업)</div>
+    <div class="checks">
+      <label><input type="checkbox" id="f_newWelfare">새 복지를 늘리고 싶어 함</label>
+      <label><input type="checkbox" id="f_welfareUp">복리후생비가 늘고 있음</label>
+      <label><input type="checkbox" id="f_empLoan">직원 대여금(주임종 단기대여금) 있음</label>
+      <label><input type="checkbox" id="f_council">노사협의회 있음</label>
+      <label><input type="checkbox" id="f_youthHire">청년·60세 이상 채용 계획</label>
+      <label><input type="checkbox" id="f_parental">출산·육아휴직·단축근무 직원</label>
+      <label><input type="checkbox" id="f_retireAge">정년 도래 직원</label>
+      <label><input type="checkbox" id="f_temp6m">비정규직 6개월 이상 근무</label>
+      <label><input type="checkbox" id="f_salesDrop">매출 15% 이상 감소</label>
+      <label><input type="checkbox" id="f_flexWork">근로시간 단축·유연근무 희망</label>
+      <label><input type="checkbox" id="f_nonCapital">사업장이 비수도권</label>
+      <label><input type="checkbox" id="f_noContract">근로계약서·임금명세서 미교부</label>
+      <label><input type="checkbox" id="f_inclusive">포괄임금</label>
+    </div>
     <div class="muted" style="margin:10px 0 4px">추가 신호</div>
     <div class="checks">
       <label><input type="checkbox" id="f_cashSales">현금매출 비중 큼·현금영수증 미발행 이력</label>
@@ -225,7 +241,7 @@ document.getElementById('g47f').addEventListener('submit',function(e){e.preventD
       <div id="relYBox"><label>기장 기간(년)</label><input type="number" id="relYears" min="0"></div>
       <div id="refBox" hidden><label>소개해 준 분</label><input type="text" id="referrer" placeholder="예: 박 대표님"></div>
       <div><label>내 자격</label><select id="cert"><option>세무사</option><option>회계사</option><option>노무사</option><option>변리사</option></select></div>
-      <div><label>미팅 성격</label><select id="occ"><option value="결산">가결산·결산 미팅 겸</option><option value="단독">AP 단독 미팅</option></select></div>
+      <div><label>미팅 성격</label><select id="occ"><option value="결산">가결산·결산 미팅 겸</option><option value="단독">AP 단독 미팅</option><option value="노무시즌">연봉협상·연차정산·4대보험 정산 시즌 미팅</option></select></div>
     </div>
     <div style="margin-top:8px"><label>오면서 볼 수 있는 것 (릴렉스용)</label><input type="text" id="obs" placeholder="예: 지게차가 바쁨, 사무실 상패, 최근 기사"></div>
     <div style="margin-top:8px"><label>대표님 성향 (내가 보고 고르기, 묻지 않기)</label><select id="style"><option value="">모름</option><option value="결론형">결론형: 말이 짧고 결론·숫자부터 묻는다</option><option value="관계형">관계형: 가족·직원 이야기가 길고 사람을 본다</option><option value="분석형">분석형: 근거·조문을 묻고 메모한다</option><option value="신중형">신중형: "생각해 볼게요", 상의하고 천천히 정한다</option></select>
@@ -427,10 +443,17 @@ const CONCEPTS=[
  {id:'welfare',name:'인건비 구조 (사내근로복지기금)',card:'',
   test:c=>{const s=[];if(c.f_laborHeavy)s.push([3,'인건비 부담 언급']);if(nz(c.emp)&&c.emp>=30)s.push([2,`직원 ${c.emp}명`]);else if(nz(c.emp)&&c.emp>=10)s.push([1,`직원 ${c.emp}명`]);
     if(c.ind==='병의원')s.push([2,'병의원: 실적 27건 중 14건이 의료업']);if(c.f_payDoctor)s.push([3,'페이닥터 고용: 월 부담금 감소 명분']);
-    if(nz(c.emp)&&c.emp>=5&&nz(c.profit)&&c.profit>=3)s.push([2,'1차 필터 충족: 상시근로자 5인↑ + 세전이익 3억↑ (연봉 5천↑ 3명은 확인)']);if(c.f_bonus)s.push([1,'상여·복지 지급 계획']);if(c.f_treasury)s.push([1,'자기주식 보유']);return s},
+    if(nz(c.emp)&&c.emp>=5&&nz(c.profit)&&c.profit>=3)s.push([2,'1차 필터 충족: 상시근로자 5인↑ + 세전이익 3억↑ (연봉 5천↑ 3명은 확인)']);if(c.f_bonus)s.push([1,'상여·복지 지급 계획 (상여 대체는 불가, 새 복지로)']);if(c.f_treasury)s.push([1,'자기주식 보유']);if(c.f_newWelfare)s.push([3,'새 복지를 늘리고 싶어 함']);if(c.f_welfareUp)s.push([2,'복리후생비 증가']);if(c.f_empLoan)s.push([1,'직원 대여금: 기금 대부사업으로 옮길 수 있음']);if(c.f_council)s.push([1,'노사협의회 있음 (설립 합의 기관)']);return s},
   need:'인건비 효율 + 직원 복지',alt:'새로 늘리실 복지를 같은 돈으로 더 크게 드리는 제도가 있습니다. 노무 쪽 정리가 같이 필요해서 제가 전문가와 함께 봐 드리겠습니다.',
   bring:'지금 인건비 중 세금·4대보험으로 빠지는 금액과 제도를 쓰면 달라지는 금액',intro:'대표님처럼 직원이 많아 인건비 고민이 크신',
   pc:'사근복(노무사 협업)은 직원 복지로 설계, 대표 보장·퇴직금 재원은 기금과 분리해 법인 차원에서 별도 검토',ff:['직원 수와 연간 상여·복지 지급액','복지포인트·출산지원금 지급 방식','자기주식 보유 여부']},
+ {id:'empSub',name:'고용장려금 (2026, 노무사 협업)',card:'컨셉카드_고용지원금_노무리스크.md',
+  test:c=>{const s=[];if(c.f_youthHire)s.push([3,'청년·60세 이상 채용 계획']);if(c.f_parental)s.push([3,'출산·육아휴직·단축근무']);if(c.f_retireAge)s.push([2,'정년 도래 직원: 계속고용']);
+    if(c.f_temp6m)s.push([2,'비정규직 6개월 이상: 정규직 전환']);if(c.f_salesDrop)s.push([3,'매출 15% 이상 감소: 고용유지']);if(c.f_flexWork)s.push([2,'근로시간 단축·유연근무']);
+    if(c.f_nonCapital)s.push([1,'비수도권: 지원 금액 더 큼']);if(c.f_noContract||c.f_inclusive)s.push([1,'노무 정비 필요 (장려금 요건 점검)']);return s},
+  need:'받을 수 있는 장려금 확인 + 노무 정비',alt:'채용·휴직 상황에 맞춰 받을 수 있는 지원금이 있는지, 신청 전에 정리할 것이 있는지 같이 보시죠. 신청하지 않으면 아무도 챙겨 주지 않습니다.',
+  bring:'대표님 회사 상황에 맞는 장려금 목록과 예상 금액, 신청 전 점검표',intro:'대표님처럼 직원 채용·휴직 고민이 있는',
+  pc:'고용장려금 찾기(노무사) → 요건·신청 기한 점검 → 노무 규정 정비·급여 아웃소싱 연결. 장려금 수령분 회계·세무 처리는 세무사 검토',ff:['채용 계획(청년·60세 이상)과 시기','휴직·단축근무 직원','상시근로자 수와 우선지원대상기업 여부']},
  {id:'invention',name:'상여·법인세 (직무발명보상)',card:'',
   test:c=>{const s=[];if(c.form!=='법인')return s;if(c.f_patent)s.push([3,'특허·연구소 있음']);if(c.f_bonus)s.push([2,'연말 상여 지급 계획']);
     if(nz(c.profit)&&c.profit>=2)s.push([1,`법인세 부담 (이익 ${eok(c.profit)})`]);if(c.ind==='IT연구'||c.ind==='제조')s.push([1,'기술 업종']);return s},
@@ -590,6 +613,17 @@ function build(c){
   add('클로징','15','다음 약속 확정',`"${top?top.bring:'시뮬레이션 자료'}, 이걸 준비해서 가져오겠습니다. ${c.day} ${c.time||P('시각')}로 하겠습니다. ${c.dur} 정도 잡아주셔야 합니다."\n(머뭇거리면) "${c.day} ${c.time||''}와 ${alt2} 중에 어느 쪽이 덜 번잡하시겠습니까?"`,'일자+시각+소요시간 고지 10점 / "연락드리겠습니다"는 0점','"언제쯤 괜찮으세요?" 금지, 이지선다로');
   // ☆ 소개요청
   add('클로징','☆','소개요청',`"${J(nm,'은','는')} 발도 넓으시니, 주변에 ${top?top.intro:'대표님처럼 같은 고민을 하시는'} 분 딱 ${c.introN} 분만 소개해 주시면 좋겠습니다. ${({A:'이익이 나기 시작한 분들만 이 갈림길에 서 계십니다.',B:'회사 가치가 커진 분들만 이 갈림길에 서 계십니다.',C:'자산을 일구신 분들만 이 갈림길에 서 계십니다.'})[T]} 다음 주에 자료 보시고 말씀해 주세요."`,'요청 + 대상 특정 + 인원 특정 5점 / "아는 분 계시면" 1점','10단계 "갈림길" 표현을 다시 써서 부탁이 아니라 논리의 결론으로');
+  if(cert==='노무사'){const L={
+    '03':{기장:`"작년에 거래처 한 곳이 퇴사자 진정 하나로 3년치 수당을 소급해서 물어주는 걸 봤습니다. 그 뒤로는 문제가 터지기 전에 미리 봐 드리는 쪽으로 일하는 방식을 바꿨습니다."`,
+          소개:`"${J(c.referrer||'OO 대표님','이','가')} 직원 복지 고민하시는 분이라고 꼭 만나 보라고 하셨습니다."`,
+          초면:`"자문 계약 받으러 온 게 아닙니다. 오늘은 인건비와 복지 이야기를 들으러 왔습니다."`}[c.rel],
+    '04':`"급여 정리도 정리지만, 대표님이 직원들 어떻게 챙기고 싶으신지 들어보려고요."`,
+    '05':`"급여 이야기 20분, 대표님 이야기 20분 괜찮으실까요?"`,
+    '06':`"회사가 직원에게 급여로 100을 더 주면, 회사는 100보다 더 쓰고 직원은 100보다 덜 받습니다. 고용장려금은 신청하지 않으면 아무도 챙겨 주지 않습니다."`,
+    '07':`"직원 ${nz(c.emp)?c.emp:'○'}명이면 4대보험 회사 부담분만 연 ${P('○천만 원')}입니다."`,
+    '09':`"복지를 늘리고 싶은데 급여로는 새고, 한 번 올리면 못 내립니다."`};
+    S.forEach(x=>{if(L[x.no]){x.say=L[x.no];x.warn=((x.warn||'')+' · 노무사 버전 멘트 (노무사 자료 초안)').replace(/^ · /,'')}});
+    const f8=S.find(x=>x.no==='08');if(f8&&Array.isArray(f8.say))f8.say=['"직원들이 제일 원하는 게 뭘까요?"','"핵심 직원 붙잡을 카드가 급여 말고 있으세요?"','"근로계약서와 임금명세서는 매번 교부하고 계세요?"','"노사협의회는 구성돼 있나요?"',...f8.say];}
   return{dx,top,sec,T,S};
 }
 function resist(c){const R={
@@ -1230,5 +1264,8 @@ function importFromHash(){const h=location.hash;if(!h.startsWith('#import='))ret
 if(!importFromHash()&&!load())write({...Object.fromEntries(FIELDS.map(k=>[k,''])),...SAMPLE,rs:['보험','생각']});
 toggle();run();
 </script>
+<script>(function(){var c=document.getElementById('cert'),r=document.getElementById('rel');if(!c||!r)return;
+function f(){var o=r.querySelector('option[value="기장"]');if(o)o.textContent=c.value==='노무사'?'노무 자문·급여 아웃소싱 거래처':'기장거래처'}
+c.addEventListener('change',f);f()})();</script>
 </body>
 </html>

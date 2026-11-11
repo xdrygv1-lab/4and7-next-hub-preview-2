@@ -1,0 +1,19 @@
+
+{
+  "owner": "노무사",
+  "built": "2026-11-04",
+  "groups": [
+    {"id": "concept", "label": "컨셉 사전", "desc": "업체 상황별 노무 컨설팅 컨셉"},
+    {"id": "guide", "label": "실무 가이드", "desc": "금지선, 절차, 첫 미팅, 자주 묻는 질문"}
+  ],
+  "docs": [
+    {"id": "sagunbok", "gid": "concept", "title": "사내근로복지기금", "file": "docs/sagunbok.md", "updated": "2026-11-04", "tag": "기본형"},
+    {"id": "joint", "gid": "concept", "title": "공동근로복지기금", "file": "docs/joint.md", "updated": "2026-11-04", "tag": "정부 지원"},
+    {"id": "asset", "gid": "concept", "title": "주식·재산 출연형 사근복", "file": "docs/asset.md", "updated": "2026-11-04", "tag": "보조 컨셉"},
+    {"id": "clinic", "gid": "concept", "title": "병의원 사근복 (새 복지 재원형)", "file": "docs/clinic.md", "updated": "2026-11-04", "tag": "병의원"},
+    {"id": "rules", "gid": "guide", "title": "되는 것과 안 되는 것", "file": "docs/rules.md", "updated": "2026-11-04", "tag": "금지선"},
+    {"id": "setup", "gid": "guide", "title": "설립 절차와 해마다 할 일", "file": "docs/setup.md", "updated": "2026-11-04", "tag": "절차"},
+    {"id": "ap", "gid": "guide", "title": "노무사의 첫 미팅 (사근복 중심)", "file": "docs/ap.md", "updated": "2026-11-04", "tag": "AP"},
+    {"id": "faq", "gid": "guide", "title": "대표님이 자주 묻는 질문", "file": "docs/faq.md", "updated": "2026-11-04", "tag": "FAQ"}
+  ]
+}

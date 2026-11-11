@@ -1,0 +1,401 @@
+
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>노무 허브 (시안)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>
+/* Layout: 왼쪽 목차 레일 + 본문 한 단(문서 폭 약 68자). 휴대폰에서는 위쪽 가로 메뉴로 접힘 */
+:root{
+  --bg:#f4f6f3; --surface:#ffffff; --ink:#1a2520; --muted:#5a6a61; --line:#d8dfda;
+  --accent:#1e6a4e; --accent-ink:#ffffff; --accent-soft:#e3eee7;
+  --good:#2b7a4b; --warn:#a85a12; --bad:#b02a20; --warn-soft:#f7ecdf; --bad-soft:#f8e4e1;
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --s-xs:12px; --s-sm:13px; --s-md:15px; --s-lg:18px; --s-xl:24px; --s-2xl:34px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#101714; --surface:#17211c; --ink:#e2eae5; --muted:#97a79e; --line:#2a3731;
+  --accent:#62c095; --accent-ink:#0c1410; --accent-soft:#1c2e25;
+  --good:#6ccf96; --warn:#e3a457; --bad:#f2877c; --warn-soft:#2e2418; --bad-soft:#331c19; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#101714; --surface:#17211c; --ink:#e2eae5; --muted:#97a79e; --line:#2a3731;
+  --accent:#62c095; --accent-ink:#0c1410; --accent-soft:#1c2e25;
+  --good:#6ccf96; --warn:#e3a457; --bad:#f2877c; --warn-soft:#2e2418; --bad-soft:#331c19; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--s-md);line-height:1.7;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100%;
+  padding-left:max(0px, env(safe-area-inset-left,0px));padding-right:max(0px, env(safe-area-inset-right,0px))}
+.rail{border-right:1px solid var(--line);padding:28px 20px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow:auto;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-display);font-size:21px;font-weight:800;letter-spacing:-.01em}
+.brand span{font-size:var(--s-xs);color:var(--muted);letter-spacing:.04em}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .h{font-size:11px;letter-spacing:.12em;color:var(--muted);margin:10px 0 4px}
+.nav a{display:block;padding:6px 10px;border-radius:6px;color:var(--ink);text-decoration:none;font-size:14px}
+.nav a:hover{background:var(--accent-soft)}
+.nav a.on{background:var(--accent);color:var(--accent-ink)}
+.railfoot{margin-top:auto;font-size:var(--s-xs);color:var(--muted)}
+
+main{min-width:0;padding-block:40px 80px;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.wrap{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+.wrap.wide{max-width:980px}
+
+h1,h2,h3{text-wrap:balance;line-height:1.3;margin:0}
+.eyebrow{font-size:var(--s-xs);letter-spacing:.14em;color:var(--accent);font-weight:600}
+.lede{color:var(--muted);font-size:var(--s-lg);max-width:62ch;margin:0}
+.title{font-family:var(--f-display);font-weight:800;font-size:var(--s-2xl);letter-spacing:-.015em}
+
+/* Home */
+.hero{display:flex;flex-direction:column;gap:12px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.hero .title{font-size:40px}
+.stamp{display:inline-flex;gap:8px;align-items:center;font-family:var(--f-mono);font-size:var(--s-xs);color:var(--muted)}
+.stamp i{width:8px;height:8px;border-radius:50%;background:var(--good);display:inline-block}
+.entries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.entry{display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.entry:hover{border-color:var(--accent)}
+.entry .k{font-family:var(--f-mono);font-size:var(--s-xs);color:var(--accent)}
+.entry b{font-size:var(--s-lg)}
+.entry span{color:var(--muted);font-size:14px}
+.law{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.law div{padding:14px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0}
+.law div:last-child{border-right:0}
+.law .n{font-family:var(--f-mono);font-size:22px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.law .l{font-size:var(--s-xs);color:var(--muted)}
+.redline{border:1px solid var(--bad);background:var(--bad-soft);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.redline b{color:var(--bad)}
+.redline ul{margin:0;padding-left:18px}
+
+/* List */
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:14px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.row:hover b{color:var(--accent)}
+.row b{font-size:16px;font-weight:600}
+.row small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.chip{font-size:11px;letter-spacing:.04em;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+
+/* Doc */
+.doc{display:flex;flex-direction:column;gap:0}
+.doc h1{font-family:var(--f-display);font-weight:800;font-size:var(--s-2xl);margin:6px 0 18px}
+.doc h2{font-size:var(--s-lg);margin:34px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.doc h3{font-size:16px;margin:20px 0 6px}
+.doc p,.doc ul,.doc ol{margin:0 0 12px;max-width:68ch}
+.doc li{margin:2px 0}
+.doc blockquote{margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0}
+.doc blockquote p{margin:0}
+.doc blockquote.lead{border-left:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:16px}
+.doc strong{font-weight:600}
+.doc .tbl{overflow-x:auto;margin:0 0 14px;border:1px solid var(--line);border-radius:8px}
+.doc table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
+.doc th,.doc td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.doc th{font-weight:600;background:var(--accent-soft);white-space:nowrap}
+.doc tr:last-child td{border-bottom:0}
+.doc input[type=checkbox]{accent-color:var(--accent);margin-right:6px}
+.doc ul:has(input[type=checkbox]){list-style:none;padding-left:0}
+.doc p:has(>strong:first-child)+p{margin-top:-6px}
+.back{font-size:14px;text-decoration:none}
+.meta{font-family:var(--f-mono);font-size:var(--s-xs);color:var(--muted)}
+
+/* Tools */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:13px;color:var(--muted)}
+.field input,.field select{font:inherit;font-family:var(--f-mono);font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%}
+.field.full{grid-column:1/-1}
+.assume{font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi .v{font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi.main{border-color:var(--accent);background:var(--accent-soft)}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;align-items:center;font-size:13px}
+.track{display:flex;flex-direction:column;gap:4px}
+.track div{height:14px;border-radius:3px;background:var(--line);position:relative}
+.track div span{position:absolute;inset:0 auto 0 0;border-radius:3px}
+.track .cost span{background:var(--muted)}
+.track .recv span{background:var(--accent)}
+.track em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.note{font-size:13px;padding:10px 12px;border-radius:8px;background:var(--warn-soft);color:var(--ink);border:1px solid var(--warn)}
+.note.bad{background:var(--bad-soft);border-color:var(--bad)}
+.note.ok{background:var(--accent-soft);border-color:var(--accent)}
+.checks{display:flex;flex-direction:column;gap:6px}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:14px}
+.checks input{accent-color:var(--accent);margin-top:5px}
+.checks.red input{accent-color:var(--bad)}
+.verdict{display:flex;flex-direction:column;gap:10px}
+.pill{display:inline-block;font-weight:600;padding:4px 12px;border-radius:999px;font-size:14px;width:max-content}
+.pill.good{background:var(--accent);color:var(--accent-ink)}
+.pill.warn{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad)}
+.verdict ul{margin:0;padding-left:18px;font-size:14px}
+.h3{font-size:16px;font-weight:600}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:14px max(16px, env(safe-area-inset-left,0px));gap:10px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav .h,.railfoot{display:none}
+  .nav a{padding:4px 10px;border:1px solid var(--line)}
+  main{padding-block:24px 60px}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .entries,.fields,.kpis{grid-template-columns:minmax(0,1fr)}
+  .law{grid-template-columns:minmax(0,1fr)}
+  .law div{border-right:0;border-bottom:1px solid var(--line)}
+  .law div:last-child{border-bottom:0}
+  .hero .title{font-size:32px}
+}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <a class="brand" href="#home"><b>노무 허브</b><span>4&amp;7 NEXT · 노무사 시안</span></a>
+    <nav class="nav" id="nav">
+      <a href="#home" data-r="home">홈</a>
+      <div class="h">도구</div>
+      <a href="#check" data-r="check">사근복 적합도 진단</a>
+      <a href="#calc" data-r="calc">출연·사용 한도 계산기</a>
+      <div class="h">공부하기</div>
+      <a href="#concepts" data-r="concepts">컨셉 사전</a>
+      <a href="#guide" data-r="guide">실무 가이드</a>
+    </nav>
+    <div class="railfoot">기준 자료: 근로복지공단 실무 매뉴얼(2025) · '25 질의회시집<br>모든 내용은 초안이며 세무 처리는 세무사 검토 사항입니다.</div>
+  </aside>
+  <main id="main"><div class="wrap"><p class="meta">불러오는 중</p></div></main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+let M=null; const CACHE=new Map();
+async function manifest(){ if(M) return M; try{ M=await fetch('manifest.json',{cache:'no-store'}).then(r=>r.json()); }catch(e){ M={groups:[],docs:[]}; } return M; }
+async function docText(d){ if(CACHE.has(d.id)) return CACHE.get(d.id); const t=await fetch(d.file,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); }); CACHE.set(d.id,t); return t; }
+function firstLine(md){ const m=md.match(/\*\*한눈에\*\*\s*([^\n]+)/); return m? m[1].replace(/\*\*/g,'').slice(0,90)+'…' : ''; }
+
+function setNav(r){ document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.r===r || (r.startsWith('doc-') && a.dataset.r===(curGroup||'')))); }
+let curGroup='';
+
+/* ---------- 홈 ---------- */
+function home(){
+  return `<div class="wrap">
+  <section class="hero">
+    <span class="eyebrow">노무 · 사근복 · 정책자금 · 지원금</span>
+    <h1 class="title">노무사가 먼저 여는 첫 미팅</h1>
+    <p class="lede">업체가 사내근로복지기금에 맞는지 진단하고, 출연·사용 한도를 계산하고, 대표님 앞에서 할 말을 준비합니다. 근로복지공단 2025 매뉴얼과 노동부 질의회시 기준입니다.</p>
+    <span class="stamp"><i></i>업데이트 2026-11-04 · 문서 ${M.docs.length}개 · 도구 2개</span>
+  </section>
+  <div class="entries">
+    <a class="entry" href="#check"><span class="k">도구 1</span><b>사근복 적합도 진단</b><span>체크 몇 개로 이 업체에 사근복을 꺼내도 되는지, 무엇을 조심할지 봅니다.</span></a>
+    <a class="entry" href="#calc"><span class="k">도구 2</span><b>출연·사용 한도 계산기</b><span>세전순이익으로 출연액, 그해 쓸 수 있는 금액, 직원 1인당 혜택을 계산합니다.</span></a>
+    <a class="entry" href="#concepts"><span class="k">공부 1</span><b>컨셉 사전</b><span>사근복 기본형, 공동기금, 주식 출연형, 병의원형.</span></a>
+    <a class="entry" href="#guide"><span class="k">공부 2</span><b>실무 가이드</b><span>되는 것과 안 되는 것, 설립 절차, 노무사 첫 미팅, 자주 묻는 질문.</span></a>
+  </div>
+  <section style="display:flex;flex-direction:column;gap:10px">
+    <span class="h3">외워 둘 숫자</span>
+    <div class="law">
+      <div><span class="n">5%</span><span class="l">출연 기준 (직전 연도 세전순이익, 가감 가능)</span></div>
+      <div><span class="n">50 / 80%</span><span class="l">그해 출연금 중 바로 쓸 수 있는 비율 (일반 / 중소기업)</span></div>
+      <div><span class="n">노사 각 3명</span><span class="l">협의회 2 + 감사 1, 감사는 겸임 불가</span></div>
+      <div><span class="n">20일 · 3주 · 20일</span><span class="l">인가 → 등기 → 사업자등록</span></div>
+      <div><span class="n">3개월</span><span class="l">결산 후 운영상황 노동부 보고</span></div>
+      <div><span class="n">최대 100%</span><span class="l">공동기금 정부 지원 (출연금 대비, 특수관계 제외)</span></div>
+    </div>
+  </section>
+  <section class="redline">
+    <b>이 세 가지는 대표님께 먼저 말씀드립니다</b>
+    <ul>
+      <li>상여·성과급·격려금을 기금으로 바꿀 수 없습니다. 새로 늘리는 복지에만 씁니다.</li>
+      <li>기존 복지를 줄이고 기금으로 돌리면 사용자 형사처벌 대상입니다 (1년 이하 징역 또는 1천만원 이하 벌금).</li>
+      <li>대표 본인은 혜택을 받을 수 없고, 출연한 돈은 돌려받을 수 없습니다.</li>
+    </ul>
+  </section>
+  </div>`;
+}
+
+/* ---------- 목록 ---------- */
+function listView(gid){
+  const g=M.groups.find(x=>x.id===gid)||{label:'',desc:''};
+  const items=M.docs.filter(d=>d.gid===gid);
+  return `<div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">공부하기</span><h1 class="title">${esc(g.label)}</h1><p class="lede">${esc(g.desc)}</p></div>
+    <div class="list" id="list">${items.map(d=>`<a class="row" href="#doc-${d.id}"><div><b>${esc(d.title)}</b><small data-sum="${d.id}">&nbsp;</small></div><span class="chip">${esc(d.tag||'')}</span></a>`).join('')}</div>
+  </div>`;
+}
+async function fillSums(){ for(const d of M.docs){ const el=document.querySelector(`[data-sum="${d.id}"]`); if(!el) continue; try{ el.textContent=firstLine(await docText(d)); }catch(e){} } }
+
+/* ---------- 문서 ---------- */
+async function docView(id){
+  const d=M.docs.find(x=>x.id===id); if(!d) return `<div class="wrap"><p>문서를 찾지 못했어요. <a href="#home">홈으로</a></p></div>`;
+  curGroup = d.gid==='concept'?'concepts':'guide';
+  let html='';
+  try{ html=marked.parse(await docText(d),{gfm:true}); }catch(e){ html='<p>문서를 불러오지 못했어요. 잠시 후 다시 열어 주세요.</p>'; }
+  return `<div class="wrap"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><a class="back" href="#${curGroup}">← ${d.gid==='concept'?'컨셉 사전':'실무 가이드'}</a><span class="meta">업데이트 ${esc(d.updated)}</span></div><article class="doc" id="doc">${html}</article></div>`;
+}
+function polishDoc(){
+  const a=$('#doc'); if(!a) return;
+  a.querySelectorAll('table').forEach(t=>{ const w=document.createElement('div'); w.className='tbl'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
+  const first=a.querySelector('blockquote'); if(first && /한눈에/.test(first.textContent)) first.classList.add('lead');
+  a.querySelectorAll('a[href^="http"]').forEach(x=>{x.target='_blank';x.rel='noopener'});
+}
+
+/* ---------- 계산기 ---------- */
+const CALC_DEFAULT={profit:8,rate:5,type:'sme',capital:5,base:0,emp:40,er:10,ee:20};
+function fmt(man){ const v=Math.round(man); if(Math.abs(v)>=10000){ const e=v/10000; return (Math.round(e*100)/100).toLocaleString('ko-KR')+'억 원'; } return v.toLocaleString('ko-KR')+'만 원'; }
+function calcView(){
+  const c=CALC_DEFAULT;
+  const f=(id,label,val,step,extra='')=>`<div class="field ${extra}"><label for="${id}">${label}</label><input id="${id}" type="number" inputmode="decimal" step="${step}" value="${val}"></div>`;
+  return `<div class="wrap wide">
+  <div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">도구 2</span><h1 class="title">출연·사용 한도 계산기</h1><p class="lede">처음 열면 예시 업체(제조업 중소기업, 세전순이익 8억, 직원 40명)가 들어 있습니다. 대표님 회사 숫자로 바꿔 보세요.</p></div>
+  <div class="grid2">
+    <form class="panel" id="cf" novalidate>
+      <span class="h3">업체 숫자</span>
+      <div class="fields">
+        ${f('profit','직전 연도 세전순이익 (억 원)',c.profit,'0.1')}
+        ${f('rate','출연률 (%) · 기준 5',c.rate,'0.5')}
+        <div class="field"><label for="type">기업 구분</label><select id="type"><option value="sme" selected>중소기업 (그해 80%)</option><option value="gen">일반 (그해 50%)</option><option value="sel">일반 + 선택적 복지 (80%)</option></select></div>
+        ${f('emp','상시근로자 수 (명, 대표 제외)',c.emp,'1')}
+        <div class="field"><label for="form">사업 형태</label><select id="form"><option value="corp" selected>법인</option><option value="indiv">개인사업자</option></select></div>
+        ${f('capital','회사 납입자본금 (억 원)',c.capital,'0.1')}
+        ${f('base','기존 기금 기본재산 (억 원)',c.base,'0.1','full')}
+      </div>
+      <div class="assume">
+        <span>급여와 비교할 때 쓰는 <b>가정값</b>입니다. 그해 4대보험 요율과 직원 소득 구간에 맞게 고쳐 쓰세요.</span>
+        <div class="fields" style="margin-top:8px">
+          ${f('er','사업주 4대보험 부담률 (%)',c.er,'0.1')}
+          ${f('ee','근로자 공제율: 4대보험+소득세 (%)',c.ee,'0.5')}
+        </div>
+      </div>
+    </form>
+    <div class="panel" id="cout" aria-live="polite"></div>
+  </div>
+  </div>`;
+}
+function runCalc(){
+  const g=id=>{ const v=parseFloat(($('#'+id)||{}).value); return isFinite(v)?v:0; };
+  const profit=g('profit')*10000, rate=g('rate'), emp=Math.max(0,Math.round(g('emp'))), cap=g('capital')*10000, base0=g('base')*10000, er=g('er'), ee=g('ee');
+  const type=$('#type').value, form=$('#form').value;
+  const useRate = type==='gen'?0.5:0.8;
+  const contrib=Math.max(0,profit*rate/100);
+  const usable=contrib*useRate;
+  const keep=contrib-usable;
+  const baseAfter=base0+keep;
+  const capExcess = form==='corp' && cap>0 ? Math.max(0, baseAfter - cap*0.5) : 0;
+  const per = emp>0? usable/emp : 0;
+  const wageCost=usable*(1+er/100), wageRecv=usable*(1-ee/100);
+  const max=Math.max(wageCost,usable,1);
+  const people = emp+1; // 대표 포함
+  let notes='';
+  if(profit<=0) notes+=`<div class="note">직전 연도 이익이 없어도 협의회 결정으로 출연할 수 있습니다. 출연률 대신 금액을 정해 출연합니다.</div>`;
+  if(rate>5) notes+=`<div class="note ok">5%를 넘는 출연도 가능하고 전액 손금입니다 (2025 매뉴얼). 감당할 수 있는 금액인지 먼저 확인하세요. 출연금은 돌려받을 수 없습니다.</div>`;
+  if(people<6) notes+=`<div class="note bad">대표 포함 ${people}명입니다. 협의회 노사 각 2명 + 감사 노사 각 1명(겸임 불가)으로 노사 각 3명이 필요해 구성이 어렵습니다. 공동기금을 검토하세요.</div>`;
+  else if(emp<10) notes+=`<div class="note">인원이 빠듯합니다. 근로자측 3명(협의회 2·감사 1), 사용자측 3명(대표·위촉 2)을 미리 정해 두세요.</div>`;
+  if(form==='indiv') notes+=`<div class="note">개인사업자는 자본금이 없어 "자본금 50% 초과액" 사용 규정이 적용되지 않습니다 (2020 회시).</div>`;
+  $('#cout').innerHTML=`
+    <span class="h3">결과</span>
+    <div class="kpis">
+      <div class="kpi main"><span class="v">${fmt(contrib)}</span><span class="l">올해 출연액 (세전순이익 × ${rate}%)</span></div>
+      <div class="kpi main"><span class="v">${fmt(usable)}</span><span class="l">그해 바로 쓸 수 있는 금액 (${useRate*100}%)</span></div>
+      <div class="kpi"><span class="v">${emp?fmt(per):'-'}</span><span class="l">직원 1인당 연간 복지 가능액</span></div>
+      <div class="kpi"><span class="v">${fmt(baseAfter)}</span><span class="l">기금에 남는 기본재산 (기존 포함)</span></div>
+    </div>
+    ${form==='corp'?`<div class="kpi"><span class="v">${fmt(capExcess)}</span><span class="l">자본금 50% 초과액 (추가로 쓸 수 있는 원금, 협의회 결정)</span></div>`:''}
+    <div class="bars">
+      <span class="h3">같은 ${fmt(usable)}을 새 복지로 줄 때</span>
+      <div class="bar"><span>급여 인상</span><div class="track"><div class="cost"><span style="width:${wageCost/max*100}%"></span></div><em>회사 ${fmt(wageCost)}</em><div class="recv"><span style="width:${wageRecv/max*100}%"></span></div><em>직원 ${fmt(wageRecv)}</em></div></div>
+      <div class="bar"><span>기금 복지</span><div class="track"><div class="cost"><span style="width:${usable/max*100}%"></span></div><em>회사 ${fmt(usable)} (출연, 전액 손금)</em><div class="recv"><span style="width:${usable/max*100}%"></span></div><em>직원 ${fmt(usable)} (임금 아님)</em></div></div>
+    </div>
+    <div class="note bad">이 비교는 <b>새로 늘리는 복지</b>에만 씁니다. 기존 상여·성과급·복지를 기금으로 바꾸면 임금 대체이고, 기존 복지를 줄이면 사용자 형사처벌 대상입니다.</div>
+    ${notes}
+    <p class="meta" style="margin:0">근거: 근로복지기본법 시행령 제46조 ④, 실무 매뉴얼(2025) 40~55쪽. 직원 수령분 중 증여세 비과세 범위 밖 항목은 세무사 확인.</p>`;
+}
+
+/* ---------- 진단 ---------- */
+const GOOD=[
+  ['profit','이익이 최근 2~3년 꾸준히 난다'],
+  ['newwel','직원 복지를 새로 늘리고 싶어 한다 (주택·학자금·의료비 등)'],
+  ['people','대표 포함 6명 이상이고 근로자측 위원·감사를 맡을 사람이 있다'],
+  ['sme','중소기업이다 (그해 출연금 80% 사용)'],
+  ['partner','협력업체·파견 근로자와 함께 일한다'],
+  ['stock','자사주나 처분하기 어려운 주식이 있다'],
+  ['council','노사협의회가 구성돼 있다']
+];
+const RED=[
+  ['bonus','상여·성과급을 기금으로 바꾸고 싶어 한다'],
+  ['cut','기존 복지·급여를 줄이고 기금으로 채우려 한다'],
+  ['ceo','대표 본인이 혜택을 받기를 기대한다'],
+  ['refund','나중에 출연금을 회수할 생각이 있다'],
+  ['loss','최근 손실이 나거나 현금흐름이 빠듯하다'],
+  ['rules','취업규칙·단체협약에 복지가 많고 고칠 생각이 없다']
+];
+function checkView(){
+  const box=(arr,cls)=>`<div class="checks ${cls}">${arr.map(([k,t])=>`<label><input type="checkbox" id="c_${k}" data-k="${k}"><span>${t}</span></label>`).join('')}</div>`;
+  return `<div class="wrap wide">
+  <div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">도구 1</span><h1 class="title">사근복 적합도 진단</h1><p class="lede">업체에 해당하는 것만 체크하세요. 예시로 제조업 대표님 사례가 체크돼 있습니다.</p></div>
+  <div class="grid2">
+    <div class="panel"><span class="h3">맞는 신호</span>${box(GOOD,'')}<span class="h3">조심할 신호</span>${box(RED,'red')}</div>
+    <div class="panel verdict" id="vout" aria-live="polite"></div>
+  </div></div>`;
+}
+const SAMPLE=['profit','newwel','people','sme','bonus'];
+function runCheck(){
+  const on=k=>{ const el=$('#c_'+k); return el&&el.checked; };
+  const g=GOOD.filter(([k])=>on(k)).length;
+  const reds=RED.filter(([k])=>on(k)).map(([k])=>k);
+  const hard=reds.filter(k=>['cut','ceo','refund'].includes(k));
+  let pill,head;
+  if(!on('people')) { pill='bad'; head='사내기금 구성이 어렵습니다'; }
+  else if(hard.length){ pill='bad'; head='지금은 꺼내지 마세요'; }
+  else if(g>=4 && !reds.length){ pill='good'; head='첫 미팅에서 꺼내도 좋습니다'; }
+  else if(g>=3){ pill='warn'; head='조건부로 검토하세요'; }
+  else { pill='warn'; head='신호가 약합니다'; }
+  const say=[];
+  if(on('bonus')) say.push('"상여나 성과급을 기금으로 바꾸는 건 노동부가 안 된다고 했습니다. 새로 늘리실 복지로 설계하겠습니다."');
+  if(on('cut')) say.push('"지금 드리는 복지를 줄이고 기금으로 돌리면 대표님이 처벌받습니다. 이 방식은 하지 않습니다."');
+  if(on('ceo')) say.push('"대표님 본인은 기금 혜택을 받을 수 없습니다. 대표님 보장은 회사 차원에서 따로 보겠습니다."');
+  if(on('refund')) say.push('"출연한 돈은 돌려받을 수 없고, 기금은 사업을 접기 전에는 해산되지 않습니다."');
+  if(on('loss')) say.push('"올해는 출연 규모를 작게 잡거나 쉬어도 됩니다. 매년 넣을 의무는 없습니다."');
+  if(on('rules')) say.push('"취업규칙에 있는 복지는 그대로 두고, 새 항목만 기금으로 하겠습니다. 옮기려면 노사 합의로 규정부터 고쳐야 합니다."');
+  if(!on('people')) say.push('"인원이 적으면 사내기금 대신 주변 회사와 공동기금을 만들면 정부 지원도 받을 수 있습니다."');
+  const next=[];
+  if(on('sme')) next.push('계산기에서 "중소기업 80%"로 그해 사용액을 보여 주세요.');
+  if(on('partner')) next.push('협력업체 근로자 지원 시 사용 한도 확대(90%), 공단 지원금(지출액 50%, 연 2억)을 함께 안내하세요.');
+  if(on('stock')) next.push('주식·재산 출연형 문서를 보세요. 세무사와 같이 검토합니다.');
+  if(!on('council')) next.push('노사협의회가 없으면 사업주 결정으로 설립합니다. 30인 이상이면 협의회 설치 의무부터 안내하세요.');
+  next.push('첫 요청 자료: 3개년 재무제표, 고용형태별 근로자 명부, 취업규칙·단체협약, 복리후생비 계정별원장.');
+  $('#vout').innerHTML=`<span class="pill ${pill}">${head}</span>
+    <p class="meta" style="margin:0">맞는 신호 ${g}/${GOOD.length} · 조심할 신호 ${reds.length}/${RED.length}</p>
+    ${say.length?`<span class="h3">대표님께 이렇게 말하세요</span><ul>${say.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
+    <span class="h3">다음 할 일</span><ul>${next.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>
+    <p style="margin:0"><a href="#doc-sagunbok">사내근로복지기금 문서 보기</a> · <a href="#doc-rules">되는 것과 안 되는 것</a></p>`;
+}
+
+/* ---------- 라우터 ---------- */
+async function route(){
+  await manifest();
+  let r=(location.hash||'#home').slice(1)||'home';
+  curGroup='';
+  const main=$('#main');
+  if(r==='concepts'){ main.innerHTML=listView('concept'); fillSums(); }
+  else if(r==='guide'){ main.innerHTML=listView('guide'); fillSums(); }
+  else if(r==='calc'){ main.innerHTML=calcView(); $('#cf').addEventListener('input',runCalc); $('#cf').addEventListener('submit',e=>e.preventDefault()); runCalc(); }
+  else if(r==='check'){ main.innerHTML=checkView(); SAMPLE.forEach(k=>{const el=$('#c_'+k); if(el) el.checked=true;}); main.querySelectorAll('.checks input').forEach(i=>i.addEventListener('change',runCheck)); runCheck(); }
+  else if(r.startsWith('doc-')){ main.innerHTML=await docView(r.slice(4)); polishDoc(); }
+  else { r='home'; main.innerHTML=home(); }
+  setNav(r); window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+route();
+</script>
