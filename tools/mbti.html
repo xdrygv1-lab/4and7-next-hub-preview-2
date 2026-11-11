@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script src="embed.js"></script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>보험 MBTI | 4&7 NEXT</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400}
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700}
+:root{--ink:#0a0b0d;--sub:#5b616e;--line:#dee1e6;--bg:#f7f8fa;--card:#fff;--acc:#0052FF;--warn:#E5322D}
+*{box-sizing:border-box}body{margin:0;font-family:'Freesentation',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6}
+.wrap{max-width:920px;margin:0 auto;padding:22px 18px 70px}
+.brand{font-size:13px;color:var(--sub);text-decoration:none}h1{margin:2px 0 6px;font-size:clamp(24px,3.2vw,32px);letter-spacing:-.02em}.lead{margin:0 0 14px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 2px rgba(10,11,13,.04),0 8px 24px rgba(10,11,13,.04)}
+.panel h2{font-size:18px;margin:0 0 8px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(max-width:640px){.row3{grid-template-columns:1fr}.lk button{font-size:11px;padding:8px 2px;min-width:0}}
+label.f{display:flex;flex-direction:column;font-size:13px;color:var(--sub);gap:3px}
+select,input{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);width:100%}
+.row3>*{min-width:0}
+.q{padding:12px 0;border-top:1px solid var(--line)}.q:first-child{border-top:0}.qt{font-size:15px;margin-bottom:8px}.qn{color:var(--sub);font-size:12px;margin-right:6px}
+.lk{display:flex;gap:6px;flex-wrap:wrap}.lk button{flex:1 1 0;min-width:0;white-space:normal;line-height:1.2;min-height:38px;word-break:keep-all;font:inherit;font-size:12px;padding:8px 4px;border:1px solid var(--line);border-radius:100px;background:#fff;cursor:pointer}
+.ver{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ver button{font:inherit;text-align:left;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;display:flex;flex-direction:column;gap:4px}.ver button b{font-size:16px}.ver button span{font-size:12px;color:var(--sub);line-height:1.45}.ver button.on{border-color:#0052FF;background:#F0F5FF}.ver button.on b{color:#0052FF}@media(max-width:480px){.ver{grid-template-columns:1fr}}
+.emo{font-size:56px;line-height:1.1}.mrow{display:flex;gap:12px;align-items:center}
+.mg-top{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.mg-top input,.mg-top select{width:auto;min-width:0;flex:1 1 140px}.mg-top input[type=checkbox]{flex:none}
+.dist{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.dist div{border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center;font-size:12px}.dist div b{display:block;font-size:20px}.dist div.z{opacity:.35}
+.pc{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}.pc .hd{display:flex;gap:10px;align-items:center}.pc .hd .e{font-size:34px}.pc .hd b{font-size:17px}.pc .mini{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin:8px 0}.pc .mini .track{height:6px}.pc .mini .track i{width:12px;height:12px;top:-3px}.pc .mm{background:#f7f9ff;border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.55}
+@media(max-width:560px){.dist{grid-template-columns:repeat(2,1fr)}.pc .mini{grid-template-columns:1fr}}
+.pair{display:grid;gap:6px;margin-top:8px}.pair span{display:block;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fafafa;font-size:14px}.pair b{color:#0052FF;margin-right:4px}
+.lk button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bar{height:8px;background:#eef0f3;border-radius:8px;overflow:hidden;margin:10px 0 2px}.bar i{display:block;height:100%;background:var(--acc)}
+.btn{font:inherit;font-size:15px;padding:10px 20px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer}.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.hint{font-size:12px;color:var(--sub)}.type{font-size:34px;font-weight:700;letter-spacing:2px;color:var(--acc)}.nick{font-size:20px;font-weight:700;margin:2px 0 8px}
+.axis{margin:10px 0}.axis .nm{display:flex;justify-content:space-between;font-size:13px;color:var(--sub)}.track{position:relative;height:10px;background:#eef0f3;border-radius:10px}
+.track i{position:absolute;top:-3px;width:16px;height:16px;border-radius:50%;background:var(--acc);transform:translateX(-50%)}
+.card{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0}.card h3{margin:0 0 4px;font-size:15px}
+.warn{color:var(--warn)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+[hidden]{display:none!important}
+.sticky{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding:16px 0 10px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+a.btn{text-decoration:none;color:inherit;display:inline-block}a.btn.p{color:#fff}
+</style>
+</head>
+<body>
+<!-- 4&7 NEXT 입구 비밀번호 (build_site.py가 모든 페이지 body 맨 앞에 넣음. ../config.json = config.json 경로) -->
+<div id="g47" style="position:fixed;inset:0;z-index:2147483000;background:#0a0b0d;display:grid;place-items:center;font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif">
+  <form id="g47f" style="background:#fff;border:0;border-radius:24px;padding:28px 26px;width:min(340px,calc(100vw - 32px));box-shadow:0 6px 24px rgba(0,0,0,.06)">
+    <div style="font-weight:800;font-size:20px;color:#0a0b0d">4&amp;7 NEXT</div>
+    <div style="color:#5f6b66;font-size:14px;margin:6px 0 16px">팀 비밀번호를 넣어 주세요. 한 번 넣으면 이 기기에서 기억합니다.</div>
+    <input id="g47p" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #dee1e6;border-radius:12px;font-size:16px">
+    <button type="submit" style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:100px;background:#0052FF;color:#fff;font-size:15px;font-weight:700;cursor:pointer">들어가기</button>
+    <div id="g47m" style="color:#E5322D;font-size:13px;margin-top:8px;min-height:1em"></div>
+  </form>
+</div>
+<script>(function(){var K='team_pass',CFG='../config.json',g=document.getElementById('g47'),m=document.getElementById('g47m'),v='';
+try{v=localStorage.getItem(K)||''}catch(e){}
+function ep(){return fetch(CFG,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return String(j.endpoint||'').trim()}).catch(function(){return ''})}
+var dv='';try{dv=localStorage.getItem('g47dv')||'';if(!dv){dv=Math.random().toString(36).slice(2,10);localStorage.setItem('g47dv',dv)}}catch(e){}
+function check(p,k){var pg=(location.pathname.split('/').filter(Boolean).pop()||'hub')+(location.hash||'').slice(0,20);return ep().then(function(e){if(!e)return null;return fetch(e+'?action=passcheck&pass='+encodeURIComponent(p)+'&k='+(k||'auto')+'&pg='+encodeURIComponent(pg)+'&dv='+dv+'&r='+Date.now()).then(function(r){return r.json()}).then(function(j){return !!j.ok}).catch(function(){return null})})}
+if(v){g.style.display='none';check(v).then(function(ok){if(ok===false){try{localStorage.removeItem(K)}catch(e){}g.style.display='grid';m.textContent='비밀번호가 바뀌었어요. 다시 넣어 주세요.'}})}
+else setTimeout(function(){var i=document.getElementById('g47p');if(i)i.focus()},50);
+document.getElementById('g47f').addEventListener('submit',function(e){e.preventDefault();var p=document.getElementById('g47p').value.trim();if(!p)return;m.style.color='#5f6b66';m.textContent='확인 중…';
+  check(p,'new').then(function(ok){if(ok===false){m.style.color='#c0392b';m.textContent='비밀번호가 맞지 않아요.';return}
+    if(ok===null){m.style.color='#c0392b';m.textContent='연결하지 못했어요. 잠시 후 다시 시도해 주세요.';return}
+    try{localStorage.setItem(K,p)}catch(e){}g.style.display='none';try{location.reload()}catch(e){}})});
+})();</script>
+
+<div class="wrap">
+  <a class="brand" href="../index.html#home">4&amp;7 NEXT 허브</a>
+  <h1>보험 MBTI <span style="font-size:15px;color:var(--sub);font-weight:400">전문직 설계사 성향검사 · 1차안</span></h1>
+  <p class="lead">나는 16가지 중 어떤 설계사일까? 9분이면 내 영업 스타일, 나와 잘 맞는 업체와 연습, 환상의 동행 짝꿍까지 나와요. 52문항.</p>
+
+  <section class="panel" id="verbox">
+    <h2>버전 고르기</h2>
+    <div class="ver"><button type="button" data-ver="new"><b>신입 버전</b><span>위촉 전·MBA, 활동 1년 미만<br>본업과 평소 모습으로 답해요</span></button><button type="button" data-ver="pro"><b>지점원 버전</b><span>활동 중인 지점원<br>실제 영업 경험으로 답해요</span></button></div>
+    <p class="hint">두 버전은 같은 기준으로 점수를 내서, 신입과 지점원 결과를 그대로 비교할 수 있어요.</p>
+  </section>
+
+  <section class="panel" id="intro">
+    <h2>나에 대해</h2>
+    <div class="row3">
+      <label class="f">이름 또는 호칭 (팀 기록용)<input id="who" placeholder="예: 김세원"></label>
+      <label class="f">자격<select id="cert"><option>세무사</option><option>회계사</option><option>노무사</option><option>변리사</option><option>변호사</option><option>기타</option></select></label>
+      <label class="f">설계사 경력<select id="career"><option value="0">위촉 전·MBA</option><option value="1">1년 미만</option><option value="2">1~3년</option><option value="3">3년 이상</option></select></label>
+    </div>
+    <p class="hint">정답이 없습니다. «되고 싶은 나»가 아니라 «지금 실제로 하는 나»에 가깝게 고르세요. 비슷한 질문이 일부러 두 번 나옵니다.<span id="newHint" hidden> 영업 경험이 아직 없으면 본업(세무·노무·특허 상담)이나 평소 모습으로 답하세요. 잘 모르겠으면 먼저 떠오르는 쪽으로 고르세요.</span></p>
+  </section>
+
+  <section class="panel" id="qs"></section>
+  <div class="sticky"><div style="flex:1"><div class="bar"><i id="prog" style="width:0"></i></div><span class="hint" id="cnt"></span></div><button class="btn p" id="done">결과 보기</button></div>
+
+  <section id="result" hidden></section>
+  <section id="mgr" hidden></section>
+</div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY = 'mbti-v2';
+/* 네 축. 앞 글자(+)와 뒤 글자(−). 문항 d=+1 이면 «그렇다»가 앞 글자 쪽 */
+const AX = [
+  { id:'m', name:'만남', pos:['A','개척형','먼저 다가가 접점을 만든다'], neg:['R','관계형','소개와 오래된 관계로 연다'] },
+  { id:'c', name:'제안', pos:['B','과감형','큰 금액도 먼저 꺼낸다'], neg:['C','확신형','내가 납득해야 제안한다'] },
+  { id:'p', name:'설득', pos:['N','숫자형','표·계산·근거로 설득한다'], neg:['S','이야기형','사례·공감·가족 이야기로 움직인다'] },
+  { id:'w', name:'방식', pos:['T','동행형','누군가와 함께할 때 힘이 난다'], neg:['O','독립형','혼자 준비해 끝까지 해낸다'] }
+];
+/* 신입 버전 문장 (번호-1 → 문장). 축·방향은 지점원 버전과 같다 */
+const NEW = {
+  0: '처음 보는 사람들이 모인 자리(모임·세미나)에서 내가 먼저 말을 건다.',
+  1: '처음 만나는 사람보다 이미 아는 사람(기장 거래처·지인)에게 이야기를 꺼내는 게 훨씬 편하다.',
+  3: '처음 보는 사람에게는 중요한 이야기를 두 번째 만남부터 꺼낼 것 같다.',
+  7: '오래 알고 지낸 사람들과의 관계가 내 가장 큰 무기다.',
+  8: '한 번 거절한 사람에게도 몇 달 뒤 다시 연락하는 게 어렵지 않다.',
+  9: '새 사람을 찾는 것보다 지금 아는 사람을 깊게 챙기는 쪽이 내 성격에 맞다.',
+  10: '내가 먼저 납득한 것이어야 남에게 권할 수 있다.',
+  11: '처음 만난 자리에서도 비용·금액 이야기를 먼저 꺼내는 게 어렵지 않다.',
+  13: '상대가 생각한 것보다 큰 안을 먼저 보여 주는 게 맞다고 생각한다.',
+  14: '누군가에게 거절을 들으면 한동안 다시 연락하기 어렵다.',
+  15: '상대가 망설여도 다음 약속은 그 자리에서 잡으려 한다.',
+  16: '여러 안을 보여 줄 때 가장 큰 안부터 보여 주는 게 낫다고 생각한다.',
+  17: '금액을 말했는데 상대 표정이 굳으면 바로 낮춰 주고 싶어진다.',
+  18: '작은 일 여러 개보다 큰 일 하나를 노리는 편이다.',
+  20: '누군가에게 설명할 때 표나 계산부터 보여 준다.',
+  21: '설명할 때 숫자보다 비슷한 사람의 이야기를 들려주는 쪽이 편하다.',
+  23: '상담할 때 숫자보다 상대의 걱정(가족·은퇴 등)을 먼저 듣는 편이다.',
+  24: '상대 이야기를 들으면 머릿속으로 숫자부터 계산하게 된다.',
+  25: '논리만으로는 사람이 움직이지 않는다고 느낀다.',
+  26: '중요한 미팅 전에는 상대 회사 숫자를 미리 다 챙겨 간다.',
+  27: '상대가 속마음을 꺼내는 순간이 가장 중요한 순간이라고 생각한다.',
+  29: '상품 설명보다 가족 걱정을 묻는 질문이 사람 마음을 더 움직일 것 같다.',
+  22: '새로운 것을 배울 때 원리와 근거부터 따져 본다.',
+  43: '말하기 어려운 이야기도 필요하면 먼저 꺼내는 편이다.',
+  48: '한 달 동안 새 사람 5명을 만난다||아는 사람 5명과 더 깊어진다',
+  49: '처음 만난 날 금액까지 꺼낸다||두 번째 만남부터 꺼낸다',
+  50: '표 한 장으로 보여 준다||비슷한 사람의 사례 하나를 들려준다'
+};
+let VER = '';
+const qText = i => (VER === 'new' && NEW[i]) || Q[i][2];
+const Q = [
+  /* 만남: + 개척 A / − 관계 R */
+  ['m', 1, '처음 보는 대표들이 모인 자리에서 내가 먼저 말을 건다.'],
+  ['m', -1, '처음 만나는 사람보다, 이미 아는 거래처에 이야기를 꺼내는 게 훨씬 편하다.'],
+  ['m', 1, '소개가 없어도 관심 가는 회사가 있으면 먼저 연락해 본다.'],
+  ['m', -1, '처음 보는 대표에게는 컨설팅 이야기를 두 번째 만남부터 꺼낸다.'],
+  ['m', 1, '모임·행사에 나가면 새 명함을 많이 받아 오는 편이다.'],
+  ['m', -1, '영업은 결국 오래된 관계에서 나온다고 믿는다.'],
+  ['m', 1, '새 업종·새 지역 대표를 만나는 일이 설렌다.'],
+  ['m', -1, '한 거래처와 여러 해 쌓은 이야기가 내 가장 큰 무기다.'],
+  ['m', 1, '거절당한 곳이라도 몇 달 뒤 다시 찾아가는 게 어렵지 않다.'],
+  ['m', -1, '새 사람을 찾기보다 소개받은 고객을 깊게 챙기는 데 시간을 쓴다.'],
+  /* 제안: + 과감 B / − 확신 C */
+  ['c', -1, '내가 먼저 납득한 금액이어야 대표님께 말할 수 있다.'],
+  ['c', 1, '첫 AP에서 금액 이야기를 내가 먼저 꺼내는 편이다.'],
+  ['c', -1, '보험을 권하면 거래처가 나를 다르게 볼까 봐 조심스럽다.'],
+  ['c', 1, '대표님이 생각한 금액보다 큰 안을 먼저 보여 준다.'],
+  ['c', -1, '거절을 들으면 한동안 그 고객에게 다시 연락하기 어렵다.'],
+  ['c', 1, '대표님이 망설여도 다음 약속까지는 끝까지 잡는다.'],
+  ['c', 1, '여러 안을 보여 줄 때 가장 큰 안부터 보여 준다.'],
+  ['c', -1, '제안 금액을 말한 뒤 대표 표정이 굳으면 바로 금액을 낮춘다.'],
+  ['c', 1, '작은 건 여러 개보다 큰 건 하나를 노리는 편이다.'],
+  ['c', -1, '보험을 권하는 것이 고객에게 짐을 지우는 것 같아 마음이 불편할 때가 있다.'],
+  /* 설득: + 숫자 N / − 이야기 S */
+  ['p', 1, '설명할 때 표나 계산표를 먼저 꺼낸다.'],
+  ['p', -1, '숫자보다 비슷한 대표님 이야기를 들려주는 쪽이 편하다.'],
+  ['p', 1, '상품을 볼 때 환급률·세금·비용처리 근거부터 따진다.'],
+  ['p', -1, '대표님의 가족·은퇴 걱정을 먼저 듣고 공감하는 편이다.'],
+  ['p', 1, '대표님 이야기를 들으면 머릿속으로 숫자부터 계산하게 된다.'],
+  ['p', -1, '논리만으로는 계약이 안 된다고 느낀다.'],
+  ['p', 1, '미팅 전에 재무제표 숫자를 다 외워 간다.'],
+  ['p', -1, '대표님이 속마음을 꺼내는 순간이 계약으로 가는 순간이라고 느낀다.'],
+  ['p', 1, '"세금이 얼마 줄어드는지"를 보여 주면 대부분 설득된다고 생각한다.'],
+  ['p', -1, '상품 설명보다 "대표님이 없을 때 가족은?" 같은 질문이 더 잘 통한다고 느낀다.'],
+  /* 방식: + 동행 T / − 독립 O */
+  ['w', 1, '중요한 약속에 누군가 같이 가 준다면 훨씬 든든하다.'],
+  ['w', -1, '준비만 잘 되어 있으면 중요한 자리도 혼자 가는 게 편하다.'],
+  ['w', 1, '다른 전문가(노무사·변리사 등)와 힘을 합치면 더 큰 일을 할 수 있다고 생각한다.'],
+  ['w', -1, '내 고객(거래처)은 다른 사람 손을 거치지 않고 내가 직접 챙기고 싶다.'],
+  ['w', 1, '혼자 해야 하는 일은 자꾸 미루게 된다.'],
+  ['w', -1, '여럿이 함께 일하면 내 속도를 잃는 느낌이 든다.'],
+  ['w', 1, '긴장되는 자리일수록 옆에 누가 있으면 말이 더 잘 나온다.'],
+  ['w', -1, '다른 사람과 일정을 맞추느니 혼자 먼저 해 버리는 게 낫다.'],
+  ['w', 1, '동료와 이야기를 주고받을 때 좋은 아이디어가 떠오른다.'],
+  ['w', -1, '일은 내 방식으로 처음부터 끝까지 해야 마음이 놓인다.'],
+  /* 일관성 확인 (앞 문항과 같은 뜻, 다른 말) */
+  ['m', 1, '모르는 사람들 사이에서도 대화를 먼저 시작하는 편이다.', 0],
+  ['m', -1, '아는 사람의 소개가 있어야 마음 편히 만난다.', 3],
+  ['c', -1, '스스로 확신이 없는 제안은 말이 잘 안 나온다.', 10],
+  ['c', 1, '금액이 커도 필요하면 먼저 꺼내는 편이다.', 11],
+  ['p', 1, '고객을 설득할 때 숫자와 근거가 가장 큰 무기다.', 20],
+  ['p', -1, '사람 이야기가 숫자보다 마음을 더 움직인다고 생각한다.', 21],
+  ['w', 1, '혼자보다 누군가와 함께할 때 일이 더 잘 풀린다.', 30],
+  ['w', -1, '혼자 준비하고 혼자 마무리하는 게 내 스타일이다.', 31],
+  /* 둘 중 고르기: 왼쪽이 앞 글자, 오른쪽이 뒷 글자 (1=왼쪽 확실 … 5=오른쪽 확실) */
+  ['m', -1, '한 달에 새 대표 5명을 만난다||기존 거래처 5곳을 깊게 본다'],
+  ['c', -1, '첫 AP에서 금액을 꺼낸다||두 번째 만남 이후에 꺼낸다'],
+  ['p', -1, '표 한 장으로 보여 준다||비슷한 대표님 사례 하나를 들려준다'],
+  ['w', -1, '어려운 일은 잘하는 사람과 같이 한다||어려운 일도 내가 끝까지 해 본다']
+];
+/* 16유형: [만남][제안][설득][방식]. 별명 · 한 줄 · 이런 사람(장면) · 잘 맞는 판 · 코칭 한 마디 */
+const EMO = { ABNT:'🦁', ABNO:'🦅', ABST:'🎉', ABSO:'🐯', ACNT:'🧭', ACNO:'🦊', ACST:'🌻', ACSO:'🐎', RBNT:'♟️', RBNO:'🎯', RBST:'🤝', RBSO:'🔧', RCNT:'🏛️', RCNO:'🔬', RCST:'🌳', RCSO:'🛡️' };
+/* 환상의 동행 짝꿍: 제안·설득 글자를 뒤집은 유형 (내가 약한 쪽을 채워 줌) */
+const MATE = c => c[0] + (c[1] === 'B' ? 'C' : 'B') + (c[2] === 'N' ? 'S' : 'N') + c[3];
+const TYPES = {
+  ABNT: ['판을 키우는 전략가', '먼저 다가가 숫자로 큰 그림을 그리고, 팀과 함께 밀어붙인다.', '처음 만난 제조업 대표에게 «법인 이익 3억이면 이렇게 쌓입니다» 표를 꺼내고, 다음 PC는 노무사와 같이 간다.', '순이익 10억 이상 법인, 여러 자격사 묶음 제안', '숫자 앞에 질문 하나. 대표가 말한 숫자로만 설득하기'],
+  ABNO: ['숫자 사냥꾼', '혼자 새 업체를 뚫고, 계산과 근거로 큰 건을 직접 마무리한다.', '소개 없이 연락한 대표에게 재무제표 3년치를 받아 혼자 시뮬레이션을 돌려 월 천만 원 제안까지 간다.', '이익 큰 신규 법인, 재무 데이터가 있는 업체', '한도(재정심사) 먼저 보고, 큰 건은 PC만 동행'],
+  ABST: ['분위기 메이커', '사람을 빨리 사로잡고, 이야기로 크게 움직이며, 동료와 함께할 때 빛난다.', '모임에서 처음 본 대표와 30분 만에 가족 이야기를 나누고, 다음 주 지점장과 함께 방문 약속을 잡는다.', '관계형·결론형 대표, 행사·모임 기반 개척', '감동 뒤에 숫자 한 장. 약속을 요일·시각으로 확정'],
+  ABSO: ['현장 승부사', '혼자 현장에 뛰어들어 이야기로 마음을 열고 그 자리에서 크게 제안한다.', '공장 앞 지게차 이야기로 시작해 대표의 은퇴 걱정을 끌어내고, 그 자리에서 다음 PC를 잡는다.', '개인사업자·중소 제조, 현장형 대표', '제안 금액은 재정심사 계산기로 확인한 범위 안에서'],
+  ACNT: ['꼼꼼한 개척 설계자', '새 업체를 먼저 찾되, 확신이 설 때까지 숫자로 검증하고 팀과 함께 제안한다.', '관심 업체를 직접 찾아가 자료를 받은 뒤, 회계사와 함께 검토해 확실한 안만 들고 간다.', '분석형 대표, 신설·성장 법인', '완벽할 때까지 기다리지 말고 A안부터 꺼내기'],
+  ACNO: ['1인 컨설턴트', '스스로 찾고, 스스로 검증하고, 스스로 끝낸다. 무리한 제안은 하지 않는다.', '신규 대표에게 세금 비교표를 직접 만들어 «제가 확인한 것만 말씀드릴게요»로 신뢰를 얻는다.', '순이익 2~5억 법인, 근거를 중시하는 대표', '내 납득 범위를 넓히려면 큰 건은 한 번 동행 경험'],
+  ACST: ['따뜻한 개척자', '먼저 다가가지만 서두르지 않고, 공감으로 신뢰를 쌓은 뒤 팀과 함께 제안한다.', '새로 만난 대표의 자녀 이야기를 오래 들어 주고, 확신이 서면 선배와 동행해 PC를 한다.', '관계형·신중형 대표, 가족 보장·상속 컨셉', '공감 다음에 «되는지 보려면 몇 가지 여쭤봐야 합니다»로 F.F'],
+  ACSO: ['발로 뛰는 상담가', '혼자 부지런히 만나고, 이야기로 마음을 여는데 제안은 신중하다.', '혼자 여러 거래처를 돌며 대표 고민을 듣고 정리해 두지만, 금액 이야기는 다음으로 미루곤 한다.', '개인사업자·소상공인, 월 200~300 범위', '들은 고민을 다음 약속(요일·시각)으로 꼭 묶기'],
+  RBNT: ['관계 레버리지 전략가', '오래된 관계를 지렛대로 숫자 큰 제안을 팀과 함께 만든다.', '5년 기장 거래처 대표에게 «작년부터 포지션을 바꿨습니다»로 시작해 노무사와 함께 큰 구조를 제안한다.', '오래된 기장 거래처, 순이익 큰 법인', '관계를 믿고 숫자를 먼저 던지지 않기. 명분부터'],
+  RBNO: ['신뢰 기반 클로저', '믿어 주는 거래처에서 숫자로 깔끔하게 큰 결정을 이끈다.', '결산 미팅 뒤 남은 20분에 회사 숫자를 보여 주며 «이 정도는 준비하셔야 합니다»라고 분명하게 말한다.', '기장 거래처 법인, 결론형 대표', '소개요청까지 같은 논리로 이어 가기'],
+  RBST: ['소개 왕', '관계와 이야기로 사람을 모으고, 큰 판을 함께 벌인다. 소개가 끊이지 않는다.', '만족한 대표가 친구 대표 두 명을 소개하고, 셋을 모아 지점장과 함께 설명회를 연다.', '대표 모임·동문, 소개 연결망', '소개받은 분도 숫자로 한 번 더 점검'],
+  RBSO: ['단골 해결사', '오래 알던 고객의 속사정을 알고, 필요하면 혼자서도 과감히 제안한다.', '10년 된 거래처 사장님이 «세무사님 말이면 믿죠»라고 할 만큼 가깝고, 그 신뢰로 큰 계약을 혼자 마무리한다.', '오래된 개인·법인 거래처', '가까울수록 정해 주지 말고 선택지 2~3개'],
+  RCNT: ['신중한 설계 파트너', '믿을 만한 관계에서, 확실한 숫자로, 팀과 함께 천천히 완성한다.', '기장 거래처의 가업승계를 회계사·노무사와 몇 달에 걸쳐 함께 설계한다.', '가업승계·법인전환 등 긴 호흡의 큰 과제', '마감일을 정해 «오늘 정할 것 하나»를 남기기'],
+  RCNO: ['정밀 분석가', '내 거래처 숫자를 가장 잘 알고, 확실한 것만 말하는 전문가.', '가결산 자료를 미리 분석해 «대표님 이익이 이 구간이라 지금이 갈림길입니다»라고 정확히 짚는다.', '기장 거래처, 분석형·신중형 대표', '분석을 다 말하지 말고 PC로 남겨 두기(AP는 기대감까지)'],
+  RCST: ['동행 멘토', '사람을 아끼고 천천히 신뢰를 쌓으며, 동료와 함께할 때 가장 편하다.', '오래된 거래처 사모님까지 챙기며, 큰 이야기는 지점장과 함께 가서 꺼낸다.', '가족 중심 개인사업자, 상속·가족 보장', '동행 일정을 먼저 잡아 미루지 않기'],
+  RCSO: ['조용한 수호자', '오래된 고객을 묵묵히 지키고, 확신하는 것만 조심스럽게 권한다.', '거래처가 먼저 «혹시 이런 것도 봐 주실 수 있어요?»라고 물어 올 때 제안이 시작된다.', '오래된 거래처, 신중형 대표, 월 200~300 범위', '먼저 꺼내는 연습. 롤플레이 «쉬움»부터 주 1회']
+};
+const LK = ['전혀 아니다','아니다','보통','그렇다','매우 그렇다'];
+const ans = {};
+/* 축 끝마다: 강점·조심·처방·AP 보강 단계 */
+const POLE = {
+  A: { s:'접점을 스스로 만든다. 소개가 없어도 판을 연다.', r:'관계가 얕을 때 바로 본론으로 가 대표가 닫힌다.', rx:'AP 3단계(포지션 전환 명분)와 5단계(시간확보)를 더 단단히. 첫 만남은 계약이 아니라 «이야기 하나 듣고 나오기».', ap:'03·05·10 선거절' },
+  R: { s:'신뢰가 깊어 한 번 열리면 오래간다. 소개가 잘 나온다.', r:'관계를 지키려다 제안 타이밍을 놓친다. 새 접점이 마른다.', rx:'기장거래처부터 «포지션을 바꿨습니다» 명분으로 1주 1곳. 소개요청을 대상·인원 특정으로 습관화.', ap:'03 명분·☆ 소개요청' },
+  B: { s:'큰 금액을 자연스럽게 말한다. 기회를 크게 본다.', r:'재정심사 한도를 넘겨 제안하거나 대표가 부담을 느낀다.', rx:'제안 전 «재정심사 계산기»로 한도부터. A안→기준안 순서로 고르게 하기.', ap:'09 문제제기·15 약속' },
+  C: { s:'고객이 믿는다. 무리한 제안이 없어 유지율이 좋다.', r:'내가 납득한 범위(예: 월 2~3백)를 넘으면 위축된다. 보험 권하기를 «손실»로 느낄 수 있다.', rx:'내 납득 범위에 맞는 업체(순이익 2~5억)에서 성공 경험부터. 큰 건은 동행으로 한 번 경험해 범위를 넓히기.', ap:'10 선거절·11 대안제시' },
+  N: { s:'근거가 탄탄해 분석형 대표에게 강하다.', r:'설명이 길어지고, 논리로 이기고 마음은 놓친다.', rx:'숫자는 표 한 장으로. 숫자 앞에 «비슷한 대표님 이야기» 하나를 먼저.', ap:'06 사례·13 구체적 예화' },
+  S: { s:'공감이 깊어 관계형·신중형 대표가 마음을 연다.', r:'근거를 물으면 흔들리고, 결론형 대표에게 길게 느껴진다.', rx:'핵심 숫자 3개(이익·세금·필요자금)는 외워 두기. 업체 분석 «보고서»를 들고 가기.', ap:'07 우리 회사 숫자·14 F.F' },
+  T: { s:'동행·조인업에서 시너지가 크다. 다른 자격사와 묶음 제안에 강하다.', r:'혼자 가야 할 때 미루고, 동행 일정에 실적이 묶인다.', rx:'동행 미팅을 주 단위로 미리 잡기. 혼자 가는 첫 단계(AP)는 롤플레이로 연습하고 PC부터 동행.', ap:'15 다음 약속(동행 일정 포함)' },
+  O: { s:'준비가 꼼꼼하고 스스로 끝까지 간다.', r:'큰 건·낯선 컨셉에서 혼자 버티다 놓친다.', rx:'자료(보고서·PPT)를 충분히 받아 혼자 가되, 금액이 내 범위를 넘으면 PC만 동행.', ap:'11 대안제시·PC 준비' }
+};
+/* 지점장용 매니지먼트 포인트: 글자 → [신입, 지점원] */
+const MGMT = {
+  A: ['모임·세미나 자리에 데리고 다니며 첫 인사를 맡기세요. 바로 본론으로 가지 않게 AP 진입(1~5단계)부터 연습시키세요.', '새 지역·새 업종 목록을 주고 주간 새 접점 목표를 같이 정하세요. 관계가 얕은 곳은 2차 약속이 잡혔는지 확인하세요.'],
+  R: ['본인 기장 거래처·지인 목록을 같이 뽑아 첫 대상 5곳을 정해 주세요. 소개 요청 멘트를 먼저 연습시키세요.', '기존 거래처 중 아직 제안하지 않은 곳을 같이 짚어 주세요. 소개가 실제로 나오는지 달마다 확인하세요.'],
+  B: ['큰 금액을 말하는 데 거리낌이 없으니, 처음부터 재정심사 계산기로 한도를 먼저 보는 습관을 들이게 하세요.', '제안 전에 재정심사 한도와 유지 가능성을 같이 점검하세요. 큰 건은 PC 전에 한 번 봐 주세요.'],
+  C: ['작은 금액에서 첫 성공 경험을 먼저 만들게 도와주세요. 상품 하나를 깊게 공부시키면 자신감이 붙습니다.', '비슷한 업체의 실제 사례(금액·결과)를 보여 주며 납득 범위를 넓혀 주세요. 큰 건은 동행으로 경험시키세요.'],
+  N: ['상품·세금 구조 자료를 먼저 주세요. 숫자 앞에 사례 하나를 넣는 연습을 같이 시키세요.', '설명을 표 한 장으로 줄이는 연습을 시키고, 롤플레이에서 관계형 대표 역을 붙여 주세요.'],
+  S: ['선배 사례를 많이 들려주고, 핵심 숫자 3개(이익·세금·보험료)만 먼저 외우게 하세요.', '근거 질문에 흔들리지 않게 분석형 대표 롤플레이를 붙이고, 숫자 자료를 미리 챙겨 주세요.'],
+  T: ['첫 3개월은 동행을 주 단위로 먼저 잡아 주세요. 같이 갈 때 실력이 빨리 늡니다.', '동행 일정을 미리 잡아 주되, 혼자 가는 미팅 목표도 같이 정하세요.'],
+  O: ['자료와 스크립트를 충분히 주고 혼자 해 보게 두되, 미팅 뒤 바로 짧게 되짚어 주세요.', '간섭은 줄이고, 큰 건·낯선 컨셉에서만 동행을 제안하세요. 결과를 나누는 주기를 정해 두세요.']
+};
+const MATCH = {
+  결론형: { N:'표 한 장으로 바로 결론. 잘 맞음', S:'이야기는 30초 안에 끊고 숫자로', B:'속도가 맞음. 재정심사만 확인', C:'결론을 먼저 말하는 연습 필요' },
+  관계형: { S:'잘 맞음. 가족 이야기로 열기', N:'표는 나중에, 사람 이야기 먼저', R:'잘 맞음', A:'서두르지 말고 한 번 더 만나기' },
+  분석형: { N:'잘 맞음. 근거·출처 같이', S:'근거 자료를 꼭 준비', C:'신중함이 신뢰로 보임', B:'큰 금액은 계산 근거와 함께' },
+  신중형: { C:'잘 맞음. 천천히 한 단계씩', B:'재촉으로 느끼지 않게 속도 조절', S:'공감이 안심을 줌', T:'동행이 부담이 되지 않게 1명만' }
+};
+function renderQs(){
+  const PK = ['A 확실', 'A 쪽', '반반', 'B 쪽', 'B 확실'];
+  $('qs').hidden = $('done').parentElement.hidden = !VER;
+  $('newHint').hidden = VER !== 'new';
+  document.querySelectorAll('.ver button').forEach(b => b.classList.toggle('on', b.dataset.ver === VER));
+  if (!VER) return;
+  $('qs').innerHTML = '<h2>문항</h2>' + Q.map((q, i) => { const pr = qText(i).split('||'), two = pr.length === 2;
+    return `<div class="q"><div class="qt"><span class="qn">${i + 1}</span>${two ? `둘 중 어느 쪽에 더 가까운가요?<div class="pair"><span><b>A</b> ${esc(pr[0])}</span><span><b>B</b> ${esc(pr[1])}</span></div>` : esc(pr[0])}</div><div class="lk" data-i="${i}">${(two ? PK : LK).map((t, v) => `<button type="button" data-v="${v + 1}" class="${ans[i] === v + 1 ? 'on' : ''}">${t}</button>`).join('')}</div></div>`; }).join('');
+  prog();
+}
+function prog(){ const n = Object.keys(ans).length; $('prog').style.width = (n / Q.length * 100) + '%'; $('cnt').textContent = `${n} / ${Q.length} 문항` + (n === Q.length ? ' · 다 했어요! 결과를 열어 보세요 🎉' : n >= Q.length * 0.75 ? ' · 거의 다 왔어요' : n >= Q.length / 2 ? ' · 절반 넘었어요' : ''); }
+$('qs').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; const i = +b.parentElement.dataset.i; ans[i] = +b.dataset.v; b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); prog(); save(); });
+function save(){ try { localStorage.setItem(KEY, JSON.stringify({ ans, ver: VER, who: $('who').value, cert: $('cert').value, career: $('career').value })); } catch (e) {} }
+function load(){ try { const o = JSON.parse(localStorage.getItem(KEY) || 'null'); if (!o) return; Object.assign(ans, o.ans || {}); VER = o.ver || ''; ['who','cert','career'].forEach(k => { if (o[k] != null) $(k).value = o[k]; }); } catch (e) {} }
+function score(){
+  const sum = {}, cnt = {};
+  Q.forEach((q, i) => { if (!ans[i]) return; const v = (ans[i] - 3) * q[1]; sum[q[0]] = (sum[q[0]] || 0) + v; cnt[q[0]] = (cnt[q[0]] || 0) + 1; });
+  const ax = AX.map(a => { const avg = cnt[a.id] ? sum[a.id] / cnt[a.id] : 0; return { a, pct: Math.round((avg + 2) / 4 * 100), pole: avg >= 0 ? a.pos : a.neg, strong: Math.abs(avg) >= 0.75 }; });
+  let gap = 0; Q.forEach((q, i) => { if (q[3] == null || !ans[i] || !ans[q[3]]) return; const x = (ans[i] - 3) * q[1], y = (ans[q[3]] - 3) * Q[q[3]][1]; if (Math.abs(x - y) >= 3) gap++; });
+  return { ax, gap, code: ax.map(x => x.pole[0]).join('') };
+}
+function result(){
+  const n = Object.keys(ans).length;
+  if (n < Q.length) { const miss = Q.findIndex((q, i) => !ans[i]); $('cnt').innerHTML = `<span class="warn">${Q.length - n}문항이 남았어요.</span>`; document.querySelectorAll('.q')[miss].scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  const R = score(), P = R.ax.map(x => x.pole[0]);
+  const nick = R.ax.map(x => x.pole[1].replace('형', '')).join('·') + '형';
+  const cAx = R.ax[1], comfort = cAx.pole[0] === 'C'
+    ? (cAx.strong ? '월 200~300만 원 안팎에서 성공 경험을 먼저 쌓으세요. 맞는 업체는 당기순이익 2~5억. 큰 건은 동행으로 한 번 경험해 범위를 넓힙니다.' : '월 300~500만 원 범위에서 시작해, 재정심사 한도 안에서 단계적으로 키우세요.')
+    : (cAx.strong ? '당기순이익 10억 이상 업체에서 월 천만 원대도 자연스럽게 말할 수 있는 성향입니다. 다만 제안 전 재정심사 한도를 꼭 먼저 보세요.' : '월 500만~천만 원대도 가능합니다. A안→기준안 순서로 고르게 하세요.');
+  const concept = (P[2] === 'N' ? '숫자로 설득하기 좋은 컨셉부터: 대표 퇴직금·비용처리 재원, 법인전환 세금 비교, 가지급금 정리.' : '이야기로 움직이기 좋은 컨셉부터: 가족 보장(대표 유고), 상속 재원, 가업승계.') +
+    (P[1] === 'C' ? ' 내가 확신하는 상품 하나를 깊게 공부해 그 상품부터 권하세요.' : ' 상품 폭을 넓게 보되, 원수사별 한도 차이를 먼저 익히세요.');
+  const ap = [...new Set(P.map(p => POLE[p].ap))].join(' / ');
+  $('result').hidden = false;
+  $('result').innerHTML = `<section class="panel">
+    <div class="hint">${$('who').value ? esc($('who').value) + '님의' : '나의'} 보험 MBTI (${esc($('cert').value)} · ${VER === 'pro' ? '지점원' : '신입'} 버전)</div>
+    <div class="emo">${EMO[R.code] || '✨'}</div><div class="type">${R.code}</div><div class="nick">${esc((TYPES[R.code] || [nick])[0])} <span class="hint" style="font-weight:400">${esc(nick)}</span></div>
+    ${TYPES[R.code] ? `<p style="margin:0 0 6px">${esc(TYPES[R.code][1])}</p><div class="card" style="background:#f7f9ff"><div><b>이런 사람</b> ${esc(TYPES[R.code][2])}</div><div><b>잘 맞는 판</b> ${esc(TYPES[R.code][3])}</div><div><b>코칭 한 마디</b> ${esc(TYPES[R.code][4])}</div></div>` : ''}
+    ${R.ax.map(x => `<div class="axis"><div class="nm"><span>${x.a.neg[0]} ${x.a.neg[1]}</span><b>${x.a.name}</b><span>${x.a.pos[1]} ${x.a.pos[0]}</span></div><div class="track"><i style="left:${x.pct}%"></i></div></div>`).join('')}
+    ${R.gap >= 2 ? `<p class="warn">비슷한 질문에 다르게 답한 곳이 ${R.gap}곳 있어요. 시간을 두고 한 번 더 해 보면 더 정확합니다.</p>` : ''}
+  </section>
+  <section class="panel"><h2>축별 강점 · 조심 · 처방</h2>
+    ${R.ax.map(x => { const p = POLE[x.pole[0]]; return `<div class="card"><h3>${x.a.name}: ${x.pole[1]} (${x.pole[0]})${x.strong ? '' : ' <span class="hint">중간에 가까움</span>'}</h3><div><b>강점</b> ${esc(p.s)}</div><div><b>조심</b> ${esc(p.r)}</div><div><b>처방</b> ${esc(p.rx)}</div></div>`; }).join('')}
+  </section>
+  <section class="panel mate"><h2>환상의 동행 짝꿍</h2>
+    ${(() => { const m = MATE(R.code), t = TYPES[m] || ['']; return `<div class="mrow"><span class="emo" style="font-size:40px">${EMO[m] || '✨'}</span><div><b>${m} ${esc(t[0])}</b><div>${esc(t[1] || '')}</div><div class="hint">내가 약한 ${R.ax[1].pole[0] === 'B' ? '신중함' : '과감함'}과 ${R.ax[2].pole[0] === 'N' ? '이야기' : '숫자'}를 채워 줘요. 팀에서 이 유형을 찾아 같이 가 보세요.</div></div></div>`; })()}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="cardDl">결과 카드 저장 (단톡 공유용)</button></div>
+    ${VER === 'pro' ? '' : '<p class="hint">3개월 뒤 «지점원 버전»으로 다시 해 보면 내가 얼마나 바뀌었는지 볼 수 있어요.</p>'}
+  </section>
+  <section class="panel"><h2>나에게 맞는 영업</h2>
+    <table><tr><th style="width:140px">제안 규모</th><td>${esc(comfort)}</td></tr>
+    <tr><th>먼저 쓸 컨셉</th><td>${esc(concept)}</td></tr>
+    <tr><th>AP에서 보강할 단계</th><td>${esc(ap)}. «AP 롤플레이»에서 이 단계를 집중 연습하세요.</td></tr>
+    <tr><th>동행<div class="hint" style="font-weight:400">선배·다른 전문가와 같이 미팅에 가는 것(조인웍)</div></th><td>${P[3] === 'T' ? '동행형입니다. 지점장·다른 자격사와 동행 일정을 주 단위로 먼저 잡으세요.' : '독립형입니다. 자료를 충분히 받아 혼자 가되, 금액이 내 범위를 넘으면 PC만 동행하세요.'}</td></tr></table>
+  </section>
+  <section class="panel"><h2>대표님 성향별 궁합</h2><p class="hint">업체 분석의 «대표님 성향» 칸과 짝입니다.</p>
+    <table><tr><th>대표님</th><th>나와 만나면</th></tr>${Object.entries(MATCH).map(([k, m]) => `<tr><td>${k}</td><td>${esc(P.map(p => m[p]).filter(Boolean)[0] || '무난함. 업체 분석 «대표님 성향» 안내를 따르세요')}</td></tr>`).join('')}</table>
+  </section>
+  <details class="panel"><summary style="cursor:pointer;font-weight:700">16가지 유형 한눈에 보기</summary>
+    <table style="margin-top:8px"><tr><th style="width:62px">유형</th><th style="width:150px">별명</th><th>이런 사람</th></tr>${Object.entries(TYPES).map(([k, t]) => `<tr${k === R.code ? ' style="background:#eef3ff"' : ''}><td>${EMO[k] || ''} <b>${k}</b></td><td>${esc(t[0])}</td><td>${esc(t[1])}</td></tr>`).join('')}</table></details>
+  <section class="panel"><h2>다음 할 일</h2><ol>
+    <li>«AP 롤플레이»에서 보강할 단계를 보통 난이도로 한 번 연습</li>
+    <li>지점장에게 이 결과를 보여 주고 «나에게 맞는 업체 규모»로 다음 AP 대상 고르기</li>
+    <li>3개월 뒤 다시 검사해 바뀐 점 보기</li></ol>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn p" id="send">팀 기록에 저장</button><a class="btn" href="roleplay.html">AP 롤플레이로 가기</a><button class="btn" id="again">다시 하기</button></div>
+    <p class="hint" id="sendMsg">저장하면 지점장이 팀 결과를 볼 수 있습니다(팀 비밀번호 기기만). 저장하지 않으면 이 브라우저에만 남습니다.</p>
+  </section>
+  <p class="hint">1차안입니다. 문항과 해석은 김세원 지점장 아이디어를 바탕으로 개발팀이 만든 초안이며, 팀 의견과 실제 실적 데이터(3~6개월)로 계속 고칩니다.</p>`;
+  $('result').scrollIntoView({ behavior: 'smooth' });
+  $('again').onclick = () => { Object.keys(ans).forEach(k => delete ans[k]); save(); renderQs(); $('result').hidden = true; window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  $('cardDl').onclick = () => {
+    const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
+    g.fillStyle = '#0a0b0d'; g.fillRect(0, 0, W, H);
+    const F = "Pretendard, 'Malgun Gothic', sans-serif"; g.textAlign = 'center';
+    g.fillStyle = '#8a93a6'; g.font = `500 36px ${F}`; g.fillText('4&7 NEXT · 보험 MBTI', W / 2, 120);
+    g.font = `200px ${F}`; g.fillText(EMO[R.code] || '✨', W / 2, 380);
+    g.fillStyle = '#4d8bff'; g.font = `800 150px ${F}`; g.fillText(R.code, W / 2, 560);
+    g.fillStyle = '#fff'; g.font = `700 64px ${F}`; g.fillText((TYPES[R.code] || [nick])[0], W / 2, 660);
+    g.fillStyle = '#c9cfdb'; g.font = `400 34px ${F}`;
+    const line = (TYPES[R.code] || ['', ''])[1]; let row = '', y = 740; [...line].forEach(ch => { if (g.measureText(row + ch).width > 860) { g.fillText(row, W / 2, y); row = ''; y += 50; } row += ch; }); g.fillText(row, W / 2, y);
+    R.ax.forEach((x, k) => { const yy = 930 + k * 90; g.textAlign = 'left'; g.fillStyle = '#8a93a6'; g.font = `500 28px ${F}`; g.fillText(x.a.neg[1], 140, yy); g.textAlign = 'right'; g.fillText(x.a.pos[1], 940, yy); g.textAlign = 'center'; g.fillStyle = '#fff'; g.fillText(x.a.name, W / 2, yy);
+      g.fillStyle = '#2a2e36'; g.fillRect(140, yy + 18, 800, 10); g.fillStyle = '#4d8bff'; g.beginPath(); g.arc(140 + 800 * x.pct / 100, yy + 23, 16, 0, 7); g.fill(); });
+    g.fillStyle = '#8a93a6'; g.font = `400 30px ${F}`; g.textAlign = 'center'; g.fillText(`${$('who').value ? $('who').value + ' · ' : ''}${VER === 'pro' ? '지점원' : '신입'} 버전`, W / 2, 1290);
+    const a = document.createElement('a'); a.download = `보험MBTI_${R.code}.png`; a.href = cv.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove();
+  };
+  $('send').onclick = () => {
+    if ($('send').disabled) return;
+    const TP = (() => { try { return localStorage.getItem('team_pass') || ''; } catch (e) { return ''; } })();
+    if (!TP) { $('sendMsg').textContent = '팀 비밀번호를 넣은 기기에서만 저장할 수 있어요.'; return; }
+    $('send').disabled = true; $('sendMsg').textContent = '저장하는 중…';
+    fetch('../config.json', { cache: 'no-store' }).then(r => r.json()).then(c => fetch(c.endpoint, { method: 'POST', body: JSON.stringify({ action: 'mbti', pass: TP, who: $('who').value, cert: $('cert').value, career: $('career').value, code: R.code, nick: (TYPES[R.code] || [nick])[0], pct: R.ax.map(x => x.pct), gap: R.gap, ans: Q.map((q, i) => ans[i]), mgmt: R.ax.map(x => x.a.name + '(' + x.pole[1] + '): ' + MGMT[x.pole[0]][VER === 'pro' ? 1 : 0]).join(' / '), ver: VER === 'pro' ? '지점원' : '신입' }) })).then(r => r.json())
+      .then(r => { $('sendMsg').textContent = r.ok ? '팀 기록에 저장했어요.' : (r.error || '저장하지 못했어요.'); if (r.ok) $('send').textContent = '저장 완료'; else $('send').disabled = false; }).catch(() => { $('sendMsg').textContent = '서버에 연결하지 못했어요.'; $('send').disabled = false; });
+  };
+}
+$('verbox').addEventListener('click', e => { const b = e.target.closest('button[data-ver]'); if (!b || b.dataset.ver === VER) return;
+  VER = b.dataset.ver;
+  const c = $('career'); if (VER === 'new' && +c.value > 1) c.value = '0'; if (VER === 'pro' && +c.value < 1) c.value = '2';
+  save(); renderQs(); $('result').hidden = true; });
+$('done').onclick = result;
+['who','cert','career'].forEach(k => $(k).addEventListener('change', save));
+/* ── 지점장 보기 (?view=mgr). 지점장 비밀번호(서버 MGR_PASS) 또는 관리자 키로 연다.
+   나중에 사람마다 이름·비밀번호를 주고 지점과 연결하면, 서버 mbtilist 가 그 지점 기록만 돌려주게 바꾼다. */
+const MGR = /(^|[?&])view=mgr(&|$)/.test(location.search);
+const CAREER = ['위촉 전·MBA', '1년 미만', '1~3년', '3년 이상'];
+function mgrView(){
+  ['verbox', 'intro', 'qs', 'result'].forEach(k => $(k).hidden = true); $('done').parentElement.hidden = true;
+  document.querySelector('h1').firstChild.textContent = '보험 MBTI 지점장 보기 ';
+  document.querySelector('.lead').textContent = '팀원 결과와 매니지먼트 포인트를 한눈에 봅니다. 이 화면의 매니지먼트 문구는 본인 결과 화면에는 나오지 않습니다.';
+  const m = $('mgr'); m.hidden = false;
+  const KK = 'mbti-mgr-key'; let key = ''; try { key = localStorage.getItem(KK) || ''; } catch (e) {}
+  m.innerHTML = `<section class="panel"><h2>열기</h2><div class="mg-top"><input id="mgKey" type="password" placeholder="지점장 비밀번호" autocomplete="off"><button class="btn p" id="mgOpen">불러오기</button></div><p class="hint" id="mgMsg">비밀번호는 이 기기에만 기억합니다.</p></section><div id="mgBody"></div>`;
+  const open = () => {
+    key = $('mgKey').value.trim() || key; if (!key) { $('mgMsg').textContent = '비밀번호를 넣어 주세요.'; return; }
+    $('mgMsg').textContent = '불러오는 중…';
+    fetch('../config.json', { cache: 'no-store' }).then(r => r.json()).then(c => fetch(c.endpoint, { method: 'POST', body: JSON.stringify({ action: 'mbtilist', token: key, mgr: key }) })).then(r => r.json()).then(d => {
+      if (!d.ok) { $('mgMsg').textContent = d.error || '비밀번호가 맞지 않습니다.'; try { localStorage.removeItem(KK); } catch (e) {} key = ''; return; }
+      try { localStorage.setItem(KK, key); } catch (e) {}
+      $('mgKey').value = ''; $('mgMsg').textContent = `기록 ${d.rows.length}줄을 불러왔어요.`;
+      mgrRender(d.rows.map(v => ({ t: String(v[0]), who: String(v[1] || ''), cert: String(v[2] || ''), career: +v[3] || 0, code: String(v[4] || ''), pct: String(v[6] || '').split(',').map(Number), gap: +v[7] || 0, act: String(v[9] || ''), ver: String(v[10] || '') })));
+    }).catch(() => { $('mgMsg').textContent = '서버에 연결하지 못했어요.'; });
+  };
+  $('mgOpen').onclick = open; $('mgKey').addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
+  if (key) open();
+}
+function mgrRender(all){
+  const st = { ver: '', q: '', test: false, latest: true, sort: 'type' };
+  $('mgBody').innerHTML = `<section class="panel"><div class="mg-top"><select id="fVer"><option value="">전체 버전</option><option>신입</option><option>지점원</option></select><input id="fQ" placeholder="이름 찾기"><select id="fSort"><option value="type">유형 순</option><option value="new">최근 순</option><option value="name">이름 순</option></select></div>
+    <div class="mg-top" style="margin-top:8px;font-size:13px"><label><input type="checkbox" id="fLatest" checked> 같은 이름은 최근 1개만</label><label><input type="checkbox" id="fTest"> 시험 기록도 보기</label></div></section><div id="mgOut"></div>`;
+  const draw = () => {
+    let rows = all.filter(x => x.code.length === 4 && (st.test || !/시험/.test(x.who)) && (!st.ver || (x.ver || '지점원') === st.ver) && (!st.q || x.who.includes(st.q)));
+    if (st.latest) { const seen = {}; rows = rows.slice().reverse().filter(x => { const k = x.who || ('익명' + x.t); if (seen[k]) return false; seen[k] = 1; return true; }); }
+    rows.sort(st.sort === 'new' ? (a, b) => b.t.localeCompare(a.t) : st.sort === 'name' ? (a, b) => a.who.localeCompare(b.who) : (a, b) => a.code.localeCompare(b.code));
+    const cnt = {}, byCode = {}; rows.forEach(x => { cnt[x.code] = (cnt[x.code] || 0) + 1; (byCode[x.code] = byCode[x.code] || []).push(x.who || '이름 없음'); });
+    const nNew = rows.filter(x => x.ver === '신입').length;
+    const avg = AX.map((a, k) => rows.length ? Math.round(rows.reduce((s, x) => s + (x.pct[k] || 0), 0) / rows.length) : 50);
+    $('mgOut').innerHTML = `<section class="panel"><h2>한눈에</h2>
+      <p style="margin:0 0 8px"><b>${rows.length}명</b> <span class="hint">신입 ${nNew} · 지점원 ${rows.length - nNew}</span></p>
+      <div class="dist">${Object.keys(TYPES).map(k => `<div class="${cnt[k] ? '' : 'z'}" title="${esc((byCode[k] || []).join(', '))}"><b>${EMO[k]} ${cnt[k] || 0}</b>${k}<br>${esc(TYPES[k][0])}</div>`).join('')}</div>
+      <h3 style="margin:14px 0 4px;font-size:15px">팀 평균</h3>
+      ${AX.map((a, k) => `<div class="axis"><div class="nm"><span>${a.neg[0]} ${a.neg[1]}</span><b>${a.name}</b><span>${a.pos[1]} ${a.pos[0]}</span></div><div class="track"><i style="left:${avg[k]}%"></i></div></div>`).join('')}
+    </section>
+    <section class="panel"><h2>사람별</h2>${rows.length ? rows.map(x => {
+      const v = x.ver === '신입' ? 0 : 1, poles = AX.map((a, k) => (x.pct[k] >= 50 ? a.pos : a.neg));
+      const mg = poles.map((p, k) => `<div><b>${AX[k].name}·${p[1]}</b> ${esc(MGMT[p[0]][v])}</div>`).join('');
+      const mates = (byCode[MATE(x.code)] || []).filter(n => n !== x.who);
+      return `<div class="pc"><div class="hd"><span class="e">${EMO[x.code] || '✨'}</span><div><b>${esc(x.who || '이름 없음')}</b> <span class="hint">${esc(x.cert)} · ${CAREER[x.career] || ''} · ${x.ver || '지점원(이전판)'} · ${esc(x.t)}</span><div><b style="color:var(--acc)">${x.code}</b> ${esc((TYPES[x.code] || [''])[0])}</div></div></div>
+        <div class="mini">${AX.map((a, k) => `<div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--sub)"><span>${a.neg[1]}</span><span>${a.name} ${x.pct[k]}</span><span>${a.pos[1]}</span></div><div class="track"><i style="left:${x.pct[k]}%"></i></div></div>`).join('')}</div>
+        <div class="mm">${mg}</div>
+        <div class="hint" style="margin-top:6px">짝꿍 ${MATE(x.code)} ${esc((TYPES[MATE(x.code)] || [''])[0])}${mates.length ? ' · 팀에서: ' + esc(mates.join(', ')) : ' · 팀에 아직 없음'}${x.act ? ' · 활동: ' + esc(x.act) : ''}${x.gap >= 2 ? ' · <span class="warn">비슷한 질문에 다르게 답한 곳 ' + x.gap + '곳</span>' : ''}</div></div>`; }).join('') : '<p class="hint">보여 줄 기록이 없어요.</p>'}</section>`;
+  };
+  $('fVer').onchange = e => { st.ver = e.target.value; draw(); };
+  $('fQ').oninput = e => { st.q = e.target.value.trim(); draw(); };
+  $('fSort').onchange = e => { st.sort = e.target.value; draw(); };
+  $('fLatest').onchange = e => { st.latest = e.target.checked; draw(); };
+  $('fTest').onchange = e => { st.test = e.target.checked; draw(); };
+  draw();
+}
+if (MGR) mgrView(); else { load(); renderQs(); }
+})();
+</script>
+</body>
+</html>

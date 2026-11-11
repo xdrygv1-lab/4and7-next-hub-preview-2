@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script src="embed.js"></script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청약 체크리스트 | 4&amp;7 NEXT</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-Variable.ttf') format('truetype');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Paperlogy';src:url('../fonts/Paperlogy-7Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  --page:#06070a; --card-d:#14161c; --card:#F7F7F7; --ink:#0a0b0d; --sub:#5b616e; --sub-d:#a8acb3;
+  --line-d:#22262e; --line:#e2e4e8; --blue:#0052FF; --blue-l:#4d8bff; --red:#E5322D;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:#fff;font-family:'Inter','Freesentation',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 16px 64px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+.brand{font-size:14px;color:var(--sub-d)}
+h1{font-family:'Paperlogy','Freesentation',sans-serif;font-weight:700;font-size:34px;line-height:1.2;margin:6px 0}
+.lead{color:var(--sub-d);margin:0;max-width:720px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-block;border:1px solid var(--line-d);border-radius:100px;padding:6px 14px;font-size:14px;color:var(--sub-d);text-decoration:none;background:transparent;cursor:pointer;font-family:inherit;transition:border-color .25s var(--ease),background .25s var(--ease),color .25s var(--ease)}
+.chip:hover{border-color:var(--blue-l);background:rgba(0,82,255,.14);color:#fff}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:20px;align-items:start}
+.grid>*{min-width:0}
+@media (max-width:960px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);color:var(--ink);border-radius:20px;padding:22px;position:sticky;top:16px}
+@media (max-width:960px){.panel{position:static}}
+.panel h2{font-family:'Paperlogy','Freesentation',sans-serif;font-size:20px;margin:0 0 4px}
+.hint{color:var(--sub);font-size:13px;margin:0 0 14px}
+fieldset{border:0;padding:0;margin:0 0 16px}
+legend{font-weight:700;font-size:14px;margin-bottom:8px;padding:0}
+select{font:inherit;font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
+select:focus{outline:2px solid var(--blue);outline-offset:1px}
+.seg{display:flex;background:#e9ebee;border-radius:100px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;border-radius:100px;padding:8px 6px;font:inherit;font-size:14px;color:var(--sub);cursor:pointer;transition:background .22s var(--ease),color .22s var(--ease)}
+.seg button.on{background:var(--ink);color:#fff}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.flags{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.flags label{display:flex;gap:6px;align-items:flex-start;font-size:14px}
+.flags label.off{opacity:.35}
+.flags input{margin-top:3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:12px;border-radius:100px;padding:2px 9px;background:#e9ebee;color:var(--sub)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:100px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
+.btn:hover{border-color:var(--blue)}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress */
+.prog{background:var(--card-d);border:1px solid var(--line-d);border-radius:20px;padding:18px 22px;margin-bottom:16px}
+.prog .big{font-size:15px;color:#e7e9ec}
+.prog .big b{color:var(--blue-l);font-size:22px}
+.bar{height:8px;background:#22262e;border-radius:100px;overflow:hidden;margin:10px 0 12px}
+.bar i{display:block;height:100%;background:var(--blue);width:0;transition:width .38s var(--ease)}
+.stagenav{display:flex;flex-wrap:wrap;gap:8px}
+.stagenav a{font-size:14px;color:var(--sub-d);text-decoration:none;border:1px solid var(--line-d);border-radius:100px;padding:5px 12px}
+.stagenav a.done{border-color:var(--blue);color:#fff}
+/* stages */
+section.stage{background:var(--card);color:var(--ink);border-radius:20px;padding:20px 22px;margin-bottom:16px}
+section.stage h2{font-family:'Paperlogy','Freesentation',sans-serif;font-size:22px;margin:0 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+section.stage h2 small{font-family:'Inter',sans-serif;font-size:14px;color:var(--sub);font-weight:600}
+h3.grp{font-size:14px;color:var(--sub);margin:16px 0 4px;font-weight:700}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{border-top:1px solid var(--line)}
+ul.items li:first-child{border-top:0}
+ul.items label{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;cursor:pointer}
+ul.items input{width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:var(--blue)}
+ul.items .txt{flex:1}
+ul.items li.on .txt{color:var(--sub);text-decoration:line-through;text-decoration-color:#b7bbc3}
+.o{font-size:11px;color:#8a8f99;white-space:nowrap;margin-left:6px}
+.new{font-size:11px;color:var(--blue);white-space:nowrap;margin-left:6px}
+.txt a{color:var(--blue)}
+.monitor{margin:10px 0 0 28px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px}
+.monitor b{display:block;margin-bottom:4px}
+.monitor code{font-family:'Inter',monospace;font-size:12px;word-break:break-all;color:var(--ink)}
+.monitor .warn{color:var(--red)}
+.empty{color:var(--sub);font-size:14px}
+footer{margin-top:28px;font-size:13px;color:var(--sub-d);border-top:1px solid var(--line-d);padding-top:16px}
+@media (max-width:640px){h1{font-size:28px}.panel{padding:18px 16px}section.stage{padding:18px 16px}.flags{grid-template-columns:1fr}}
+@media print{
+  body{background:#fff;color:#000}
+  .panel,.nav,.stagenav{display:none}
+  .grid{grid-template-columns:1fr}
+  .prog{background:#fff;color:#000;border-color:#ccc}.prog .big{color:#000}
+  section.stage{border:1px solid #ccc;break-inside:auto}
+  ul.items li{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<!-- 4&7 NEXT 입구 비밀번호 (build_site.py가 모든 페이지 body 맨 앞에 넣음. ../config.json = config.json 경로) -->
+<div id="g47" style="position:fixed;inset:0;z-index:2147483000;background:#0a0b0d;display:grid;place-items:center;font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif">
+  <form id="g47f" style="background:#fff;border:0;border-radius:24px;padding:28px 26px;width:min(340px,calc(100vw - 32px));box-shadow:0 6px 24px rgba(0,0,0,.06)">
+    <div style="font-weight:800;font-size:20px;color:#0a0b0d">4&amp;7 NEXT</div>
+    <div style="color:#5f6b66;font-size:14px;margin:6px 0 16px">팀 비밀번호를 넣어 주세요. 한 번 넣으면 이 기기에서 기억합니다.</div>
+    <input id="g47p" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #dee1e6;border-radius:12px;font-size:16px">
+    <button type="submit" style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:100px;background:#0052FF;color:#fff;font-size:15px;font-weight:700;cursor:pointer">들어가기</button>
+    <div id="g47m" style="color:#E5322D;font-size:13px;margin-top:8px;min-height:1em"></div>
+  </form>
+</div>
+<script>(function(){var K='team_pass',CFG='../config.json',g=document.getElementById('g47'),m=document.getElementById('g47m'),v='';
+try{v=localStorage.getItem(K)||''}catch(e){}
+function ep(){return fetch(CFG,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return String(j.endpoint||'').trim()}).catch(function(){return ''})}
+var dv='';try{dv=localStorage.getItem('g47dv')||'';if(!dv){dv=Math.random().toString(36).slice(2,10);localStorage.setItem('g47dv',dv)}}catch(e){}
+function check(p,k){var pg=(location.pathname.split('/').filter(Boolean).pop()||'hub')+(location.hash||'').slice(0,20);return ep().then(function(e){if(!e)return null;return fetch(e+'?action=passcheck&pass='+encodeURIComponent(p)+'&k='+(k||'auto')+'&pg='+encodeURIComponent(pg)+'&dv='+dv+'&r='+Date.now()).then(function(r){return r.json()}).then(function(j){return !!j.ok}).catch(function(){return null})})}
+if(v){g.style.display='none';check(v).then(function(ok){if(ok===false){try{localStorage.removeItem(K)}catch(e){}g.style.display='grid';m.textContent='비밀번호가 바뀌었어요. 다시 넣어 주세요.'}})}
+else setTimeout(function(){var i=document.getElementById('g47p');if(i)i.focus()},50);
+document.getElementById('g47f').addEventListener('submit',function(e){e.preventDefault();var p=document.getElementById('g47p').value.trim();if(!p)return;m.style.color='#5f6b66';m.textContent='확인 중…';
+  check(p,'new').then(function(ok){if(ok===false){m.style.color='#c0392b';m.textContent='비밀번호가 맞지 않아요.';return}
+    if(ok===null){m.style.color='#c0392b';m.textContent='연결하지 못했어요. 잠시 후 다시 시도해 주세요.';return}
+    try{localStorage.setItem(K,p)}catch(e){}g.style.display='none';try{location.reload()}catch(e){}})});
+})();</script>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <a class="brand" href="../index.html#uw" style="text-decoration:none;color:inherit">4&amp;7 NEXT 허브 · 재정심사 → 청약</a>
+      <h1>청약 체크리스트</h1>
+      <p class="lead">원수사·상품·계약 형태를 고르면 이번 청약에 해당하는 항목만 남습니다. 청약 전부터 제출 서류까지 차례대로 체크하세요.</p>
+    </div>
+    <div class="nav">
+      <a class="chip" href="uw-calc.html">재정심사 계산기</a>
+      <a class="chip" href="library.html">상품 자료실</a>
+        <a class="chip" href="../index.html#tool-ap">업체 분석 → 제안 준비</a>
+      <button class="chip" type="button" onclick="window.print()">인쇄 · PDF</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <form class="panel" id="f" onsubmit="return false" autocomplete="off">
+      <h2>이번 청약</h2>
+      <p class="hint">고객 정보는 넣지 않습니다. 체크 상태는 이 브라우저에만 남습니다.</p>
+
+      <fieldset>
+        <legend>원수사</legend>
+        <div class="seg" data-name="ins">
+          <button type="button" data-v="메트라이프" class="on">메트라이프</button>
+          <button type="button" data-v="KB라이프">KB라이프</button>
+          <button type="button" data-v="신한라이프">신한라이프</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>상품</legend>
+        <select id="product"></select>
+        <div class="tags" id="ptags"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>계약자</legend>
+        <div class="seg" data-name="contract">
+          <button type="button" data-v="corp" class="on">법인</button>
+          <button type="button" data-v="indiv">개인</button>
+          <button type="button" data-v="minor">미성년</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>해당하는 것</legend>
+        <div class="flags">
+          <label><input type="checkbox" id="simple"> 간편심사</label>
+          <label><input type="checkbox" id="diff"> 계약자 ≠ 피보험자</label>
+          <label data-corp><input type="checkbox" id="newCorp"> 설립 2년 미만</label>
+          <label data-corp><input type="checkbox" id="conv"> 법인전환</label>
+          <label><input type="checkbox" id="exam"> 건강진단 대상</label>
+          <label><input type="checkbox" id="esign"> 전자청약</label>
+          <label><input type="checkbox" id="card"> 카드 납입</label>
+          <label><input type="checkbox" id="foreign"> 외국인</label>
+        </div>
+      </fieldset>
+
+      <div class="btns">
+        <button type="button" class="btn" id="clear">체크 모두 지우기 (새 건 시작)</button>
+      </div>
+    </form>
+
+    <div>
+      <div class="prog">
+        <div class="big">이번 청약 <b id="pDone">0</b> / <span id="pAll">0</span> 완료</div>
+        <div class="bar"><i id="pBar"></i></div>
+        <div class="stagenav" id="snav"></div>
+      </div>
+      <div id="stages"></div>
+    </div>
+  </div>
+
+  <footer>
+    원본: 리치디바인 "전문직 FP의 청약 루틴" 점검표(2025-06-01, 78항목)에 메트·KB·신한 원수사 자료를 더했습니다. 한화 전용 항목은 뺐고, 판매중단 상품(KB 7년의약속 플러스)은 바꿨습니다.
+    "원본 N"은 원래 점검표 번호, "추가"는 이번에 원수사 자료에서 더한 항목입니다. 최종 서류 목록은 원수사 기준을 따릅니다.
+  </footer>
+</div>
+
+<script src="../uw/checklist-data.js"></script>
+<script>
+(function(){
+const D = window.CHECKLIST;
+const $ = id => document.getElementById(id);
+const KEY = 'checklist-v1';
+const FLAGS = ['simple','diff','newCorp','conv','exam','esign','card','foreign'];
+const cfg = { ins:'메트라이프', contract:'corp', product:null };
+let checks = {};
+
+const itemKey = it => it.s + '|' + it.t;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function product(){ return D.products.find(p => p.id === cfg.product) || D.products.find(p => p.ins === cfg.ins); }
+
+function context(){
+  const p = product();
+  const c = { ins:cfg.ins, contract:cfg.contract, kind:p.kind, fx:!!p.fx, variable:!!p.variable };
+  FLAGS.forEach(k => c[k] = $(k).checked);
+  if (c.contract !== 'corp'){ c.newCorp = false; c.conv = false; }
+  return c;
+}
+function match(it, c){
+  if (!it.if) return true;
+  for (const [k, v] of Object.entries(it.if)){
+    const have = c[k];
+    if (Array.isArray(v)){ if (!v.includes(have)) return false; }
+    else if (typeof v === 'boolean'){ if (!!have !== v) return false; }
+    else if (have !== v) return false;
+  }
+  return true;
+}
+
+function fillProducts(){
+  const sel = $('product');
+  const list = D.products.filter(p => p.ins === cfg.ins);
+  sel.innerHTML = list.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  if (!list.find(p => p.id === cfg.product)) cfg.product = list[0].id;
+  sel.value = cfg.product;
+}
+
+function syncControls(){
+  const p = product();
+  // 법인 전용 상품이면 개인·미성년 막기
+  document.querySelectorAll('.seg[data-name="contract"] button').forEach(b => {
+    b.disabled = !!p.corpOnly && b.dataset.v !== 'corp';
+  });
+  if (p.corpOnly && cfg.contract !== 'corp') setSeg('contract', 'corp');
+  document.querySelectorAll('[data-corp]').forEach(l => {
+    const off = cfg.contract !== 'corp';
+    l.classList.toggle('off', off);
+    l.querySelector('input').disabled = off;
+  });
+  const tags = [p.kind === 'ceo' ? '경영인정기' : '종신', p.fx ? '외화' : '원화', p.variable ? '변액' : null, p.corpOnly ? '법인 계약 전용' : null].filter(Boolean);
+  $('ptags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+}
+
+function monitorBox(c){
+  const p = product();
+  const files = (p.monitor || []).map(f => `<div><code>${esc(D.monitorBase + f)}</code></div>`).join('');
+  let h = `<div class="monitor"><b>이 상품의 모니터링 스크립트</b>${files || '<div class="warn">폴더에 해당 스크립트 없음</div>'}`;
+  if (p.monitorNote) h += `<div class="${p.monitor && p.monitor.length ? '' : 'warn'}" style="margin-top:4px">${esc(p.monitorNote)}</div>`;
+  if (c.diff){
+    const d = D.diffMonitor[cfg.ins];
+    h += `<div style="margin-top:6px"><b style="display:inline">계·피 상이 (피보험자용)</b> ${d ? `<code>${esc(D.monitorBase + d)}</code>` : '<span class="warn">폴더에 없음</span>'}</div>`;
+  }
+  return h + '</div>';
+}
+
+function render(){
+  syncControls();
+  const c = context();
+  let all = 0, done = 0;
+  const per = {};
+  const html = D.stages.map(st => {
+    const its = D.items.filter(it => it.s === st.id && match(it, c));
+    let sDone = 0;
+    const groups = [];
+    its.forEach(it => { let g = groups.find(x => x.g === it.g); if (!g) groups.push(g = {g:it.g, list:[]}); g.list.push(it); });
+    const body = groups.map(g => `<h3 class="grp">${esc(g.g)}</h3><ul class="items">${g.list.map(it => {
+      const k = itemKey(it); const on = !!checks[k]; if (on) sDone++;
+      let txt = esc(it.t);
+      if (it.link) txt += ` <a href="${it.link}">계산기 열기</a>`;
+      const badge = it.o ? `<span class="o">원본 ${it.o}</span>` : `<span class="new">추가</span>`;
+      return `<li class="${on?'on':''}"><label><input type="checkbox" data-k="${esc(k)}" ${on?'checked':''}><span class="txt">${txt}${badge}</span></label>${it.monitor ? monitorBox(c) : ''}</li>`;
+    }).join('')}</ul>`).join('');
+    all += its.length; done += sDone; per[st.id] = [sDone, its.length];
+    return `<section class="stage" id="st-${st.id}"><h2>${st.title}<small>${sDone} / ${its.length}</small></h2>${its.length ? body : '<p class="empty">해당 항목 없음</p>'}</section>`;
+  }).join('');
+  $('stages').innerHTML = html;
+  $('pDone').textContent = done; $('pAll').textContent = all;
+  $('pBar').style.width = all ? (done / all * 100) + '%' : '0';
+  $('snav').innerHTML = D.stages.map(st => { const [d, n] = per[st.id]; return `<a href="#st-${st.id}" class="${n && d === n ? 'done' : ''}">${st.title} ${d}/${n}</a>`; }).join('');
+  save();
+}
+
+function setSeg(name, v){
+  cfg[name] = v;
+  document.querySelectorAll(`.seg[data-name="${name}"] button`).forEach(b => b.classList.toggle('on', b.dataset.v === v));
+}
+function save(){
+  try{
+    const o = { cfg, checks, flags:{} };
+    FLAGS.forEach(k => o.flags[k] = $(k).checked);
+    localStorage.setItem(KEY, JSON.stringify(o));
+  }catch(e){}
+}
+function load(){
+  let o = null; try{ o = JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){}
+  // 주소로 넘어온 값이 있으면 우선 (계산기에서 연결할 때)
+  const q = new URLSearchParams(location.search);
+  if (o){ Object.assign(cfg, o.cfg || {}); checks = o.checks || {}; FLAGS.forEach(k => $(k).checked = !!(o.flags||{})[k]); }
+  if (q.get('ins')) cfg.ins = q.get('ins');
+  if (q.get('contract')) cfg.contract = q.get('contract');
+  ['simple','newCorp','conv'].forEach(k => { if (q.get(k) === '1') $(k).checked = true; });
+  if (!D.products.some(p => p.ins === cfg.ins)) cfg.ins = '메트라이프';
+  setSeg('ins', cfg.ins); setSeg('contract', cfg.contract);
+}
+
+/* 이벤트 */
+document.querySelectorAll('.seg').forEach(seg => seg.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  setSeg(seg.dataset.name, b.dataset.v);
+  if (seg.dataset.name === 'ins') fillProducts();
+  render();
+}));
+$('product').addEventListener('change', e => { cfg.product = e.target.value; render(); });
+FLAGS.forEach(k => $(k).addEventListener('change', render));
+$('stages').addEventListener('change', e => {
+  const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+  if (e.target.checked) checks[k] = 1; else delete checks[k];
+  render();
+});
+$('clear').addEventListener('click', () => { if (!Object.keys(checks).length || confirm('체크를 모두 지우고 새 건을 시작할까요?')) { checks = {}; render(); } });
+
+load(); fillProducts(); render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>경정기 시뮬레이터</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#14171c;--sub:#5b6472;--line:#e3e6eb;--acc:#1f3a68;--acc2:#3d6cb9;--good:#1b7f4b;--warn:#b5590e;--bad:#b42318;--chip:#eef2f8;--hl:#f2f6fd;--onacc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1218;--card:#171b23;--ink:#e8ebf0;--sub:#9aa3b2;--line:#2a303b;--acc:#8fb1ea;--acc2:#6f97dc;--good:#4cc38a;--warn:#f0a35e;--bad:#f97066;--chip:#1f2633;--hl:#1c2433;--onacc:#0f1218}}
+:root[data-theme="dark"]{--bg:#0f1218;--card:#171b23;--ink:#e8ebf0;--sub:#9aa3b2;--line:#2a303b;--acc:#8fb1ea;--acc2:#6f97dc;--good:#4cc38a;--warn:#f0a35e;--bad:#f97066;--chip:#1f2633;--hl:#1c2433;--onacc:#0f1218}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Malgun Gothic",sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:24px 16px 48px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--sub);font-weight:600}
+h1{margin:4px 0 0;font-size:26px;letter-spacing:-.02em}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--chip);color:var(--sub);white-space:nowrap}
+.badge.ok{color:var(--good)}.badge.warn{color:var(--warn)}.badge.bad{color:var(--bad)}.badge.est{color:var(--acc2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:end}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}
+label,.lbl{display:block;font-size:12px;color:var(--sub);font-weight:600;margin-bottom:6px}
+select,input[type=number]{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);font:inherit}
+input[type=range]{width:100%;accent-color:var(--acc2)}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{flex:1;padding:9px 6px;border:0;background:var(--card);color:var(--sub);font:inherit;font-weight:600;cursor:pointer}
+.seg button.on{background:var(--acc);color:var(--onacc)}
+.inrow{display:flex;gap:6px;align-items:center}.inrow span{color:var(--sub);white-space:nowrap}
+.agebox{display:flex;gap:10px;align-items:center}.agebox input[type=number]{width:76px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:999px;padding:4px 10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.chip.on{background:var(--chip);color:var(--acc);border-color:var(--acc2)}
+.row2{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:900px){.row2{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.kpis{grid-template-columns:1fr}}
+.kpi .t{font-size:12px;color:var(--sub);font-weight:600}.kpi .v{font-size:21px;font-weight:700;margin-top:4px;letter-spacing:-.01em}.kpi .s{font-size:12px;color:var(--sub)}
+.tabs{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.tab{border:0;background:none;padding:8px 12px;border-radius:9px;font:inherit;font-weight:700;color:var(--sub);cursor:pointer}
+.tab.on{background:var(--chip);color:var(--acc)}
+.tbl-wrap{overflow-x:auto;margin:0 -18px;padding:0 18px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-size:12px;color:var(--sub);font-weight:600;cursor:pointer;user-select:none}
+th.l,td.l{text-align:left}th.sorted{color:var(--acc)}
+#tbl tbody tr{cursor:pointer}#tbl tbody tr:hover{background:var(--hl)}
+tr.sel{background:var(--hl)}tr.dim td{opacity:.45}tr.cur td{background:var(--hl);font-weight:700}
+.pname{font-weight:600}.pco{font-size:12px;color:var(--sub)}
+.best{color:var(--good);font-weight:700}
+i.e{font-style:normal;color:var(--acc2)}
+.sec-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.sec-h h2{font-size:16px;margin:0}
+.muted{color:var(--sub);font-size:12px}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+@media(max-width:900px){.detail{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}.facts dt{color:var(--sub)}.facts dd{margin:0}
+.uwout{font-size:13px;line-height:1.7}.uwout b{font-size:15px}
+ul.tight{margin:6px 0 0;padding-left:18px}ul.tight li{margin:2px 0}
+.note{font-size:12px;color:var(--sub);margin-top:18px;line-height:1.7}.note b{color:var(--ink)}
+.mt{margin-top:14px}
+details summary{cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<!-- 4&7 NEXT 입구 비밀번호 (build_site.py가 모든 페이지 body 맨 앞에 넣음. ../config.json = config.json 경로) -->
+<div id="g47" style="position:fixed;inset:0;z-index:2147483000;background:#0a0b0d;display:grid;place-items:center;font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif">
+  <form id="g47f" style="background:#fff;border:0;border-radius:24px;padding:28px 26px;width:min(340px,calc(100vw - 32px));box-shadow:0 6px 24px rgba(0,0,0,.06)">
+    <div style="font-weight:800;font-size:20px;color:#0a0b0d">4&amp;7 NEXT</div>
+    <div style="color:#5f6b66;font-size:14px;margin:6px 0 16px">팀 비밀번호를 넣어 주세요. 한 번 넣으면 이 기기에서 기억합니다.</div>
+    <input id="g47p" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #dee1e6;border-radius:12px;font-size:16px">
+    <button type="submit" style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:100px;background:#0052FF;color:#fff;font-size:15px;font-weight:700;cursor:pointer">들어가기</button>
+    <div id="g47m" style="color:#E5322D;font-size:13px;margin-top:8px;min-height:1em"></div>
+  </form>
+</div>
+<script>(function(){var K='team_pass',CFG='../config.json',g=document.getElementById('g47'),m=document.getElementById('g47m'),v='';
+try{v=localStorage.getItem(K)||''}catch(e){}
+function ep(){return fetch(CFG,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return String(j.endpoint||'').trim()}).catch(function(){return ''})}
+var dv='';try{dv=localStorage.getItem('g47dv')||'';if(!dv){dv=Math.random().toString(36).slice(2,10);localStorage.setItem('g47dv',dv)}}catch(e){}
+function check(p,k){var pg=(location.pathname.split('/').filter(Boolean).pop()||'hub')+(location.hash||'').slice(0,20);return ep().then(function(e){if(!e)return null;return fetch(e+'?action=passcheck&pass='+encodeURIComponent(p)+'&k='+(k||'auto')+'&pg='+encodeURIComponent(pg)+'&dv='+dv+'&r='+Date.now()).then(function(r){return r.json()}).then(function(j){return !!j.ok}).catch(function(){return null})})}
+if(v){g.style.display='none';check(v).then(function(ok){if(ok===false){try{localStorage.removeItem(K)}catch(e){}g.style.display='grid';m.textContent='비밀번호가 바뀌었어요. 다시 넣어 주세요.'}})}
+else setTimeout(function(){var i=document.getElementById('g47p');if(i)i.focus()},50);
+document.getElementById('g47f').addEventListener('submit',function(e){e.preventDefault();var p=document.getElementById('g47p').value.trim();if(!p)return;m.style.color='#5f6b66';m.textContent='확인 중…';
+  check(p,'new').then(function(ok){if(ok===false){m.style.color='#c0392b';m.textContent='비밀번호가 맞지 않아요.';return}
+    if(ok===null){m.style.color='#c0392b';m.textContent='연결하지 못했어요. 잠시 후 다시 시도해 주세요.';return}
+    try{localStorage.setItem(K,p)}catch(e){}g.style.display='none';try{location.reload()}catch(e){}})});
+})();</script>
+
+<div class="wrap">
+<header>
+  <div><div class="eyebrow">4&7 NEXT · DEMO v1</div><h1>경영인정기보험 시뮬레이터</h1></div>
+  <div class="muted" id="srcline"></div>
+</header>
+
+<section class="card">
+  <div class="grid">
+    <div>
+      <label>대표 나이</label>
+      <div class="agebox"><input id="ageR" type="range" min="20" max="75" value="45"><input id="ageN" type="number" min="20" max="75" value="45"></div>
+    </div>
+    <div><label>성별</label><div class="seg" id="sex"><button data-v="남" class="on">남</button><button data-v="여">여</button></div></div>
+    <div><label>심사유형</label><div class="seg" id="uw"><button data-v="일반" class="on">일반</button><button data-v="간편">간편</button></div></div>
+    <div><label>보기 방식</label><div class="seg" id="mode"><button data-v="bud" class="on">보험료 기준</button><button data-v="amt">가입금액 기준</button></div></div>
+    <div id="inAmt" hidden><label>가입금액</label><div class="inrow"><input id="amt" type="number" min="1" step="1" value="10"><span>억원</span></div></div>
+    <div id="inBud"><label>월 보험료</label><div class="inrow"><input id="bud" type="number" min="10" step="10" value="300"><span>만원</span></div>
+      <div class="chips" id="budChips" style="margin-top:6px"></div></div>
+    <div><label>순비용 기준 연도</label><select id="netY"></select></div>
+    <div><label>정렬 기준</label><select id="sortSel">
+      <option value="rN">기준 연도 환급률 높은 순</option><option value="nN">기준 연도 순비용 낮은 순</option>
+      <option value="prem">월 보험료 낮은 순</option><option value="rfN">기준 연도 해지환급금 큰 순</option><option value="amtx">가입금액 큰 순(예산 기준)</option><option value="co">보험사 이름순</option></select></div>
+    <div><label>&nbsp;</label><div class="seg" id="okOnly"><button data-v="all" class="on">전체 상품</button><button data-v="ok">가입 가능만</button></div></div>
+  </div>
+  <div class="row2">
+    <div><span class="lbl">비교 상품</span><div class="chips" id="pchips"></div></div>
+    <div><span class="lbl">표시할 경과년수</span><div class="chips" id="ychips"></div></div>
+    <div><span class="lbl">재정심사 참고</span><div class="seg" id="uwOn"><button data-v="off" class="on">끄기</button><button data-v="on">켜기</button></div></div>
+  </div>
+  <div id="uwPanel" class="mt" hidden>
+    <div class="grid">
+      <div><label>대표 연간소득</label><div class="inrow"><input id="inc" type="number" min="0" step="1000" value="20000"><span>만원</span></div></div>
+      <div><label>고객등급</label><div class="seg" id="grade"><button data-v="클래식" class="on">클래식↑</button><button data-v="일반">일반</button></div></div>
+      <div><label>기계약 사망보험금 합산</label><div class="inrow"><input id="prior" type="number" min="0" step="0.5" value="0"><span>억원</span></div></div>
+      <div><label>법인 설립 2년 미만</label><div class="seg" id="young"><button data-v="n" class="on">아니오</button><button data-v="y">예</button></div></div>
+    </div>
+    <div class="uwout mt" id="uwOut"></div>
+  </div>
+</section>
+
+<div class="kpis" id="kpis"></div>
+
+<section class="card">
+  <div class="tabs"><button class="tab on" data-t="cmp">상품 비교</button><button class="tab" data-t="age">나이별 보기</button><button class="tab" data-t="dsg">실제 설계서</button></div>
+
+  <div id="t-cmp">
+    <div class="sec-h"><span class="muted" id="cmpNote"></span><span class="muted">행을 누르면 상세 · 머리글로 정렬</span></div>
+    <div class="tbl-wrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+    <div id="detail" hidden class="mt">
+      <div class="sec-h"><h2 id="dTitle"></h2><span id="dBadges"></span></div>
+      <div class="detail">
+        <div><div class="muted">경과년수별 해지환급률</div><div id="chartY"></div></div>
+        <div><div class="muted">나이별 월 보험료 (점: 원자료, 점선: 추정)</div><div id="chartA"></div></div>
+      </div>
+      <div class="detail mt">
+        <div class="tbl-wrap"><table id="ytbl"><thead><tr><th class="l">경과</th><th>도달 나이</th><th>누적 납입</th><th>해지환급금</th><th>환급률</th><th>순비용</th><th class="l">전환</th></tr></thead><tbody></tbody></table></div>
+        <dl class="facts" id="facts"></dl>
+      </div>
+    </div>
+  </div>
+
+  <div id="t-age" hidden>
+    <div class="sec-h">
+      <div class="inrow"><span class="muted">표시 값</span>
+        <select id="ageMetric" style="width:auto"><option value="prem">월 보험료</option><option value="amtx">가입 가능 금액(예산 기준)</option><option value="rN">기준 연도 환급률</option><option value="nN">기준 연도 순비용</option></select>
+        <select id="ageStep" style="width:auto"><option value="5">5세 단위</option><option value="1">1세 단위</option></select>
+      </div>
+      <span class="muted">파란 글씨: 추정값 · 굵은 행: 현재 나이 · – : 가입 불가 또는 자료 없음</span>
+    </div>
+    <div class="tbl-wrap"><table id="atbl"><thead></thead><tbody></tbody></table></div>
+  </div>
+
+  <div id="t-dsg" hidden>
+    <div class="sec-h"><span class="muted">메트 달러 경정기 실제 가입설계서 (35세 남). 외부 비교 데이터 비교값과 별개인 확정 수치입니다.</span><span class="badge ok">확정 데이터</span></div>
+    <div class="tbl-wrap"><table id="dsg"><thead><tr><th class="l">심사</th><th>가입금액</th><th>월보험료</th><th>경과</th><th>누적 납입</th><th>해지환급금</th><th>환급률</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<div class="note">
+<b>이용 안내</b><br>
+· 내부 검토용 데모입니다. 고객에게 보여주는 수치는 반드시 실제 가입설계서로 확인하세요.<br>
+· 원자료: <span id="srcNote"></span>. 기준 나이는 남 40·50·60·70세, 여 40세입니다. <b>그 외 나이는 추정값</b>입니다. 원자료에 다른 나이가 없어 보간했습니다. 특히 65세 초과는 환급률이 급락하고 만기(90세) 영향이 커서, 35세 미만은 기준 나이 밖 연장이라 <b>신뢰도가 낮습니다</b>. 정확한 값은 보험사 설계 전산의 나이별 가입설계서로 확인하세요.<br>
+· 추정 방법: 보험료는 인접한 기준 나이 사이를 로그 보간(40세 미만·70세 초과는 가장 가까운 두 기준 나이의 추세로 연장), 환급률은 같은 경과년수끼리 선형 보간. 여성은 40세에서 측정한 여/남 비율과 차이를 다른 나이에 적용합니다.<br>
+· 도달 나이가 90세(만기)면 환급률 0%(만기환급금 없음), 90세를 넘는 경과년수는 표시하지 않습니다. 기준 나이 중 한쪽이 만기에 걸려 보간 근거가 없으면 "–"로 둡니다.<br>
+· 가입금액·예산을 바꾸면 1억 기준 보험료를 비례 환산합니다. 상품 최대한도는 재정심사 한도가 아닙니다.<br>
+· 재정심사 참고는 신한 세븐플러스(종신 계열) 26.07 기준이며 경정기 기준이 아닙니다. 보험사별 경정기 기준이 확보되면 교체합니다.<br>
+· 메트 The Classic 전환 조건 (사업방법서 확정): 종신전환은 7년 이상 정상 유지 후 전부 해지하고 해약환급금을 종신 보험료로 일시납(전환시점 보험나이·기초율 적용, 해약환급금 발생, 세무 처리는 세무사 검토 사항). 연금전환은 7년 경과 + 해약환급금 1,000만원 이상(달러연금전환은 1만달러 이상). 조기전환은 36회 이상 납입 + 폐업·3개월 이상 입원·대표이사 변경·최대주주 변경 중 하나. 계약자는 법인, 피보험자는 재직 CEO·등기임원. 감액완납은 약관상 5년 경과 + 회사 승낙<br>
+· <b>세무 처리</b>: 손금·익금·명의변경 평가 등은 세무사 검토 사항입니다.<br>
+· 달러 상품은 1,400원/$로 환산했습니다.
+</div>
+</div>
+
+<script>
+const D={"prods": {"MGR-DB": {"co": "DB생명", "name": "경영인정기보험", "ageG": [25, 70], "ageS": [25, 70], "limG": 2500000000.0, "limS": 1200000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신/연금", "refundType": "저해약형", "cur": "KRW", "extra": "가능", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:5%체증형, 10%체증형 / 간편:5%체증형, 10%체증형", "note": null, "since": "2601"}, "MGR-KDB": {"co": "KDB생명", "name": "CEO프리미엄정기보험", "ageG": [20, 75], "ageS": [30, 75], "limG": 2000000000.0, "limS": 2000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신/연금/적립", "refundType": "보증형", "cur": "KRW", "extra": "-", "withdraw": "기본:불가/추가납입분:-", "step": "일반:기본형, 10%체증형 / 간편:기본형, 10%체증형", "note": null, "since": "2601"}, "MGR-METLIFE-USD": {"co": "MetLife생명", "name": "The Classic 달러경영인정기보험", "ageG": [20, 70], "ageS": [30, 75], "limG": 7000000000.0, "limS": 2800000000.0, "waiver": "일반:- / 간편:-", "conv": "종신/연금/감액(5년후)/기타:조기계약전환", "refundType": "저해약형", "cur": "USD", "extra": "가능", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": "달러 한도는 1400원/$ 환산", "since": "2601", "convRule": {"wholeY": 7, "annY": 7, "annMin": 10000000.0, "usdAnnMin": 14000000.0, "earlyY": 3}}, "MGR-METLIFE-KRW": {"co": "MetLife생명", "name": "The Classic 경영인정기보험", "ageG": [20, 70], "ageS": [30, 75], "limG": 5000000000.0, "limS": 3000000000.0, "waiver": "일반:- / 간편:-", "conv": "종신/연금/감액(5년후)/기타:조기계약전환", "refundType": "저해약형", "cur": "KRW", "extra": "가능", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2504", "limS65": 2000000000.0, "limNote": "간편 한도: 상품요약서 기준 30억(65세 초과 20억). 외부 비교 데이터 표기 20억과 다름", "convRule": {"wholeY": 7, "annY": 7, "annMin": 10000000.0, "usdAnnMin": null, "earlyY": 3}}, "MGR-NH": {"co": "NH농협생명", "name": "행복한NH 경영인정기보험", "ageG": [18, 70], "ageS": [20, 70], "limG": 2500000000.0, "limS": 2500000000.0, "waiver": "일반:- / 간편:-", "conv": "연금/적립/감액(5년후)", "refundType": "저해약형", "cur": "KRW", "extra": "가능", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:5%체증형, 10%체증형 / 간편:5%체증형, 10%체증형", "note": null, "since": "2601"}, "MGR-KYOBO": {"co": "교보생명", "name": "경영인정기보험", "ageG": [22, 70], "ageS": [22, 70], "limG": 3000000000.0, "limS": 2000000000.0, "waiver": "일반:- / 간편:-", "conv": "연금/적립", "refundType": "저해약형", "cur": "KRW", "extra": "가능", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:5%체증형, 10%체증형 / 간편:5%체증형, 10%체증형", "note": null, "since": "2501"}, "MGR-SAMSUNG": {"co": "삼성생명", "name": "CEO보장보험", "ageG": [20, 75], "ageS": [30, 70], "limG": 5000000000.0, "limS": 5000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "연금/적립", "refundType": "저해약형", "cur": "KRW", "extra": "-", "withdraw": "기본:-/추가납입분:-", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2601"}, "MGR-FUBON": {"co": "푸본현대", "name": "MAX경영인정기탑픽Ⅱ", "ageG": [25, 70], "ageS": [31, 70], "limG": 4000000000.0, "limS": 3000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신(가능(일반))/연금", "refundType": "저해약형", "cur": "KRW", "extra": "-", "withdraw": "기본:-/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2609"}, "MGR-SHINHAN": {"co": "신한라이프", "name": "위너스경영인정기보험", "ageG": [25, 75], "ageS": [30, 75], "limG": 5000000000.0, "limS": 3000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신/연금/적립", "refundType": "저해약형", "cur": "KRW", "extra": "-", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2505"}, "MGR-KB": {"co": "KB라이프", "name": "경영인정기보험Ⅲ", "ageG": [23, 70], "ageS": [30, 70], "limG": 5000000000.0, "limS": 3000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신/연금/감액", "refundType": "저해약형", "cur": "KRW", "extra": "불가", "withdraw": "기본:유지보너스/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2506", "limNote": "일반 한도: 같은 달 자료에서 999억/50억 상충. 보수적으로 50억 적용, 확정 안내 금지"}, "MGR-HANWHA": {"co": "한화생명", "name": "경영인H 정기보험", "ageG": [24, 75], "ageS": [24, 75], "limG": 6000000000.0, "limS": 3000000000.0, "waiver": "일반:합산50% / 간편:재해50%", "conv": "종신/연금/적립/기타:연장형계약", "refundType": "저해약형", "cur": "KRW", "extra": "불가", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:5%체증형, 10%체증형 / 간편:5%체증형, 10%체증형", "note": null, "since": "2604"}, "MGR-MIRAE": {"co": "미래에셋생명", "name": "경영인을위한 정기보험", "ageG": [24, 70], "ageS": [30, 70], "limG": 3000000000.0, "limS": 2000000000.0, "waiver": "일반:재해50% / 간편:재해50%", "conv": "종신/연금", "refundType": "저해약형", "cur": "KRW", "extra": "-", "withdraw": "기본:불가/추가납입분:가능", "step": "일반:10%체증형 / 간편:10%체증형", "note": null, "since": "2601"}, "MGR-KDB-VIP": {"co": "KDB생명", "name": "VIP경영인정기보험", "ageG": null, "ageS": null, "limG": null, "limS": null, "waiver": null, "conv": null, "refundType": null, "cur": "KRW", "extra": null, "withdraw": null, "step": "10%체증형", "note": "상품개요 미수록. 간편 70세 비교에만 등장", "since": null}}, "anchors": {"남|일반": {"MGR-FUBON": [{"age": 40, "base": 100000000.0, "per1": 412000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 85.6, "7": 92.2, "10": 95.8, "20": 95.6, "30": 94.4, "40": 79.9}}, {"age": 50, "base": 100000000.0, "per1": 422000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.7, "7": 90.6, "10": 94.0, "20": 91.3, "30": 77.0, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 428000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.8, "7": 85.6, "10": 88.2, "20": 74.2, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 443000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 65.4, "7": 67.2, "10": 65.3, "20": 0.0}}], "MGR-METLIFE-USD": [{"age": 40, "base": 140000000.0, "per1": 368000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 82.3, "7": 89.6, "10": 94.9, "20": 91.8, "30": 89.4, "40": 74.6}}, {"age": 50, "base": 140000000.0, "per1": 369000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 81.5, "7": 88.2, "10": 93.3, "20": 87.8, "30": 72.8, "40": 0.0}}, {"age": 60, "base": 140000000.0, "per1": 365000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 77.3, "7": 82.9, "10": 87.2, "20": 70.9, "30": 0.0}}, {"age": 70, "base": 140000000.0, "per1": 367000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 60.9, "7": 63.2, "10": 62.7, "20": 0.0}}], "MGR-SHINHAN": [{"age": 40, "base": 100000000.0, "per1": 406700.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 86.2, "7": 90.2, "10": 93.7, "20": 94.0, "30": 92.9, "40": 78.7}}, {"age": 50, "base": 100000000.0, "per1": 417200.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 84.7, "7": 88.5, "10": 91.8, "20": 89.6, "30": 75.7, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 424700.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 80.1, "7": 83.3, "10": 85.8, "20": 72.5, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 438600.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 65.0, "7": 65.6, "10": 63.8, "20": 0.0}}], "MGR-NH": [{"age": 40, "base": 100000000.0, "per1": 483000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 82.4, "7": 89.6, "10": 93.5, "20": 93.7, "30": 93.5, "40": 81.6}}, {"age": 50, "base": 100000000.0, "per1": 491000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 81.9, "7": 88.4, "10": 92.2, "20": 90.5, "30": 78.7, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 495000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 78.3, "7": 83.6, "10": 86.9, "20": 75.3, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 512000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 62.5, "7": 65.0, "10": 64.3, "20": 0.0}}], "MGR-KB": [{"age": 40, "base": 100000000.0, "per1": 479000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 83.0, "7": 89.3, "10": 93.1, "20": 92.7, "30": 92.2, "40": 79.5}}, {"age": 50, "base": 100000000.0, "per1": 499000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 80.1, "7": 86.6, "10": 90.2, "20": 88.0, "30": 75.5, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 519000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 74.3, "7": 80.7, "10": 83.7, "20": 71.2, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 560000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 57.8, "7": 61.5, "10": 60.5, "20": 0.0}}], "MGR-DB": [{"age": 40, "base": 100000000.0, "per1": 456900.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.4, "7": 88.7, "10": 92.2, "20": 92.0, "30": 90.6, "40": 77.2}}, {"age": 50, "base": 100000000.0, "per1": 468500.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 83.3, "7": 87.0, "10": 90.3, "20": 87.6, "30": 74.4, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 477000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.4, "7": 81.5, "10": 84.1, "20": 71.4, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 493600.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 64.3, "7": 64.6, "10": 63.0, "20": 0.0}}], "MGR-HANWHA": [{"age": 40, "base": 100000000.0, "per1": 409000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 85.3, "7": 90.5, "10": 91.0, "20": 93.3, "30": 93.0, "40": 79.3}}, {"age": 50, "base": 100000000.0, "per1": 420000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.6, "7": 88.9, "10": 89.3, "20": 89.2, "30": 76.1, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 430000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.7, "7": 83.9, "10": 83.8, "20": 72.4, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 451000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 65.4, "7": 66.0, "10": 62.0, "20": 0.0}}], "MGR-KDB": [{"age": 40, "base": 100000000.0, "per1": 462000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.2, "7": 88.7, "10": 91.0, "20": 92.5, "30": 92.0, "40": 75.9}}, {"age": 50, "base": 100000000.0, "per1": 520000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.4, "7": 86.7, "10": 89.0, "20": 88.9, "30": 76.9, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 540000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 73.7, "7": 81.5, "10": 83.2, "20": 72.5, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 583000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 59.1, "7": 62.2, "10": 60.9, "20": 0.0}}], "MGR-METLIFE-KRW": [{"age": 40, "base": 100000000.0, "per1": 367000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.9, "7": 87.2, "10": 90.6, "20": 90.2, "30": 88.8, "40": 74.5}}, {"age": 50, "base": 100000000.0, "per1": 370000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.0, "7": 85.7, "10": 88.9, "20": 86.2, "30": 72.1, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 368000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 76.0, "7": 80.6, "10": 83.1, "20": 69.4, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 370000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 60.5, "7": 62.1, "10": 60.3, "20": 0.0}}], "MGR-MIRAE": [{"age": 40, "base": 100000000.0, "per1": 430000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.7, "7": 86.1, "10": 89.4, "20": 89.7, "30": 89.3, "40": 78.6}}, {"age": 50, "base": 100000000.0, "per1": 438000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.4, "7": 85.0, "10": 88.3, "20": 86.2, "30": 75.7, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 442000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 75.3, "7": 80.4, "10": 82.8, "20": 72.4, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 450000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 60.8, "7": 64.1, "10": 63.6, "20": 0.0}}], "MGR-KYOBO": [{"age": 40, "base": 100000000.0, "per1": 454000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.2, "7": 86.0, "10": 87.6, "20": 92.9, "30": 95.3, "40": 84.7}}, {"age": 50, "base": 100000000.0, "per1": 511000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 84.3, "7": 85.0, "10": 86.6, "20": 89.9, "30": 83.0, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 534000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 80.1, "7": 80.4, "10": 81.5, "20": 76.7, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 569000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 65.9, "7": 65.1, "10": 63.6, "20": 0.0}}], "MGR-SAMSUNG": [{"age": 40, "base": 100000000.0, "per1": 379000.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.4, "7": 85.0, "10": 87.3, "20": 88.6, "30": 87.0, "40": 69.9}}, {"age": 50, "base": 100000000.0, "per1": 420200.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.4, "7": 84.1, "10": 86.2, "20": 85.2, "30": 71.9, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 429300.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 74.5, "7": 79.0, "10": 80.3, "20": 68.5, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 452600.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 59.1, "7": 60.8, "10": 58.5, "20": 0.0}}]}, "남|간편": {"MGR-FUBON": [{"age": 40, "base": 100000000.0, "per1": 574000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 86.0, "7": 92.2, "10": 96.0, "20": 96.4, "30": 96.7, "40": 86.0}}, {"age": 50, "base": 100000000.0, "per1": 587000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 85.0, "7": 90.8, "10": 94.5, "20": 93.4, "30": 82.7, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 599000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.6, "7": 85.4, "10": 88.8, "20": 78.6, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 638000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 62.9, "7": 65.0, "10": 65.0, "20": 0.0}}], "MGR-KB": [{"age": 40, "base": 100000000.0, "per1": 562000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 84.5, "7": 90.7, "10": 94.5, "20": 94.0, "30": 93.2, "40": 81.3}}, {"age": 50, "base": 100000000.0, "per1": 583000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 81.4, "7": 87.5, "10": 91.1, "20": 88.7, "30": 77.0, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 606000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 74.0, "7": 79.7, "10": 82.8, "20": 71.7, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 644000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 58.1, "7": 60.7, "10": 59.9, "20": 0.0}}], "MGR-NH": [{"age": 40, "base": 100000000.0, "per1": 556000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 83.2, "7": 90.2, "10": 94.1, "20": 94.3, "30": 93.8, "40": 83.0}}, {"age": 50, "base": 100000000.0, "per1": 567000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 83.0, "7": 89.1, "10": 92.8, "20": 90.7, "30": 80.0, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 577000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 78.4, "7": 83.2, "10": 86.4, "20": 76.1, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 599000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 64.8, "7": 66.4, "10": 65.7, "20": 0.0}}], "MGR-METLIFE-USD": [{"age": 40, "base": 140000000.0, "per1": 445000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 81.0, "7": 88.0, "10": 93.2, "20": 90.0, "30": 87.2, "40": 73.4}}, {"age": 50, "base": 140000000.0, "per1": 447000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 80.5, "7": 86.7, "10": 91.6, "20": 85.7, "30": 71.6, "40": 0.0}}, {"age": 60, "base": 140000000.0, "per1": 445000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 75.7, "7": 80.6, "10": 84.6, "20": 69.5, "30": 0.0}}, {"age": 70, "base": 140000000.0, "per1": 443000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 62.4, "7": 63.7, "10": 63.1, "20": 0.0}}], "MGR-SHINHAN": [{"age": 40, "base": 100000000.0, "per1": 567400.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 84.8, "7": 89.0, "10": 92.4, "20": 93.1, "30": 92.3, "40": 78.9}}, {"age": 50, "base": 100000000.0, "per1": 585300.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 83.7, "7": 87.7, "10": 91.1, "20": 89.2, "30": 75.9, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 602500.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 80.1, "7": 82.9, "10": 85.3, "20": 72.6, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 641200.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 65.4, "7": 64.9, "10": 63.1, "20": 0.0}}], "MGR-DB": [{"age": 40, "base": 100000000.0, "per1": 613800.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.3, "7": 88.5, "10": 92.0, "20": 92.3, "30": 92.1, "40": 82.3}}, {"age": 50, "base": 100000000.0, "per1": 628800.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 83.4, "7": 87.0, "10": 90.4, "20": 88.9, "30": 79.1, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 640900.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.9, "7": 81.7, "10": 84.7, "20": 75.3, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 667400.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 66.1, "7": 65.7, "10": 65.0, "20": 0.0}}], "MGR-KDB": [{"age": 40, "base": 100000000.0, "per1": 519000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.8, "7": 89.1, "10": 91.5, "20": 92.8, "30": 91.4, "40": 75.0}}, {"age": 50, "base": 100000000.0, "per1": 574000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.4, "7": 86.8, "10": 89.0, "20": 88.3, "30": 76.6, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 589000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 72.9, "7": 80.2, "10": 81.9, "20": 71.8, "30": 0.0}}], "MGR-METLIFE-KRW": [{"age": 40, "base": 100000000.0, "per1": 440000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.4, "7": 86.4, "10": 89.7, "20": 89.3, "30": 87.4, "40": 74.0}}, {"age": 50, "base": 100000000.0, "per1": 444000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 79.9, "7": 85.1, "10": 88.1, "20": 84.9, "30": 71.6, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 440000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 75.3, "7": 79.2, "10": 81.4, "20": 68.8, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 444000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 62.3, "7": 62.9, "10": 61.0, "20": 0.0}}], "MGR-MIRAE": [{"age": 40, "base": 100000000.0, "per1": 529000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 79.3, "7": 86.4, "10": 89.7, "20": 90.0, "30": 89.1, "40": 79.1}}, {"age": 50, "base": 100000000.0, "per1": 541000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.9, "7": 85.1, "10": 88.3, "20": 85.9, "30": 76.0, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 551000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 74.8, "7": 79.3, "10": 81.6, "20": 72.2, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 565000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 61.8, "7": 64.2, "10": 63.6, "20": 0.0}}], "MGR-HANWHA": [{"age": 40, "base": 100000000.0, "per1": 551000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.2, "7": 88.9, "10": 89.5, "20": 92.4, "30": 93.5, "40": 83.0}}, {"age": 50, "base": 100000000.0, "per1": 565000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.2, "7": 88.1, "10": 88.5, "20": 89.6, "30": 79.5, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 577000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 81.1, "7": 83.9, "10": 83.9, "20": 75.2, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 606000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 66.7, "7": 66.4, "10": 63.2, "20": 0.0}}], "MGR-KYOBO": [{"age": 40, "base": 100000000.0, "per1": 553000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.6, "7": 86.3, "10": 87.8, "20": 93.5, "30": 96.6, "40": 88.2}}, {"age": 50, "base": 100000000.0, "per1": 620000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.0, "7": 85.7, "10": 87.3, "20": 91.2, "30": 86.7, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 656000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 81.2, "7": 81.3, "10": 82.5, "20": 79.7, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 715000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 68.8, "7": 67.3, "10": 66.0, "20": 0.0}}], "MGR-SAMSUNG": [{"age": 40, "base": 100000000.0, "per1": 533700.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.6, "7": 85.2, "10": 87.5, "20": 89.0, "30": 87.7, "40": 73.1}}, {"age": 50, "base": 100000000.0, "per1": 604600.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.3, "7": 83.9, "10": 86.2, "20": 85.8, "30": 75.6, "40": 0.0}}, {"age": 60, "base": 100000000.0, "per1": 620300.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 73.6, "7": 77.8, "10": 79.6, "20": 71.1, "30": 0.0}}, {"age": 70, "base": 100000000.0, "per1": 655100.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 58.9, "7": 60.3, "10": 59.1, "20": 0.0}}], "MGR-KDB-VIP": [{"age": 70, "base": 100000000.0, "per1": 617000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 59.5, "7": 62.3, "10": 60.0, "20": 0.0}}]}}, "grp3": {"일반": {"MGR-FUBON": {"남40": {"base": 300000000.0, "per1": 412000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 85.6, "7": 92.2, "10": 95.8, "20": 95.6, "30": 94.4, "40": 79.9}}, "여40": {"base": 300000000.0, "per1": 290000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 81.8, "7": 88.9, "10": 92.3, "20": 92.4, "30": 92.7, "40": 92.2}}}, "MGR-METLIFE-USD": {"남40": {"base": 420000000.0, "per1": 368000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 82.3, "7": 89.6, "10": 94.9, "20": 91.8, "30": 89.4, "40": 74.6}}, "여40": {"base": 420000000.0, "per1": 269000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 80.5, "7": 88.1, "10": 93.3, "20": 90.4, "30": 89.5, "40": 79.1}}}, "MGR-SHINHAN": {"남40": {"base": 300000000.0, "per1": 406700.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 86.2, "7": 90.2, "10": 93.7, "20": 94.0, "30": 92.5, "40": 78.7}}, "여40": {"base": 300000000.0, "per1": 318600.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 81.4, "7": 85.6, "10": 88.9, "20": 89.6, "30": 90.3, "40": 80.5}}}, "MGR-NH": {"남40": {"base": 300000000.0, "per1": 483000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 82.4, "7": 89.6, "10": 93.5, "20": 93.7, "30": 93.5, "40": 81.6}}, "여40": {"base": 300000000.0, "per1": 389000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 82.0, "7": 90.7, "10": 93.3, "20": 93.9, "30": 95.3, "40": 88.6}}}, "MGR-KB": {"남40": {"base": 300000000.0, "per1": 479000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 83.0, "7": 89.3, "10": 93.1, "20": 92.7, "30": 92.2, "40": 79.5}}, "여40": {"base": 300000000.0, "per1": 409000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 81.9, "7": 88.4, "10": 92.2, "20": 92.1, "30": 93.0, "40": 83.9}}}, "MGR-DB": {"남40": {"base": 300000000.0, "per1": 459000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.4, "7": 88.7, "10": 92.2, "20": 92.0, "30": 90.6, "40": 77.2}}, "여40": {"base": 300000000.0, "per1": 320900.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.4, "7": 88.8, "10": 92.3, "20": 92.6, "30": 93.1, "40": 82.8}}}, "MGR-KDB": {"남40": {"base": 300000000.0, "per1": 462000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.2, "7": 88.7, "10": 91.0, "20": 92.5, "30": 92.0, "40": 75.9}}, "여40": {"base": 300000000.0, "per1": 341000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 76.1, "7": 88.4, "10": 90.7, "20": 92.7, "30": 93.9, "40": 83.1}}}, "MGR-HANWHA": {"남40": {"base": 300000000.0, "per1": 409000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 85.3, "7": 90.5, "10": 91.0, "20": 93.3, "30": 93.0, "40": 79.3}}, "여40": {"base": 300000000.0, "per1": 278000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 83.8, "7": 89.6, "10": 90.1, "20": 92.7, "30": 93.8, "40": 83.2}}}, "MGR-METLIFE-KRW": {"남40": {"base": 300000000.0, "per1": 367000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.9, "7": 87.2, "10": 90.6, "20": 90.2, "30": 88.8, "40": 74.5}}, "여40": {"base": 300000000.0, "per1": 268000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 79.2, "7": 85.8, "10": 89.0, "20": 88.9, "30": 89.0, "40": 79.1}}}, "MGR-MIRAE": {"남40": {"base": 300000000.0, "per1": 430000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.7, "7": 86.1, "10": 89.4, "20": 89.7, "30": 89.3, "40": 78.6}}, "여40": {"base": 300000000.0, "per1": 251000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 77.6, "7": 85.5, "10": 88.7, "20": 88.7, "30": 89.0, "40": 79.5}}}, "MGR-KYOBO": {"남40": {"base": 300000000.0, "per1": 454000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.2, "7": 86.0, "10": 87.6, "20": 92.9, "30": 95.3, "40": 84.7}}, "여40": {"base": 300000000.0, "per1": 348000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 84.7, "7": 85.5, "10": 87.0, "20": 92.6, "30": 97.0, "40": 91.0}}}, "MGR-SAMSUNG": {"남40": {"base": 300000000.0, "per1": 379000.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.4, "7": 85.0, "10": 87.3, "20": 88.6, "30": 87.0, "40": 69.9}}, "여40": {"base": 300000000.0, "per1": 247100.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 75.6, "7": 82.5, "10": 84.7, "20": 85.9, "30": 85.4, "40": 72.1}}}}, "간편": {"MGR-FUBON": {"남40": {"base": 300000000.0, "per1": 574000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 86.0, "7": 92.2, "10": 96.0, "20": 96.4, "30": 96.7, "40": 86.0}}, "여40": {"base": 300000000.0, "per1": 452000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.6, "7": 91.2, "10": 94.9, "20": 95.4, "30": 96.8, "40": 88.9}}}, "MGR-KB": {"남40": {"base": 300000000.0, "per1": 562000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 84.5, "7": 90.7, "10": 94.5, "20": 94.0, "30": 93.2, "40": 81.3}}, "여40": {"base": 300000000.0, "per1": 494000.0, "rate": "2.7%, 10년후 1.0%", "y": {"5": 83.6, "7": 89.9, "10": 93.6, "20": 93.3, "30": 93.7, "40": 84.5}}}, "MGR-NH": {"남40": {"base": 300000000.0, "per1": 556000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 83.2, "7": 90.2, "10": 94.1, "20": 94.3, "30": 93.8, "40": 83.0}}, "여40": {"base": 300000000.0, "per1": 456000.0, "rate": "2.75%, 10년후 1.1%", "y": {"5": 82.7, "7": 90.0, "10": 93.9, "20": 94.2, "30": 95.3, "40": 88.4}}}, "MGR-METLIFE-USD": {"남40": {"base": 420000000.0, "per1": 445000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 81.0, "7": 88.0, "10": 93.2, "20": 90.0, "30": 87.2, "40": 73.4}}, "여40": {"base": 420000000.0, "per1": 333000.0, "rate": "3.75%, 10년후 1.0%", "y": {"5": 79.4, "7": 86.6, "10": 91.6, "20": 88.4, "30": 86.9, "40": 76.5}}}, "MGR-SHINHAN": {"남40": {"base": 300000000.0, "per1": 567400.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 84.8, "7": 89.0, "10": 92.4, "20": 93.1, "30": 92.3, "40": 78.9}}, "여40": {"base": 300000000.0, "per1": 453100.0, "rate": "2.5%, 10년후 1.1%", "y": {"5": 81.1, "7": 85.6, "10": 88.9, "20": 89.5, "30": 90.5, "40": 80.4}}}, "MGR-DB": {"남40": {"base": 300000000.0, "per1": 604800.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.3, "7": 88.5, "10": 92.0, "20": 92.3, "30": 92.1, "40": 82.3}}, "여40": {"base": 300000000.0, "per1": 470700.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.6, "7": 88.9, "10": 92.4, "20": 92.9, "30": 94.0, "40": 86.2}}}, "MGR-KDB": {"남40": {"base": 300000000.0, "per1": 519000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 77.8, "7": 89.1, "10": 91.5, "20": 92.8, "30": 91.4, "40": 75.0}}, "여40": {"base": 300000000.0, "per1": 404000.0, "rate": "1.75%, 10년후 1.0%", "y": {"5": 76.5, "7": 88.7, "10": 90.9, "20": 92.6, "30": 93.0, "40": 81.6}}}, "MGR-METLIFE-KRW": {"남40": {"base": 300000000.0, "per1": 440000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 80.4, "7": 86.4, "10": 89.7, "20": 89.3, "30": 87.4, "40": 74.0}}, "여40": {"base": 300000000.0, "per1": 328000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 79.0, "7": 85.3, "10": 88.5, "20": 88.0, "30": 87.4, "40": 77.3}}}, "MGR-HANWHA": {"남40": {"base": 300000000.0, "per1": 551000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 84.2, "7": 88.9, "10": 89.5, "20": 92.4, "30": 93.5, "40": 83.0}}, "여40": {"base": 300000000.0, "per1": 396000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 83.3, "7": 88.6, "10": 89.1, "20": 91.9, "30": 93.7, "40": 85.0}}}, "MGR-MIRAE": {"남40": {"base": 300000000.0, "per1": 529000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 79.3, "7": 86.4, "10": 89.7, "20": 90.0, "30": 89.1, "40": 79.1}}, "여40": {"base": 300000000.0, "per1": 328000.0, "rate": "2.5%, 10년후 1.0%", "y": {"5": 78.2, "7": 85.6, "10": 88.7, "20": 88.4, "30": 87.8, "40": 77.7}}}, "MGR-KYOBO": {"남40": {"base": 300000000.0, "per1": 553000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.6, "7": 86.3, "10": 87.8, "20": 93.5, "30": 96.6, "40": 88.2}}, "여40": {"base": 300000000.0, "per1": 448000.0, "rate": "2.25%, 15년후 1.5%", "y": {"5": 85.5, "7": 86.2, "10": 87.8, "20": 93.5, "30": 98.4, "40": 93.8}}}, "MGR-SAMSUNG": {"남40": {"base": 300000000.0, "per1": 553700.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 78.6, "7": 85.2, "10": 87.5, "20": 89.0, "30": 87.7, "40": 73.1}}, "여40": {"base": 300000000.0, "per1": 398400.0, "rate": "1.0%, 10년후 0.5%", "y": {"5": 77.4, "7": 84.4, "10": 86.6, "20": 87.9, "30": 87.6, "40": 75.5}}}}}, "design": [{"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 3, "rate": 36.18}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 5, "rate": 81.98}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 7, "rate": 89.65}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 10, "rate": 95.01}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 20, "rate": 92.38}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 30, "rate": 91.97}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 45, "rate": 75.68}, {"uw": "일반", "age": 35, "amt": 506800000.0, "prem": 1854888.0, "premUsd": 1324.92, "y": 54, "rate": 14.28}, {"uw": "간편", "age": 35, "amt": 420000000.0, "prem": 1856400.0, "premUsd": 1326.0, "y": 5, "rate": 80.73}, {"uw": "간편", "age": 35, "amt": 420000000.0, "prem": 1856400.0, "premUsd": 1326.0, "y": 7, "rate": 88.04}, {"uw": "간편", "age": 35, "amt": 420000000.0, "prem": 1856400.0, "premUsd": 1326.0, "y": 10, "rate": 93.29}], "uw": [{"id": "SHINHAN-SEVENPLUS-2607", "name": "신한라이프 세븐플러스 · 7~8월 썸머 신계약 재정심사 기준 (26.07)", "scope": "신한 세븐종신·모아더드림(종신 계열) 기준. 경정기 기준이 아니므로 참고용", "multiples": {"일반": [[39, 30], [49, 25], [59, 15], [200, 10]], "클래식": [[39, 35], [49, 30], [59, 20], [200, 15]]}, "promoAllClassic": true, "validity": "2026년 7~8월 썸머 신계약 청약분 한정 안내. 9월 이후 유효 여부 확인필요", "bands": ["모아더드림(비체증형): 기계약 합산 5억 이하 → 고지소득 심사 (재정질의서·소득서류 불필요)", "세븐종신(체증형): 기계약 합산 5억 이하 → 고지소득 심사 / 5억 초과 ~ 7억 이하 → 재정질의서 심사 (소득서류 불필요)", "법인 설립 2년 미만: 가입금액 5억 이하 & 월납 300만 이하 → 소득서류 불필요"], "notToDo": ["고지소득이 월납보험료 대비 부족 (예: 월납 100만 가입에 월소득 100만 고지)", "소득서류 제출 대상이 아닌데 셀프 제출 (제출 서류는 모두 검토 대상)", "고지소득의 신빙성 부족 (예: 직업 '주방보조'인데 월소득 2천 고지)", "동업사 합산한도 초과(50억): 특별승인 대상, 가입금액과 무관하게 소득서류 필요"], "source": ""}], "meta": {"src": "외부 비교 데이터 경영인정기 비교(2026.09)", "fx": 1400, "collected": "2026-10-04", "checked": "2026-10-12", "rateFiles": []}};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const YEARS=[5,7,10,20,30,40];
+const st={age:45,sex:'남',uw:'일반',mode:'bud',amt:10,bud:300,netY:10,sort:'rN',dir:1,okOnly:false,sel:null,tab:'cmp',
+  prods:new Set(Object.keys(D.prods)),years:new Set([5,7,10,20]),uwOn:false,inc:20000,grade:'클래식',prior:0,young:false,ageMetric:'prem',ageStep:5};
+const won=v=>v==null||isNaN(v)?'–':Math.round(v).toLocaleString('ko-KR');
+const eok=v=>{if(v==null||isNaN(v))return'–';const e=v/1e8;return (e>=10?e.toFixed(0):e.toFixed(1)).replace(/\.0$/,'')+'억'};
+const pct=v=>v==null||isNaN(v)?'–':v.toFixed(1)+'%';
+const E=(txt,est)=>est?`<i class="e">${txt}</i>`:txt;
+
+/* ---------- 추정 엔진 ---------- */
+function bracket(A,age){const n=A.length;if(age<=A[0].age)return[A[0],A[1]];if(age>=A[n-1].age)return[A[n-2],A[n-1]];for(let i=0;i<n-1;i++)if(age>=A[i].age&&age<=A[i+1].age)return[A[i],A[i+1]]}
+function validRate(a,y){const v=a.y[y];return v!=null&&v>0&&a.age+y<90}
+function maleAt(pid,uw,age){
+  const A=(D.anchors[`남|${uw}`]||{})[pid];if(!A)return null;
+  const ex=A.find(a=>a.age===age);if(ex)return{per1:ex.per1,y:{...ex.y},est:false,rate:ex.rate};
+  if(A.length<2)return null;
+  const[lo,hi]=bracket(A,age);const t=(age-lo.age)/(hi.age-lo.age);
+  const per1=Math.exp(Math.log(lo.per1)+t*(Math.log(hi.per1)-Math.log(lo.per1)));
+  const y={};
+  YEARS.forEach(yr=>{const reach=age+yr;if(reach>90)return;if(reach===90){y[yr]=0;return}
+    if(validRate(lo,yr)&&validRate(hi,yr)){y[yr]=Math.min(99.9,Math.max(0,lo.y[yr]+t*(hi.y[yr]-lo.y[yr])))}});
+  return{per1,y,est:true,rate:lo.rate};
+}
+function at(pid,sex,uw,age){
+  if(sex==='남')return maleAt(pid,uw,age);
+  const g=(D.grp3[uw]||{})[pid];if(!g||!g['여40']||!g['남40'])return null;
+  if(age===40)return{per1:g['여40'].per1,y:{...g['여40'].y},est:false,rate:g['여40'].rate};
+  const m=maleAt(pid,uw,age);if(!m)return null;
+  const ratio=g['여40'].per1/g['남40'].per1;const y={};
+  Object.entries(m.y).forEach(([yr,v])=>{yr=+yr;if(v===0){y[yr]=0;return}const f=g['여40'].y[yr],mm=g['남40'].y[yr];if(f!=null&&mm!=null&&f>0&&mm>0)y[yr]=Math.min(99.9,Math.max(0,v+(f-mm)))});
+  return{per1:m.per1*ratio,y,est:true,rate:m.rate};
+}
+function uwMultiple(age){const R=D.uw[0];const g=R.promoAllClassic&&st.grade==='일반'?st.grade:st.grade;const tb=R.multiples[g];for(const[mx,mul]of tb)if(age<=mx)return mul;return tb[tb.length-1][1]}
+function uwCap(age){return st.inc*1e4*uwMultiple(age)}
+
+function evalRow(pid,age){
+  const p=D.prods[pid];const d=at(pid,st.sex,st.uw,age);if(!d)return null;
+  const amt=st.mode==='amt'?st.amt*1e8:st.bud*1e4/d.per1*1e8;
+  const prem=st.mode==='amt'?d.per1*st.amt:st.bud*1e4;
+  const ar=st.uw==='일반'?p.ageG:p.ageS;let lim=st.uw==='일반'?p.limG:p.limS;if(st.uw==='간편'&&p.limS65&&age>65)lim=p.limS65;
+  const nt=p.limNote&&p.limNote.startsWith(st.uw)?p.limNote:'';
+  const ageOk=!ar||(age>=ar[0]&&age<=ar[1]);const limOk=!lim||amt<=lim;
+  const uwOk=!st.uwOn||(st.prior*1e8+amt)<=uwCap(age);
+  const cum=y=>prem*12*y,rf=y=>d.y[y]==null?null:cum(y)*d.y[y]/100,net=y=>d.y[y]==null?null:cum(y)-rf(y);
+  const low=d.est&&(age>65||age<35);
+  return{pid,p,d,amt,prem,lim,nt,ageOk,limOk,uwOk,low,ok:ageOk&&limOk,est:d.est,cum,rf,net,rN:d.y[st.netY],nN:net(st.netY),amtx:amt};
+}
+
+/* ---------- UI 바인딩 ---------- */
+$('#srcline').textContent=`${D.meta.src} · 수집 ${D.meta.collected} · 최근 확인 ${D.meta.checked||D.meta.collected} (매주 월요일 자동 확인)`;$('#srcNote').textContent=D.meta.src;
+$('#netY').innerHTML=[5,7,10,20].map(y=>`<option value="${y}" ${y===10?'selected':''}>${y}년</option>`).join('');
+function seg(id,fn){$$(`#${id} button`).forEach(b=>b.onclick=()=>{$$(`#${id} button`).forEach(x=>x.classList.toggle('on',x===b));fn(b.dataset.v);render()})}
+seg('sex',v=>st.sex=v);seg('uw',v=>st.uw=v);
+seg('mode',v=>{st.mode=v;$('#inAmt').hidden=v!=='amt';$('#inBud').hidden=v!=='bud'});
+seg('okOnly',v=>st.okOnly=v==='ok');
+seg('uwOn',v=>{st.uwOn=v==='on';$('#uwPanel').hidden=!st.uwOn});
+seg('grade',v=>st.grade=v);seg('young',v=>st.young=v==='y');
+const setAge=v=>{v=Math.max(20,Math.min(75,Math.round(+v||20)));st.age=v;$('#ageR').value=v;$('#ageN').value=v;render()};
+$('#ageR').oninput=e=>setAge(e.target.value);$('#ageN').onchange=e=>setAge(e.target.value);
+$('#budChips').innerHTML=[100,200,300,500,1000,2000].map(v=>`<button class="chip" data-b="${v}">${v>=1000?(v/1000)+'천':v}만</button>`).join('');
+$$('#budChips .chip').forEach(c=>c.onclick=()=>{st.bud=+c.dataset.b;$('#bud').value=st.bud;render()});
+$('#amt').oninput=e=>{st.amt=+e.target.value||0;render()};$('#bud').oninput=e=>{st.bud=+e.target.value||0;render()};
+$('#netY').onchange=e=>{st.netY=+e.target.value;render()};
+$('#sortSel').onchange=e=>{st.sort=e.target.value;st.dir=1;render()};
+$('#inc').oninput=e=>{st.inc=+e.target.value||0;render()};$('#prior').oninput=e=>{st.prior=+e.target.value||0;render()};
+$('#ageMetric').onchange=e=>{st.ageMetric=e.target.value;render()};$('#ageStep').onchange=e=>{st.ageStep=+e.target.value;render()};
+$$('.tab').forEach(t=>t.onclick=()=>{st.tab=t.dataset.t;$$('.tab').forEach(x=>x.classList.toggle('on',x===t));['cmp','age','dsg'].forEach(k=>$('#t-'+k).hidden=k!==st.tab)});
+$('#pchips').innerHTML=Object.entries(D.prods).map(([id,p])=>`<button class="chip on" data-id="${id}">${p.co.replace('생명','')}${p.cur==='USD'?'(USD)':''}${id.endsWith('VIP')?' VIP':''}</button>`).join('');
+$$('#pchips .chip').forEach(c=>c.onclick=()=>{const id=c.dataset.id;st.prods.has(id)?st.prods.delete(id):st.prods.add(id);c.classList.toggle('on');render()});
+$('#ychips').innerHTML=YEARS.map(y=>`<button class="chip ${st.years.has(y)?'on':''}" data-y="${y}">${y}년</button>`).join('');
+$$('#ychips .chip').forEach(c=>c.onclick=()=>{const y=+c.dataset.y;st.years.has(y)?st.years.delete(y):st.years.add(y);c.classList.toggle('on');render()});
+
+const SORTS={rfN:[r=>r.rf(st.netY),-1],cumN:[r=>r.prem,1],rN:[r=>r.rN,-1],nN:[r=>r.nN,1],prem:[r=>r.prem,1],amtx:[r=>r.amt,-1],co:[r=>r.p.co,1]};
+function sortRows(rs){const[f,d0]=SORTS[st.sort];const d=d0*st.dir;return rs.sort((a,b)=>{if(a.ok!==b.ok)return a.ok?-1:1;const x=f(a),y=f(b);if(x==null)return 1;if(y==null)return-1;return(x>y?1:x<y?-1:0)*d})}
+
+function render(){
+  const ids=[...st.prods];let rs=ids.map(id=>evalRow(id,st.age)).filter(Boolean);
+  if(st.okOnly)rs=rs.filter(r=>r.ok);sortRows(rs);
+  const ok=rs.filter(r=>r.ok);
+  const best=(f,better)=>ok.filter(r=>f(r)!=null).reduce((m,r)=>!m||better(f(r),f(m))?r:m,null);
+  const bR=best(r=>r.rN,(a,b)=>a>b),bN=best(r=>r.nN,(a,b)=>a<b),bP=best(r=>r.prem,(a,b)=>a<b),bA=best(r=>r.amt,(a,b)=>a>b);
+  const estAny=rs.some(r=>r.est);
+  $('#cmpNote').innerHTML=`${st.sex} ${st.age}세 · ${st.uw}심사 · ${st.mode==='amt'?st.amt+'억 가입':'월 보험료 '+st.bud.toLocaleString()+'만원 (연 '+(st.bud*12).toLocaleString()+'만원) → 상품별 가입금액'} ${estAny?'<span class="badge est">추정 포함</span>':'<span class="badge ok">원자료</span>'}${rs.some(r=>r.low)?' <span class="badge warn">추정 신뢰도 낮음 (35세 미만·65세 초과)</span>':''}`;
+  const k=[{t:`${st.netY}년 환급률 최고`,r:bR,v:bR&&E(pct(bR.rN),bR.est)},
+    st.mode==='amt'?{t:'최저 월 보험료',r:bP,v:bP&&E(won(bP.prem)+'원',bP.est)}:{t:'같은 보험료로 최대 가입금액',r:bA,v:bA&&E(eok(bA.amt),bA.est)},
+    {t:`${st.netY}년 순비용 최저`,r:bN,v:bN&&E(won(bN.nN)+'원',bN.est)},
+    {t:'가입 가능 상품',r:null,v:`${ok.length} / ${rs.length}`,s:st.uwOn?`재정심사 참고 한도 ${eok(uwCap(st.age))}`:'나이·상품 한도 기준'}];
+  $('#kpis').innerHTML=k.map(x=>`<div class="card kpi"><div class="t">${x.t}</div><div class="v">${x.v||'–'}</div><div class="s">${x.s||(x.r?x.r.p.co+' '+x.r.p.name:'해당 없음')}</div></div>`).join('');
+  const ys=YEARS.filter(y=>st.years.has(y));
+  const cols=[['co','상품',1],['prem','월 보험료'],['amtx','가입금액'],...ys.map(y=>['y'+y,y+'년']),['cumN',st.netY+'년 누적 납입'],['rfN',st.netY+'년 해지환급금'],['nN',st.netY+'년 순비용'],['lim','상품 최대한도'],['ok','상태',1]];
+  $('#tbl thead').innerHTML='<tr>'+cols.map(([k,t,l])=>`<th class="${l?'l':''} ${st.sort===k?'sorted':''}" data-k="${k}">${t}</th>`).join('')+'</tr>';
+  $$('#tbl th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(!SORTS[k])return;if(st.sort===k)st.dir*=-1;else{st.sort=k;st.dir=1}$('#sortSel').value=k;render()});
+  $('#tbl tbody').innerHTML=rs.map(r=>{
+    const b=o=>o&&o.pid===r.pid?'best':'';
+    const stt=!r.ageOk?'<span class="badge bad">나이 불가</span>':!r.limOk?'<span class="badge warn">한도 초과</span>':'<span class="badge ok">가능</span>';
+    const uwB=st.uwOn?(r.uwOk?'':' <span class="badge warn">재정 초과(참고)</span>'):'';
+    const yv=y=>{const v=r.d.y[y];return v===0?'<span class="muted">만기</span>':E(pct(v),r.est)};
+    return `<tr data-pid="${r.pid}" class="${st.sel===r.pid?'sel':''} ${r.ok?'':'dim'}">
+      <td class="l"><div class="pname">${r.p.name}${r.p.cur==='USD'?' <span class="badge">USD</span>':''}</div><div class="pco">${r.p.co}</div></td>
+      <td class="${st.mode==='amt'?b(bP):''}">${E(won(r.prem),r.est&&st.mode==='amt')}</td><td class="${st.mode==='bud'?b(bA):''}">${E(eok(r.amt),r.est&&st.mode==='bud')}</td>
+      ${ys.map(y=>`<td class="${y===st.netY?b(bR):''}">${yv(y)}</td>`).join('')}
+      <td>${won(r.cum(st.netY))}</td><td>${E(won(r.rf(st.netY)),r.est)}</td>
+      <td class="${b(bN)}">${E(won(r.nN),r.est)}</td>
+      <td title="${r.nt}">${r.lim?eok(r.lim):'–'}${r.nt?' <span class="badge warn">주의</span>':''}</td><td class="l">${stt}${uwB}</td></tr>`}).join('')||`<tr><td class="l muted" colspan="12">선택한 조건의 데이터가 없습니다.</td></tr>`;
+  $$('#tbl tbody tr[data-pid]').forEach(tr=>tr.onclick=()=>{st.sel=st.sel===tr.dataset.pid?null:tr.dataset.pid;render()});
+  detail(rs);ageTable();uwPanel();
+}
+
+function detail(rs){
+  const r=rs.find(x=>x.pid===st.sel);$('#detail').hidden=!r;if(!r)return;const p=r.p;
+  $('#dTitle').textContent=`${p.co} ${p.name}`;
+  $('#dBadges').innerHTML=(r.low?'<span class="badge warn">추정 신뢰도 낮음</span> ':'')+(r.est?'<span class="badge est">추정값</span> ':'<span class="badge ok">원자료</span> ')+(p.cur==='USD'?'<span class="badge warn">달러 · 환율 영향</span> ':'')+'<span class="badge">확인필요</span>';
+  $('#ytbl tbody').innerHTML=YEARS.filter(y=>st.age+y<=90).map(y=>{const v=r.d.y[y];return`<tr><td class="l">${y}년</td><td>${st.age+y}세</td><td>${won(r.cum(y))}</td><td>${E(won(r.rf(y)),r.est)}</td><td>${v===0?'0% <span class="badge">90세 만기</span>':E(pct(v),r.est)}</td><td>${E(won(r.net(y)),r.est)}</td><td class="l">${convB(r,y)}</td></tr>`}).join('');
+  const ar=st.uw==='일반'?p.ageG:p.ageS;
+  const f=[['사망보험금 (가입 시)',eok(r.amt)+(p.step&&/체증/.test(p.step)?' · 체증형은 경과에 따라 늘어남 (연도별 금액은 설계서 확인)':'')],['월 보험료',won(r.prem)+'원'],['연 보험료',won(r.prem*12)+'원'],['가입금액',eok(r.amt)],['1억당 월 보험료',won(r.d.per1)+'원'],['적용이율',r.d.rate],['가입나이',ar?ar.join('~')+'세':null],['상품 최대한도',(r.lim?eok(r.lim):'–')+' (재정심사 한도 아님)'],['한도 메모',r.nt],['체증형',p.step],['전환기능',p.conv],['납입면제',p.waiver],['추가납입',p.extra],['중도인출',p.withdraw],['해약환급금',p.refundType],['판매개시',p.since?'20'+p.since.slice(0,2)+'.'+p.since.slice(2):null]];
+  $('#facts').innerHTML=f.filter(x=>x[1]).map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('');
+  chartY(rs,r);chartA(r);
+}
+function convB(r,y){const c=r.p.convRule;if(!c)return'';if(r.d.y[y]==null)return'<span class="muted">자료 없음</span>';const rf=r.rf(y)||0;const b=[];
+  if(y>=c.wholeY)b.push('<span class="badge ok">종신전환 가능</span>');
+  if(y>=c.annY)b.push(rf>=c.annMin?'<span class="badge ok">연금전환 가능</span>':'<span class="badge warn">연금전환: 환급금 1천만 미만</span>');
+  if(c.usdAnnMin&&y>=c.annY)b.push(rf>=c.usdAnnMin?'<span class="badge ok">달러연금전환 가능</span>':'<span class="badge warn">달러연금: 1만달러 미만</span>');
+  if(y>=c.earlyY&&y<c.wholeY)b.push('<span class="badge">조기전환(사유 필요)</span>');return b.join(' ')}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function chartY(rs,sel){
+  const W=520,H=230,P={l:40,r:12,t:16,b:26};const ys=YEARS;
+  const x=y=>P.l+(ys.indexOf(y)/(ys.length-1))*(W-P.l-P.r),yv=v=>P.t+(1-v/110)*(H-P.t-P.b);
+  const line=(r,c,w,op)=>{const pts=ys.filter(y=>r.d.y[y]!=null).map(y=>`${x(y)},${yv(r.d.y[y])}`);return pts.length>1?`<polyline fill="none" stroke="${c}" stroke-width="${w}" opacity="${op}" stroke-linejoin="round" ${r.est?'stroke-dasharray="5 4"':''} points="${pts.join(' ')}"/>`:''};
+  let g='';[0,25,50,75,100].forEach(v=>g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${yv(v)}" y2="${yv(v)}" stroke="${css('--line')}"/><text x="${P.l-6}" y="${yv(v)+4}" text-anchor="end" font-size="11" fill="${css('--sub')}">${v}%</text>`);
+  ys.forEach(y=>g+=`<text x="${x(y)}" y="${H-6}" text-anchor="middle" font-size="11" fill="${css('--sub')}">${y}년</text>`);
+  rs.filter(r=>r!==sel).forEach(r=>g+=line(r,css('--sub'),1.2,.3));g+=line(sel,css('--acc2'),3,1);
+  ys.filter(y=>sel.d.y[y]!=null).forEach(y=>g+=`<circle cx="${x(y)}" cy="${yv(sel.d.y[y])}" r="4" fill="${css('--acc2')}"/><text x="${x(y)}" y="${yv(sel.d.y[y])-9}" text-anchor="middle" font-size="11" font-weight="600" fill="${css('--ink')}">${sel.d.y[y].toFixed(1)}</text>`);
+  $('#chartY').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="환급률 추이">${g}</svg>`;
+}
+function chartA(r){
+  const W=520,H=230,P={l:56,r:12,t:16,b:26};const ages=[];for(let a=20;a<=75;a++)ages.push(a);
+  const pts=ages.map(a=>{const d=at(r.pid,st.sex,st.uw,a);if(!d)return null;const prem=st.mode==='amt'?d.per1*st.amt:d.per1;return{a,v:prem,est:d.est}}).filter(Boolean);
+  if(!pts.length){$('#chartA').innerHTML='';return}
+  const vmin=Math.min(...pts.map(p=>p.v))*0.95,vmax=Math.max(...pts.map(p=>p.v))*1.05;
+  const x=a=>P.l+(a-20)/55*(W-P.l-P.r),y=v=>P.t+(1-(v-vmin)/(vmax-vmin))*(H-P.t-P.b);
+  const ar=st.uw==='일반'?r.p.ageG:r.p.ageS;let g='';
+  if(ar)g+=`<rect x="${x(Math.max(20,ar[0]))}" y="${P.t}" width="${x(Math.min(75,ar[1]))-x(Math.max(20,ar[0]))}" height="${H-P.t-P.b}" fill="${css('--chip')}"/>`;
+  [0,.5,1].forEach(t=>{const v=vmin+t*(vmax-vmin);g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="${css('--line')}"/><text x="${P.l-6}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="${css('--sub')}">${Math.round(v/1e4).toLocaleString()}만</text>`});
+  [20,30,40,50,60,70,75].forEach(a=>g+=`<text x="${x(a)}" y="${H-6}" text-anchor="middle" font-size="11" fill="${css('--sub')}">${a}세</text>`);
+  g+=`<polyline fill="none" stroke="${css('--acc2')}" stroke-width="2" stroke-dasharray="5 4" points="${pts.map(p=>`${x(p.a)},${y(p.v)}`).join(' ')}"/>`;
+  pts.filter(p=>!p.est).forEach(p=>g+=`<circle cx="${x(p.a)}" cy="${y(p.v)}" r="4.5" fill="${css('--acc2')}"/>`);
+  const cur=pts.find(p=>p.a===st.age);if(cur)g+=`<line x1="${x(cur.a)}" x2="${x(cur.a)}" y1="${P.t}" y2="${H-P.b}" stroke="${css('--warn')}" stroke-width="1.5"/><text x="${x(cur.a)+4}" y="${P.t+10}" font-size="11" font-weight="700" fill="${css('--warn')}">${cur.a}세 ${Math.round(cur.v/1e4).toLocaleString()}만</text>`;
+  $('#chartA').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="나이별 보험료">${g}</svg><div class="muted">${st.mode==='amt'?st.amt+'억 가입 기준':'1억당'} · 음영: 가입 가능 나이</div>`;
+}
+function ageTable(){
+  const ids=[...st.prods].filter(id=>at(id,st.sex,st.uw,40)||at(id,st.sex,st.uw,70));
+  const ages=[];for(let a=20;a<=75;a+=st.ageStep)ages.push(a);if(!ages.includes(st.age))ages.push(st.age);ages.sort((a,b)=>a-b);
+  const fmt={prem:r=>won(r.prem),amtx:r=>eok(r.amt),rN:r=>r.rN===0?'만기':pct(r.rN),nN:r=>won(r.nN)}[st.ageMetric];
+  $('#atbl thead').innerHTML='<tr><th class="l">나이</th>'+ids.map(id=>`<th>${D.prods[id].co.replace('생명','')}${D.prods[id].cur==='USD'?'(USD)':''}</th>`).join('')+'</tr>';
+  $('#atbl tbody').innerHTML=ages.map(a=>`<tr class="${a===st.age?'cur':''}"><td class="l">${a}세</td>${ids.map(id=>{const r=evalRow(id,a);if(!r||!r.ok)return'<td class="muted">–</td>';return`<td>${E(fmt(r),r.est)}</td>`}).join('')}</tr>`).join('');
+}
+function uwPanel(){
+  if(!st.uwOn)return;const R=D.uw[0];const mul=uwMultiple(st.age);const cap=uwCap(st.age);
+  const tot=st.prior*1e8+(st.mode==='amt'?st.amt*1e8:0);
+  let band='';const t=tot/1e8;
+  if(st.young)band='법인 설립 2년 미만: 가입금액 5억 이하 & 월납 300만 이하이면 소득서류 불필요';
+  else if(t<=5)band='기계약 합산 5억 이하: 고지소득으로 심사 (재정질의서·소득서류 불필요)';
+  else if(t<=7)band='5억 초과 ~ 7억 이하: 세븐종신은 재정질의서로 심사 (소득서류 불필요)';
+  else band='7억 초과: 기준표에 구간 없음. 소득서류 필요 여부 보험사 확인 [추정]';
+  $('#uwOut').innerHTML=`<div><span class="badge warn">유효기간 확인</span> ${R.validity}</div><div>${st.age}세 · ${st.grade}${R.promoAllClassic&&st.grade==='일반'?' (참고: 썸머 기간에는 전체 고객 클래식↑ 적용)':''} → 연간소득 × <b>${mul}배</b> = 인정 사망보험금 <b>${eok(cap)}</b></div>
+   <div>${st.mode==='amt'?`기계약 ${st.prior}억 + 이번 ${st.amt}억 = ${eok(tot)} → `+(tot<=cap?'<span class="badge ok">범위 내</span>':'<span class="badge bad">초과</span>'):'예산 기준 보기에서는 상품별 가입금액으로 비교 표에 표시합니다.'}</div>
+   <div>심사 구간: ${band}</div>
+   <details class="mt"><summary>기준 원문 요약 · 하지 말아야 할 것</summary><div class="muted">${R.name} · ${R.scope}</div><ul class="tight">${R.bands.map(b=>`<li>${b}</li>`).join('')}</ul><div class="muted mt">NOT TO DO</div><ul class="tight">${R.notToDo.map(b=>`<li>${b}</li>`).join('')}</ul></details>`;
+}
+$('#dsg tbody').innerHTML=D.design.map((d,i,a)=>{const f=i===0||a[i-1].uw!==d.uw;return`<tr><td class="l">${f?d.uw:''}</td><td>${f?eok(d.amt):''}</td><td>${f?won(d.prem)+'원<div class="pco">$'+(d.premUsd||0).toLocaleString('en-US')+'</div>':''}</td><td>${d.y}년</td><td>${won(d.prem*12*d.y)}</td><td>${won(d.prem*12*d.y*d.rate/100)}</td><td>${pct(d.rate)}</td></tr>`}).join('');
+/* 주소창 조건 받기: ?age=50&sex=남&uw=일반&amt=10 또는 &bud=300 */
+(function(){try{const q=new URLSearchParams(location.search);const clk=(id,v)=>{const b=document.querySelector(`#${id} button[data-v="${v}"]`);if(b)b.click()};
+  if(q.get('sex'))clk('sex',q.get('sex'));if(q.get('uw'))clk('uw',q.get('uw'));
+  if(q.get('bud')){clk('mode','bud');st.bud=+q.get('bud')||st.bud;$('#bud').value=st.bud}
+  else if(q.get('amt')){clk('mode','amt');st.amt=+q.get('amt')||st.amt;$('#amt').value=st.amt}
+  if(q.get('age')){const v=Math.max(20,Math.min(75,+q.get('age')||45));st.age=v;$('#ageR').value=v;$('#ageN').value=v}}catch(e){}})();
+render();
+</script>
+</body>
+</html>

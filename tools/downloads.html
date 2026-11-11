@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script src="embed.js"></script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상품 자료 받기 | 4&amp;7 NEXT</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-Variable.ttf') format('truetype');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Paperlogy';src:url('../fonts/Paperlogy-7Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  --page:#06070a; --card-d:#14161c; --card:#F7F7F7; --ink:#0a0b0d; --sub:#5b616e; --sub-d:#a8acb3;
+  --line-d:#22262e; --line:#e2e4e8; --blue:#0052FF; --blue-l:#4d8bff; --red:#E5322D;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:#fff;font-family:'Inter','Freesentation',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+.brand{font-size:14px;color:var(--sub-d)}
+h1{font-family:'Paperlogy','Freesentation',sans-serif;font-weight:700;font-size:34px;line-height:1.2;margin:6px 0}
+.lead{color:var(--sub-d);margin:0;max-width:640px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-block;border:1px solid var(--line-d);border-radius:100px;padding:6px 14px;font-size:14px;color:var(--sub-d);text-decoration:none;background:transparent;cursor:pointer;font-family:inherit;transition:border-color .25s var(--ease),background .25s var(--ease),color .25s var(--ease)}
+.chip:hover,.chip.on{border-color:var(--blue-l);background:rgba(0,82,255,.14);color:#fff}
+.chip .n{opacity:.7;margin-left:4px;font-size:12px}
+/* 찾기 */
+.find{position:sticky;top:0;z-index:5;background:var(--page);padding:10px 0 12px;margin-bottom:6px}
+.find input[type=search]{width:100%;min-width:0;font:inherit;font-size:16px;background:var(--card-d);color:#fff;border:1px solid var(--line-d);border-radius:14px;padding:12px 16px}
+.find input[type=search]:focus{outline:2px solid var(--blue);outline-offset:1px}
+.row2{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.row2 label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--sub-d);margin-left:auto}
+.count{font-size:13px;color:var(--sub-d);margin-top:8px}
+.msg{background:var(--card-d);border:1px solid var(--line-d);border-radius:14px;padding:16px 18px;color:#e7e9ec}
+/* 원수사 묶음 */
+section.ins{margin:18px 0 0}
+section.ins>h2{font-family:'Paperlogy','Freesentation',sans-serif;font-size:20px;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+section.ins>h2 i{width:10px;height:22px;border-radius:3px;background:var(--bar);display:inline-block}
+section.ins>h2 small{font-family:'Inter','Freesentation',sans-serif;font-size:13px;color:var(--sub-d);font-weight:400}
+details.prod{background:var(--card);color:var(--ink);border-radius:16px;margin:0 0 8px;border-left:5px solid var(--bar,#999);overflow:hidden}
+details.prod>summary{cursor:pointer;list-style:none;padding:13px 40px 13px 16px;position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-weight:700;font-size:16px}
+details.prod>summary::-webkit-details-marker{display:none}
+details.prod>summary::after{content:'+';position:absolute;right:16px;top:13px;color:var(--sub);font-weight:400;font-size:20px;line-height:1}
+details.prod[open]>summary::after{content:'−'}
+details.prod>summary .c{font-size:13px;font-weight:400;color:var(--sub)}
+details.prod>summary .sum{font-size:12.5px;font-weight:500;color:var(--blue);text-decoration:none;border:1px solid rgba(0,82,255,.3);border-radius:100px;padding:2px 10px;white-space:nowrap}
+details.prod>summary .sum:hover{background:rgba(0,82,255,.08)}
+details.prod.hit{box-shadow:0 0 0 3px var(--blue-l)}
+ul.files{list-style:none;margin:0;padding:0 16px 8px}
+ul.files li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;border-top:1px solid var(--line);padding:10px 0}
+.ft{font-size:14.5px;font-weight:600;line-height:1.4}
+.fm{font-size:12px;color:var(--sub);grid-column:1}
+.fm .exp{color:var(--red);font-weight:700}
+.fm .soon{color:#b45309;font-weight:700}
+.dt{display:inline-block;font-size:11px;border-radius:100px;padding:1px 8px;margin-right:6px;background:#e9ebee;color:var(--sub);font-weight:600;vertical-align:1px}
+.dt.cust{background:rgba(0,82,255,.1);color:var(--blue)}
+.dt.edu{background:#fdecea;color:#b42318}
+.acts{grid-row:1 / 3;grid-column:2;display:flex;gap:6px;align-items:center}
+.acts button{font:inherit;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:100px;padding:5px 12px;cursor:pointer;color:var(--sub);white-space:nowrap}
+.acts button.dl{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;padding:7px 16px}
+.acts button.dl:hover{filter:brightness(1.1)}
+.mg{display:none}.manage .mg{display:inline-block}
+/* 올리기 */
+.up{background:#fff;color:var(--ink);border-radius:18px;padding:16px 18px;margin:0 0 14px}
+.up h2{margin:0 0 4px;font-size:18px}.up .tl{font-size:13px;color:var(--sub);margin:0 0 10px}
+.tg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}.tg2>*{min-width:0}
+.tg2 label{display:flex;flex-direction:column;font-size:13px;gap:3px}
+.tg2 input,.tg2 select{font:inherit;font-size:14px;padding:7px 8px;border:1px solid #d1d5db;border-radius:10px;width:100%;background:#fff;color:var(--ink)}
+.tchk{display:block;font-size:13px;margin:8px 0}.tbtn{display:flex;gap:10px;align-items:center}#tMsg{font-size:13px}
+.up .chip{color:#fff;background:var(--blue);border-color:var(--blue)}
+footer{margin-top:28px;font-size:13px;color:var(--sub-d);border-top:1px solid var(--line-d);padding-top:16px}
+@media (max-width:640px){h1{font-size:28px}ul.files li{grid-template-columns:1fr}.acts{grid-row:auto;grid-column:1;margin-top:6px}.row2 label{margin-left:0}}
+</style>
+</head>
+<body>
+<!-- 4&7 NEXT 입구 비밀번호 (build_site.py가 모든 페이지 body 맨 앞에 넣음. ../config.json = config.json 경로) -->
+<div id="g47" style="position:fixed;inset:0;z-index:2147483000;background:#0a0b0d;display:grid;place-items:center;font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif">
+  <form id="g47f" style="background:#fff;border:0;border-radius:24px;padding:28px 26px;width:min(340px,calc(100vw - 32px));box-shadow:0 6px 24px rgba(0,0,0,.06)">
+    <div style="font-weight:800;font-size:20px;color:#0a0b0d">4&amp;7 NEXT</div>
+    <div style="color:#5f6b66;font-size:14px;margin:6px 0 16px">팀 비밀번호를 넣어 주세요. 한 번 넣으면 이 기기에서 기억합니다.</div>
+    <input id="g47p" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #dee1e6;border-radius:12px;font-size:16px">
+    <button type="submit" style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:100px;background:#0052FF;color:#fff;font-size:15px;font-weight:700;cursor:pointer">들어가기</button>
+    <div id="g47m" style="color:#E5322D;font-size:13px;margin-top:8px;min-height:1em"></div>
+  </form>
+</div>
+<script>(function(){var K='team_pass',CFG='../config.json',g=document.getElementById('g47'),m=document.getElementById('g47m'),v='';
+try{v=localStorage.getItem(K)||''}catch(e){}
+function ep(){return fetch(CFG,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return String(j.endpoint||'').trim()}).catch(function(){return ''})}
+var dv='';try{dv=localStorage.getItem('g47dv')||'';if(!dv){dv=Math.random().toString(36).slice(2,10);localStorage.setItem('g47dv',dv)}}catch(e){}
+function check(p,k){var pg=(location.pathname.split('/').filter(Boolean).pop()||'hub')+(location.hash||'').slice(0,20);return ep().then(function(e){if(!e)return null;return fetch(e+'?action=passcheck&pass='+encodeURIComponent(p)+'&k='+(k||'auto')+'&pg='+encodeURIComponent(pg)+'&dv='+dv+'&r='+Date.now()).then(function(r){return r.json()}).then(function(j){return !!j.ok}).catch(function(){return null})})}
+if(v){g.style.display='none';check(v).then(function(ok){if(ok===false){try{localStorage.removeItem(K)}catch(e){}g.style.display='grid';m.textContent='비밀번호가 바뀌었어요. 다시 넣어 주세요.'}})}
+else setTimeout(function(){var i=document.getElementById('g47p');if(i)i.focus()},50);
+document.getElementById('g47f').addEventListener('submit',function(e){e.preventDefault();var p=document.getElementById('g47p').value.trim();if(!p)return;m.style.color='#5f6b66';m.textContent='확인 중…';
+  check(p,'new').then(function(ok){if(ok===false){m.style.color='#c0392b';m.textContent='비밀번호가 맞지 않아요.';return}
+    if(ok===null){m.style.color='#c0392b';m.textContent='연결하지 못했어요. 잠시 후 다시 시도해 주세요.';return}
+    try{localStorage.setItem(K,p)}catch(e){}g.style.display='none';try{location.reload()}catch(e){}})});
+})();</script>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <a class="brand" href="../index.html#uw" style="text-decoration:none;color:inherit">4&amp;7 NEXT 허브</a>
+      <h1>상품 자료 받기</h1>
+      <p class="lead">원수사·상품별 최신 자료를 여기 한 곳에서 내려받습니다. 상품명이나 자료 이름으로 찾고 «내려받기»를 누르면 됩니다.</p>
+    </div>
+    <div class="nav">
+      <a class="chip" href="library.html">상품 요약 보기</a>
+      <button type="button" class="chip" id="tOpen">자료 올리기</button>
+      <button type="button" class="chip" id="mgBtn">관리</button>
+    </div>
+  </header>
+
+  <section class="up" id="up" hidden>
+    <h2>자료 올리기</h2>
+    <p class="tl">파일은 팀 드라이브(비공개)에 저장되고, 팀 비밀번호를 넣은 기기에서만 받을 수 있습니다. 새 버전은 «관리» → «새 버전 올리기»로 올리면 예전 판이 자동으로 내려갑니다.</p>
+    <form id="tForm" onsubmit="return false">
+      <div class="tg2">
+        <label>원수사<select id="tIns"><option>메트라이프</option><option>한화생명</option><option>KB라이프</option><option>신한라이프</option><option>삼성생명</option><option>공통</option></select></label>
+        <label>상품<select id="tPid"></select></label>
+        <label>자료 제목<input id="tTitle" placeholder="예: 2026년 11월 상품교육 요약본"></label>
+        <label>종류<select id="tType"><option>고객용</option><option>내부·교육용</option><option>약관</option><option>설계 샘플</option><option>서식·매뉴얼</option><option>이미지</option><option>기타</option></select></label>
+        <label>준법번호 (있으면)<input id="tAppr" placeholder="예: 3001_2610_003584"></label>
+        <label>준법 유효기간 끝 (있으면)<input type="date" id="tExp"></label>
+        <label>올린 사람<input id="tWho" placeholder="이름 또는 호칭"></label>
+        <label>파일 (20MB까지)<input type="file" id="tFile"></label>
+      </div>
+      <label class="tchk"><input type="checkbox" id="tNoPII"> 고객 개인정보(이름·주민번호·연락처)가 들어 있지 않습니다. 고객 제안서·청약서는 올리지 않습니다.</label>
+      <div class="tbtn"><button type="button" class="chip" id="tSend">올리기</button><span id="tMsg"></span></div>
+      <input type="hidden" id="tReplace">
+    </form>
+  </section>
+
+  <div class="find">
+    <input type="search" id="q" placeholder="상품명·자료 이름으로 찾기 (예: 경영인정기, 상품설명서, 청약)">
+    <div class="row2" id="fIns"></div>
+    <div class="row2"><span id="fType" style="display:flex;gap:6px;flex-wrap:wrap"></span><label><input type="checkbox" id="hideExp"> 준법 기간 지난 자료 숨기기</label></div>
+    <div class="count" id="count"></div>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>
+    «고객용»만 고객에게 보여 줍니다. «내부·교육용»은 고객에게 전달하지 않습니다. 준법 유효기간이 지난 안내장은 최신본을 받은 뒤 쓰세요.
+  </footer>
+</div>
+
+<script src="../uw/library-data.js"></script>
+<script>
+(function(){
+const L = window.LIBRARY;
+const $ = id => document.getElementById(id);
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+const INS = ['메트라이프','한화생명','KB라이프','신한라이프','삼성생명','공통'];
+const BRAND = { '메트라이프':'#A4CE4E', '한화생명':'#F37321', 'KB라이프':'#FFBC00', '신한라이프':'#0046FF', '삼성생명':'#1428A0', '공통':'#8a8f98' };
+const TYPES = ['고객용','내부·교육용','약관','설계 샘플','서식·매뉴얼','이미지','기타'];
+const qs = new URLSearchParams(location.search);
+const st = { ins: qs.get('ins') || '전체', type: '전체', q: '', hideExp: false, p: qs.get('p') || '' };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const days = d => Math.round((new Date(d + 'T00:00:00') - TODAY) / 864e5);
+const PROD = Object.fromEntries(L.products.map(p => [p.id, p]));
+if (st.p && PROD[st.p]) st.ins = PROD[st.p].ins;
+
+let EP = '', TEAM = [], ERR = '불러오는 중…';
+const TP = () => { try { return localStorage.getItem('team_pass') || ''; } catch (e) { return ''; } };
+const post = o => fetch(EP, { method: 'POST', body: JSON.stringify(Object.assign({ pass: TP() }, o)) }).then(r => r.json());
+
+function size(b){ b = +b || 0; return b >= 1048576 ? (b / 1048576).toFixed(1) + 'MB' : Math.max(1, Math.round(b / 1024)) + 'KB'; }
+function expired(f){ return f.exp && days(f.exp) < 0; }
+function row(f){
+  const n = f.exp ? days(f.exp) : null;
+  const ex = f.exp ? (n < 0 ? `<span class="exp">준법 기간 지남 (${esc(f.exp)})</span>` : n <= 60 ? `<span class="soon">${n}일 뒤 준법 기간 끝</span>` : `준법 유효 ~${esc(f.exp)}`) : '';
+  const ext = (String(f.name).match(/\.(\w+)$/) || ['', ''])[1].toUpperCase();
+  const cls = f.type === '고객용' ? 'cust' : f.type === '내부·교육용' ? 'edu' : '';
+  const meta = [ext, size(f.size), ex, f.approval ? '준법 ' + esc(f.approval) : ''].filter(Boolean).join(' · ');
+  return `<li><span class="ft"><span class="dt ${cls}">${esc(f.type)}</span>${esc(f.title)}</span>
+    <span class="acts"><button type="button" class="dl" data-dl="${esc(f.id)}">내려받기</button><button type="button" class="mg" data-rep="${esc(f.id)}">새 버전 올리기</button><button type="button" class="mg" data-hide="${esc(f.id)}">내리기</button></span>
+    <span class="fm">${meta}</span></li>`;
+}
+function match(f){
+  if (st.type !== '전체' && f.type !== st.type) return false;
+  if (st.hideExp && expired(f)) return false;
+  if (st.q) { const t = [f.title, f.name, f.type, f.pname, f.ins, (PROD[f.pid] || {}).name].join(' ').toLowerCase(); if (!st.q.toLowerCase().split(/\s+/).every(w => t.includes(w))) return false; }
+  return true;
+}
+const byType = (a, b) => (TYPES.indexOf(a.type) - TYPES.indexOf(b.type)) || String(a.title).localeCompare(String(b.title), 'ko');
+function group(key, title, fs, ins, pid){
+  const open = !!st.q || (st.p && st.p === pid);
+  const sum = pid ? `<a class="sum" href="library.html?p=${esc(pid)}">상품 요약 →</a>` : '';
+  return `<details class="prod${st.p && st.p === pid ? ' hit' : ''}" id="g-${esc(key)}" style="--bar:${BRAND[ins]}"${open ? ' open' : ''}><summary>${esc(title)} <span class="c">${fs.length}건</span>${sum}</summary><ul class="files">${fs.sort(byType).map(row).join('')}</ul></details>`;
+}
+function render(){
+  const all = TEAM.filter(match);
+  const cnt = g => all.filter(f => g === '전체' || f.ins === g).length;
+  $('fIns').innerHTML = ['전체', ...INS].map(g => `<button type="button" class="chip ${st.ins === g ? 'on' : ''}" data-ins="${g}">${g}<span class="n">${cnt(g)}</span></button>`).join('');
+  $('fType').innerHTML = ['전체', ...TYPES].map(t => `<button type="button" class="chip ${st.type === t ? 'on' : ''}" data-type="${t}">${t === '전체' ? '모든 종류' : t}</button>`).join('');
+  if (ERR) { $('list').innerHTML = `<p class="msg">${esc(ERR)}</p>`; $('count').textContent = ''; return; }
+  const fs = all.filter(f => st.ins === '전체' || f.ins === st.ins);
+  $('count').textContent = `${fs.length}건${fs.length !== TEAM.length ? ' / 전체 ' + TEAM.length + '건' : ''}`;
+  $('list').innerHTML = fs.length ? INS.filter(g => st.ins === '전체' || g === st.ins).map(g => {
+    const mine = fs.filter(f => f.ins === g); if (!mine.length) return '';
+    const prods = L.products.filter(p => p.ins === g).map(p => [p, mine.filter(f => f.pid === p.id)]).filter(x => x[1].length);
+    const rest = mine.filter(f => !f.pid || !PROD[f.pid]);
+    return `<section class="ins" style="--bar:${BRAND[g]}"><h2><i></i>${g} <small>${mine.length}건</small></h2>`
+      + prods.map(([p, x]) => group(p.id, p.name, x, g, p.id)).join('')
+      + (rest.length ? group(g + '-etc', g === '공통' ? '공통 서식·매뉴얼' : '서식·매뉴얼·공통 자료', rest, g, '') : '') + '</section>';
+  }).join('') : '<p class="msg">찾는 자료가 없습니다. 검색어를 줄이거나 «전체»를 눌러 보세요.</p>';
+}
+function load(){
+  if (!EP) { ERR = '서버 주소가 없어 자료를 불러올 수 없어요.'; render(); return; }
+  if (!TP()) { ERR = '팀 비밀번호를 넣은 기기에서만 자료가 보여요. 허브 첫 화면에서 비밀번호를 넣어 주세요.'; render(); return; }
+  post({ action: 'prodlist' }).then(r => {
+    if (r.ok) { TEAM = r.items || []; ERR = ''; } else ERR = r.error || '목록을 못 불러왔어요.';
+    render();
+    if (st.p) { const g = document.getElementById('g-' + st.p); if (g) g.scrollIntoView({ block: 'start' }); }
+  }).catch(() => { ERR = '서버에 연결하지 못했어요.'; render(); });
+}
+
+/* 찾기·거르기 */
+$('q').addEventListener('input', e => { st.q = e.target.value.trim(); st.p = ''; render(); });
+$('hideExp').addEventListener('change', e => { st.hideExp = e.target.checked; render(); });
+document.addEventListener('click', e => {
+  const i = e.target.closest('[data-ins]'), t = e.target.closest('[data-type]');
+  if (i) { st.ins = i.dataset.ins; st.p = ''; render(); }
+  if (t) { st.type = t.dataset.type; render(); }
+});
+
+/* 관리 (새 버전·내리기 버튼 보이기) */
+const MG = 'dl-manage';
+const setMg = on => { document.body.classList.toggle('manage', on); $('mgBtn').classList.toggle('on', on); try { localStorage.setItem(MG, on ? '1' : ''); } catch (e) {} };
+try { setMg(!!localStorage.getItem(MG)); } catch (e) {}
+$('mgBtn').onclick = () => setMg(!document.body.classList.contains('manage'));
+
+/* 올리기 */
+function pidOptions(){ const ins = $('tIns').value; $('tPid').innerHTML = '<option value="">(상품 없음·공통)</option>' + L.products.filter(p => ins === '공통' || p.ins === ins).map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join(''); }
+function openForm(rep){
+  $('up').hidden = false; $('tReplace').value = rep ? rep.id : ''; $('tMsg').textContent = rep ? `«${rep.title}»의 새 버전을 올립니다. 올리면 예전 판은 내려갑니다.` : '';
+  if (rep) { $('tIns').value = rep.ins; pidOptions(); $('tPid').value = rep.pid; $('tTitle').value = rep.title; $('tType').value = rep.type; $('tAppr').value = ''; $('tExp').value = ''; }
+  try { $('tWho').value = $('tWho').value || localStorage.getItem('lib-who') || ''; } catch (e) {}
+  $('up').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+$('tOpen').onclick = () => { if ($('up').hidden) openForm(null); else $('up').hidden = true; };
+$('tIns').onchange = pidOptions; pidOptions();
+$('tSend').onclick = () => {
+  const f = $('tFile').files[0], msg = $('tMsg');
+  if (!TP()) { msg.textContent = '팀 비밀번호를 넣은 기기에서만 올릴 수 있어요.'; return; }
+  if (!f) { msg.textContent = '파일을 골라 주세요.'; return; }
+  if (f.size > 20 * 1024 * 1024) { msg.textContent = '파일은 20MB까지 올릴 수 있어요.'; return; }
+  if (!$('tNoPII').checked) { msg.textContent = '«고객 개인정보가 들어 있지 않습니다»를 확인해 주세요.'; return; }
+  const pid = $('tPid').value, pr = PROD[pid];
+  msg.textContent = '올리는 중…'; $('tSend').disabled = true;
+  const rd = new FileReader();
+  rd.onload = () => post({ action: 'produp', ins: $('tIns').value, pid, pname: pr ? pr.name : '', title: $('tTitle').value, type: $('tType').value, approval: $('tAppr').value, exp: $('tExp').value, who: $('tWho').value, noPII: true, replaceId: $('tReplace').value, file: { name: f.name, mimeType: f.type, base64: String(rd.result) } })
+    .then(r => { msg.textContent = r.ok ? r.message : (r.error || '올리지 못했어요.'); if (r.ok) { try { localStorage.setItem('lib-who', $('tWho').value); } catch (e) {} $('tFile').value = ''; $('tNoPII').checked = false; $('tReplace').value = ''; load(); } })
+    .catch(() => { msg.textContent = '서버에 연결하지 못했어요.'; }).finally(() => { $('tSend').disabled = false; });
+  rd.readAsDataURL(f);
+};
+
+/* 내려받기·새 버전·내리기 */
+document.addEventListener('click', e => {
+  const d = e.target.closest('[data-dl]'), r = e.target.closest('[data-rep]'), h = e.target.closest('[data-hide]');
+  if (d) { const id = d.dataset.dl; d.textContent = '받는 중…'; post({ action: 'proddl', id }).then(x => {
+      if (!x.ok) { d.textContent = x.error || '실패'; return; }
+      const bin = atob(x.base64), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+      const url = URL.createObjectURL(new Blob([u], { type: x.mime || 'application/octet-stream' })), a = document.createElement('a');
+      a.href = url; a.download = x.name || 'download'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 5000); d.textContent = '받음 ✓';
+      setTimeout(() => { d.textContent = '내려받기'; }, 2500);
+    }).catch(() => { d.textContent = '연결 실패'; }); }
+  if (r) { const f = TEAM.find(x => x.id === r.dataset.rep); if (f) openForm(f); }
+  if (h) { const f = TEAM.find(x => x.id === h.dataset.hide); if (!f) return; h.textContent = '한 번 더 누르면 내림'; if (h.dataset.sure) { post({ action: 'prodhide', id: f.id, who: $('tWho').value || localStorage.getItem('lib-who') || '' }).then(x => { if (x.ok) load(); else h.textContent = x.error || '실패'; }); } h.dataset.sure = '1'; }
+});
+
+render();
+fetch('../config.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(c => { EP = (c && c.endpoint) || ''; load(); }).catch(() => load());
+})();
+</script>
+</body>
+</html>

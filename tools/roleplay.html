@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script src="embed.js"></script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AP 롤플레이 | 4&7 NEXT</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400}
+@font-face{font-family:'Freesentation';src:url('../fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700}
+:root{--ink:#0a0b0d;--sub:#5b616e;--line:#dee1e6;--bg:#f7f8fa;--card:#fff;--acc:#0052FF;--warn:#E5322D}
+*{box-sizing:border-box}body{margin:0;font-family:'Freesentation',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 60px}
+header.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+.brand{font-size:13px;color:var(--sub)}h1{margin:2px 0 6px;font-size:clamp(24px,3.2vw,32px);letter-spacing:-.02em}.lead{margin:0;color:var(--sub);max-width:720px}
+.nav a{display:inline-block;margin:2px;padding:6px 12px;border:1px solid var(--line);border-radius:100px;color:inherit;text-decoration:none;font-size:13px;background:#fff}
+.grid{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.grid>*,.row2>*{min-width:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;box-shadow:0 1px 2px rgba(10,11,13,.04),0 8px 24px rgba(10,11,13,.04)}
+.panel h2{font-size:17px;margin:0 0 8px}label.f{display:flex;flex-direction:column;font-size:13px;color:var(--sub);gap:3px;margin-bottom:8px}
+select,input,textarea{font:inherit;font-size:14px;color:var(--ink);padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fff;width:100%;transition:border-color .15s,box-shadow .15s}
+input[type=checkbox]{width:auto;padding:0}
+.setTog{display:none}@media(max-width:980px){.setTog{display:inline-block}.collapsed .setbody{display:none}}
+select:focus,input:focus,textarea:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,82,255,.12)}
+textarea{resize:vertical}.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.seg button{flex:1;font:inherit;font-size:13px;padding:8px 6px;border:1px solid var(--line);border-radius:100px;background:#fff;cursor:pointer}
+.seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn{font:inherit;font-size:14px;padding:9px 16px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer}.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}.hint{font-size:12px;color:var(--sub);margin:4px 0 0}
+.chat{display:flex;flex-direction:column;height:calc(100vh - 190px);min-height:460px;max-height:820px;position:sticky;top:12px}@media(max-width:980px){.chat{position:static;height:70vh}}.log{flex:1;overflow:auto;padding:10px 4px;display:flex;flex-direction:column;gap:8px}
+.b{max-width:82%;padding:10px 14px;border-radius:18px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font-size:15px}.b.me{align-self:flex-end;background:var(--acc);color:#fff;border-bottom-right-radius:4px}
+.b.ai{align-self:flex-start;background:#f0f2f5;border-bottom-left-radius:4px}.b.sys{align-self:center;background:none;color:var(--sub);font-size:12px}
+.who{font-size:11px;opacity:.75;display:block;margin-bottom:2px}
+.inp{display:flex;gap:8px;align-items:flex-end;border-top:1px solid var(--line);padding-top:12px}.inp textarea{flex:1;min-height:52px;max-height:160px}.inp .btn{flex:0 0 auto;height:52px}
+.mic{flex:0 0 auto;width:64px;height:52px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font:inherit;font-size:13px}.mic.on{background:var(--warn);color:#fff;border-color:var(--warn)}
+.fb{margin-top:14px}.fb table{border-collapse:collapse;width:100%;font-size:13px}.fb th,.fb td{border:1px solid var(--line);padding:4px 6px;text-align:left}
+.fb h2,.fb h3{font-size:16px;margin:12px 0 6px}.score{font-size:28px;font-weight:700;color:var(--acc)}
+.tip{font-size:13px;background:#eef3ff;border-radius:12px;padding:8px 10px;margin-top:8px}
+a.btn{text-decoration:none;color:inherit;display:inline-block}a.btn.p{color:#fff}
+</style>
+</head>
+<body>
+<!-- 4&7 NEXT 입구 비밀번호 (build_site.py가 모든 페이지 body 맨 앞에 넣음. ../config.json = config.json 경로) -->
+<div id="g47" style="position:fixed;inset:0;z-index:2147483000;background:#0a0b0d;display:grid;place-items:center;font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif">
+  <form id="g47f" style="background:#fff;border:0;border-radius:24px;padding:28px 26px;width:min(340px,calc(100vw - 32px));box-shadow:0 6px 24px rgba(0,0,0,.06)">
+    <div style="font-weight:800;font-size:20px;color:#0a0b0d">4&amp;7 NEXT</div>
+    <div style="color:#5f6b66;font-size:14px;margin:6px 0 16px">팀 비밀번호를 넣어 주세요. 한 번 넣으면 이 기기에서 기억합니다.</div>
+    <input id="g47p" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #dee1e6;border-radius:12px;font-size:16px">
+    <button type="submit" style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:100px;background:#0052FF;color:#fff;font-size:15px;font-weight:700;cursor:pointer">들어가기</button>
+    <div id="g47m" style="color:#E5322D;font-size:13px;margin-top:8px;min-height:1em"></div>
+  </form>
+</div>
+<script>(function(){var K='team_pass',CFG='../config.json',g=document.getElementById('g47'),m=document.getElementById('g47m'),v='';
+try{v=localStorage.getItem(K)||''}catch(e){}
+function ep(){return fetch(CFG,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return String(j.endpoint||'').trim()}).catch(function(){return ''})}
+var dv='';try{dv=localStorage.getItem('g47dv')||'';if(!dv){dv=Math.random().toString(36).slice(2,10);localStorage.setItem('g47dv',dv)}}catch(e){}
+function check(p,k){var pg=(location.pathname.split('/').filter(Boolean).pop()||'hub')+(location.hash||'').slice(0,20);return ep().then(function(e){if(!e)return null;return fetch(e+'?action=passcheck&pass='+encodeURIComponent(p)+'&k='+(k||'auto')+'&pg='+encodeURIComponent(pg)+'&dv='+dv+'&r='+Date.now()).then(function(r){return r.json()}).then(function(j){return !!j.ok}).catch(function(){return null})})}
+if(v){g.style.display='none';check(v).then(function(ok){if(ok===false){try{localStorage.removeItem(K)}catch(e){}g.style.display='grid';m.textContent='비밀번호가 바뀌었어요. 다시 넣어 주세요.'}})}
+else setTimeout(function(){var i=document.getElementById('g47p');if(i)i.focus()},50);
+document.getElementById('g47f').addEventListener('submit',function(e){e.preventDefault();var p=document.getElementById('g47p').value.trim();if(!p)return;m.style.color='#5f6b66';m.textContent='확인 중…';
+  check(p,'new').then(function(ok){if(ok===false){m.style.color='#c0392b';m.textContent='비밀번호가 맞지 않아요.';return}
+    if(ok===null){m.style.color='#c0392b';m.textContent='연결하지 못했어요. 잠시 후 다시 시도해 주세요.';return}
+    try{localStorage.setItem(K,p)}catch(e){}g.style.display='none';try{location.reload()}catch(e){}})});
+})();</script>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <a class="brand" href="../index.html#tool-ap" style="text-decoration:none;color:inherit">4&amp;7 NEXT 허브 · 업체 분석 → 제안 준비</a>
+      <h1>AP 롤플레이</h1>
+      <p class="lead">AI 대표님을 상대로 첫 미팅(AP)을 말로 연습합니다. 끝내면 AP 15단계 채점표로 점수와 고칠 점을 받습니다. 거꾸로 AI가 설계사를 맡고 내가 대표가 되어 거절해 보는 연습도 됩니다.</p>
+    </div>
+    <div class="nav"><a href="ap-generator.html">업체 분석 → 제안 준비</a><a href="uw-calc.html">재정심사 계산기</a></div>
+  </header>
+
+  <div class="grid">
+    <section class="panel" id="setup">
+      <h2 style="display:flex;justify-content:space-between;align-items:center">연습 설정 <button type="button" class="btn setTog" id="setTog" style="font-size:13px;padding:6px 12px">접기</button></h2>
+      <div class="setbody">
+      <div class="seg" data-name="mode"><button type="button" data-v="ceo" class="on">AI가 대표 (내가 AP)</button><button type="button" data-v="fp">AI가 설계사 (내가 거절)</button></div>
+      <div class="row2">
+        <label class="f">관계<select id="rel"><option value="기장">기장거래처</option><option value="소개">소개받은 자리</option><option value="초면">완전 초면</option></select></label>
+        <label class="f">난이도<select id="level"><option value="easy">쉬움 (호의적)</option><option value="mid" selected>보통 (반신반의)</option><option value="hard">어려움 (보험 싫어요)</option></select></label>
+      </div>
+      <label class="f">대표님 성향<select id="style"><option value="">고르지 않음</option><option>결론형</option><option>관계형</option><option>분석형</option><option>신중형</option></select></label>
+      <h2 style="margin-top:6px">업체</h2>
+      <button type="button" class="btn" id="fromAp" style="width:100%;margin-bottom:8px">업체 분석에 넣은 업체 불러오기</button>
+      <div class="row2">
+        <label class="f">업종<input id="ind" placeholder="예: 제조"></label>
+        <label class="f">형태<select id="form"><option>법인</option><option>개인사업자</option></select></label>
+        <label class="f">매출(억)<input id="sales" type="number" step="0.1"></label>
+        <label class="f">당기순이익(억)<input id="profit" type="number" step="0.1"></label>
+        <label class="f">대표 나이<input id="age" type="number"></label>
+        <label class="f">자녀 수<input id="kids" type="number"></label>
+      </div>
+      <label class="f">상황 (AI 대표가 속으로 가진 고민)<textarea id="notes" rows="3" placeholder="예: 내년 공장 이전 고민, 자녀는 사업에 관심 없음. 상호·실명은 쓰지 마세요."></textarea></label>
+      <label class="f">연습하는 사람 (지점장이 기록을 볼 때 씀)<input id="who" placeholder="이름 또는 호칭"></label>
+      <div class="tip" id="modeTip"></div>
+      <p class="hint">상호·고객 실명은 서버로 보내지 않습니다(업종·숫자·상황만). 대화와 피드백은 팀 기록 시트에 남아 지점장이 볼 수 있습니다.</p>
+      </div>
+    </section>
+
+    <section class="panel chat">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--line)">
+        <h2 style="margin:0" id="chatTitle">대화</h2>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <label style="font-size:13px;color:var(--sub)"><input type="checkbox" id="speak" checked> 소리로 듣기</label>
+          <button type="button" class="btn" id="restart">새로 시작</button>
+          <button type="button" class="btn p" id="finish">끝내고 피드백</button>
+        </div>
+      </div>
+      <div class="log" id="log"></div>
+      <div class="inp">
+        <button type="button" class="mic" id="mic" title="누르고 말하기">말하기</button>
+        <textarea id="say" placeholder="여기에 말할 내용을 쓰거나 «말하기»를 눌러 말하세요. Enter로 보내기, Shift+Enter 줄바꿈"></textarea>
+        <button type="button" class="btn p" id="send">보내기</button>
+      </div>
+      <p class="hint" id="state"></p>
+    </section>
+  </div>
+
+  <section class="panel fb" id="fb" hidden></section>
+</div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY = 'rp-v1';
+const st = { mode: 'ceo', hist: [], busy: false };
+let EP = '';
+const TP = () => { try { return localStorage.getItem('team_pass') || ''; } catch (e) { return ''; } };
+const FIELDS = ['rel','level','style','ind','form','sales','profit','age','kids','notes','who'];
+const TIPS = {
+  ceo: '내가 세무사(FP)입니다. AI 대표님께 먼저 인사하며 시작하세요. 상품명은 꺼내지 말고, 다음 약속(요일·시각·소요시간)과 소개요청까지 가 보세요.',
+  fp: 'AI가 설계사입니다. 내가 대표가 되어 "보험 싫어요", "생각해 볼게요"처럼 실제로 들었던 거절을 해 보세요. AI가 어떻게 받아치는지 배우는 연습입니다.'
+};
+
+function save(){ try { const o = { mode: st.mode, hist: st.hist }; FIELDS.forEach(k => o[k] = $(k).value); localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+function load(){ try { const o = JSON.parse(localStorage.getItem(KEY) || 'null'); if (!o) return; FIELDS.forEach(k => { if (o[k] != null) $(k).value = o[k]; }); setMode(o.mode || 'ceo', true); st.hist = Array.isArray(o.hist) ? o.hist : []; } catch (e) {} }
+function setMode(v, quiet){
+  st.mode = v; document.querySelectorAll('.seg[data-name="mode"] button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  $('modeTip').textContent = TIPS[v]; $('chatTitle').textContent = v === 'ceo' ? '대화 (AI = 대표님)' : '대화 (AI = 설계사)';
+  if (!quiet) restart();
+}
+function caseObj(){ return { ind: $('ind').value, form: $('form').value, sales: $('sales').value, profit: $('profit').value, age: $('age').value, kids: $('kids').value, notes: $('notes').value }; }
+function render(){
+  const me = st.mode === 'ceo' ? '나 (세무사)' : '나 (대표)', ai = st.mode === 'ceo' ? 'AI 대표님' : 'AI 설계사';
+  $('log').innerHTML = (st.hist.length ? '' : `<div class="b sys">${st.mode === 'ceo' ? '먼저 인사하며 시작하세요.' : 'AI 설계사가 먼저 말을 겁니다. 잠시 기다리세요.'}</div>`) +
+    st.hist.map(m => `<div class="b ${m.role === 'user' ? 'me' : 'ai'}"><span class="who">${m.role === 'user' ? me : ai}</span>${esc(m.text)}</div>`).join('');
+  $('log').scrollTop = $('log').scrollHeight;
+}
+function busy(on, msg){ st.busy = on; $('send').disabled = on; $('finish').disabled = on; $('state').textContent = msg || ''; }
+function speakOut(t){ if (!$('speak').checked || !window.speechSynthesis) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'ko-KR'; u.rate = 1.05; speechSynthesis.speak(u); } catch (e) {} }
+function post(o){ return fetch(EP, { method: 'POST', body: JSON.stringify(Object.assign({ action: 'rp', pass: TP(), mode: st.mode, rel: $('rel').value, level: $('level').value, style: $('style').value, case: caseObj(), who: $('who').value }, o)) }).then(r => r.json()); }
+function check(){
+  if (!EP) { busy(false, '서버 주소가 없어 롤플레이를 쓸 수 없어요.'); return false; }
+  if (!TP()) { busy(false, '팀 비밀번호를 넣은 기기에서만 쓸 수 있어요. 허브 첫 화면에서 비밀번호를 넣어 주세요.'); return false; }
+  return true;
+}
+function turn(){
+  if (!check()) return;
+  busy(true, st.mode === 'ceo' ? '대표님이 생각 중…' : '설계사가 생각 중…');
+  post({ history: st.hist }).then(r => {
+    if (!r.ok) { busy(false, r.error || '답을 받지 못했어요.'); return; }
+    st.hist.push({ role: 'assistant', text: r.text }); save(); render(); speakOut(r.text); busy(false, '');
+  }).catch(() => busy(false, '서버에 연결하지 못했어요.'));
+}
+function send(){
+  const t = $('say').value.trim(); if (!t || st.busy) return;
+  if (st.hist.length && st.hist[st.hist.length - 1].role === 'user') st.hist[st.hist.length - 1].text += '\n' + t; else st.hist.push({ role: 'user', text: t });
+  $('say').value = ''; save(); render(); turn();
+  if (matchMedia('(max-width:980px)').matches && !$('setup').classList.contains('collapsed')) toggleSet(true);
+}
+function toggleSet(c){ $('setup').classList.toggle('collapsed', c); $('setTog').textContent = c ? '설정 열기' : '접기'; }
+function restart(){
+  st.hist = []; $('fb').hidden = true; save(); render(); busy(false, '');
+  if (st.mode === 'fp') turn();
+}
+function finish(){
+  if (!check() || st.busy) return;
+  if (st.hist.filter(m => m.role === 'user').length < 2) { $('state').textContent = '두세 번 이상 주고받은 뒤 끝내 주세요.'; return; }
+  busy(true, '피드백을 만드는 중… (20~40초)');
+  post({ history: st.hist, end: true }).then(r => {
+    busy(false, '');
+    if (!r.ok) { $('state').textContent = r.error || '피드백을 받지 못했어요.'; return; }
+    $('fb').hidden = false; $('fb').innerHTML = (r.score !== '' && r.score != null ? `<div class="score">${esc(r.score)}점 / 100</div>` : '') + md(r.feedback) +
+      '<p class="hint">이 대화와 피드백은 팀 기록에 저장됐습니다. «새로 시작»으로 다시 연습하세요.</p>';
+    $('fb').scrollIntoView({ behavior: 'smooth' });
+  }).catch(() => busy(false, '서버에 연결하지 못했어요.'));
+}
+/* 아주 작은 마크다운: 제목·표·목록·굵게 */
+function md(t){
+  const lines = String(t || '').split('\n'); let out = '', tbl = [], list = false;
+  const inl = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  const flushT = () => { if (!tbl.length) return; const rows = tbl.filter(r => !/^\s*\|?\s*:?-{2,}/.test(r)); out += '<table>' + rows.map((r, i) => '<tr>' + r.replace(/^\||\|$/g, '').split('|').map(c => i ? `<td>${inl(c.trim())}</td>` : `<th>${inl(c.trim())}</th>`).join('') + '</tr>').join('') + '</table>'; tbl = []; };
+  const flushL = () => { if (list) { out += '</ul>'; list = false; } };
+  lines.forEach(l => {
+    if (/^\s*\|/.test(l)) { flushL(); tbl.push(l.trim()); return; } flushT();
+    const h = l.match(/^(#{1,4})\s+(.*)/); if (h) { flushL(); out += `<h3>${inl(h[2])}</h3>`; return; }
+    const li = l.match(/^\s*(?:[-*]|\d+[.)])\s+(.*)/); if (li) { if (!list) { out += '<ul>'; list = true; } out += `<li>${inl(li[1])}</li>`; return; }
+    flushL(); if (l.trim()) out += `<p>${inl(l)}</p>`;
+  });
+  flushT(); flushL(); return out;
+}
+/* 업체 분석(ap-generator)에 넣어 둔 업체를 불러옴. 상호·대표 이름은 가져오지 않음 */
+$('fromAp').onclick = () => {
+  try {
+    const c = JSON.parse(localStorage.getItem('ap-card-v0') || 'null');
+    if (!c) { $('state').textContent = '업체 분석에 넣은 업체가 없어요. 업체 분석에서 먼저 숫자를 넣어 주세요.'; return; }
+    const map = { ind: c.ind, form: c.form_ === '개인' ? '개인사업자' : (c.form_ ? '법인' : ''), sales: c.sales, profit: c.profit, age: c.age, kids: c.kids };
+    Object.entries(map).forEach(([k, v]) => { if (v !== undefined && v !== null && v !== '') $(k).value = v; });
+    if (c.rel) $('rel').value = c.rel; if (c.style) $('style').value = c.style;
+    const bits = [c.notes, c.k1, c.k2, c.k3].filter(Boolean).join(' / ');
+    if (bits) $('notes').value = bits.slice(0, 600);
+    save(); $('state').textContent = '업체 분석의 업종·숫자·상황을 불러왔어요. 상황 칸에 상호·실명이 있으면 지워 주세요.';
+  } catch (e) { $('state').textContent = '불러오지 못했어요.'; }
+};
+/* 음성 입력 (크롬·엣지) */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition; let rec = null, recOn = false;
+if (!SR) { $('mic').disabled = true; $('mic').title = '이 브라우저는 음성 입력을 지원하지 않아요 (크롬 권장)'; }
+$('mic').onclick = () => {
+  if (!SR) return;
+  if (recOn) { rec.stop(); return; }
+  try { speechSynthesis.cancel(); } catch (e) {}
+  rec = new SR(); rec.lang = 'ko-KR'; rec.interimResults = true; rec.continuous = true;
+  const base = $('say').value ? $('say').value + ' ' : '';
+  rec.onresult = e => { let t = ''; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript; $('say').value = base + t; };
+  rec.onend = () => { recOn = false; $('mic').classList.remove('on'); $('mic').textContent = '말하기'; if ($('say').value.trim()) send(); };
+  rec.onerror = e => { $('state').textContent = e.error === 'not-allowed' ? '마이크 사용을 허락해 주세요.' : '음성을 듣지 못했어요. 다시 눌러 주세요.'; };
+  rec.start(); recOn = true; $('mic').classList.add('on'); $('mic').textContent = '끝'; $('state').textContent = '말씀하세요. 다 말하면 «끝»을 누르면 보내집니다.';
+};
+$('say').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
+$('setTog').onclick = () => toggleSet(!$('setup').classList.contains('collapsed'));
+$('send').onclick = send; $('finish').onclick = finish; $('restart').onclick = restart;
+document.querySelectorAll('.seg[data-name="mode"] button').forEach(b => b.onclick = () => setMode(b.dataset.v));
+FIELDS.forEach(k => $(k).addEventListener('change', save));
+load(); setMode(st.mode, true); render();
+fetch('../config.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(c => { EP = (c && c.endpoint) || ''; if (st.mode === 'fp' && !st.hist.length) turn(); }).catch(() => {});
+})();
+</script>
+</body>
+</html>
