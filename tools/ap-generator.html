@@ -624,8 +624,7 @@ function build(c){
     '09':`"복지를 늘리고 싶은데 급여로는 새고, 한 번 올리면 못 내립니다."`};
     S.forEach(x=>{if(L[x.no]){x.say=L[x.no];x.warn=((x.warn||'')+' · 노무사 버전 멘트 (노무사 자료 초안)').replace(/^ · /,'')}});
     const f8=S.find(x=>x.no==='08');const q8n=['"직원들이 제일 원하는 게 뭘까요?"','"핵심 직원 붙잡을 카드가 급여 말고 있으세요?"','"근로계약서와 임금명세서는 매번 교부하고 계세요?"','"노사협의회는 구성돼 있나요?"'];
-    if(f8){if(Array.isArray(f8.say))f8.say=[...q8n,...f8.say];else f8.say='[노무사 질문] '+q8n.join(' / ')+'
-'+f8.say}}
+    if(f8){if(Array.isArray(f8.say))f8.say=[...q8n,...f8.say];else f8.say='[노무사 질문] '+q8n.join(' / ')+' · '+f8.say}}
   return{dx,top,sec,T,S};
 }
 function resist(c){const R={
