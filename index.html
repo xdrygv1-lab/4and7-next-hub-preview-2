@@ -434,7 +434,7 @@ th{background:var(--panel2)}
  --side:#e9efe9;--side-card:#d6e4da;--side-line:#d3ddd5;--side-sub:#5c6a64;--blue-l:#2e6b57;--side-ink:#1a2420;--hero:#1f3d33;--hero-em:#9fd3b8}
 </style>
 <div class="pvband">
- <span>미리보기 사이트 2 (노무·사근복·고용장려금) · <a href="#preview-changes">무엇이 바뀌었나 보기</a> · 실제 허브는 그대로</span>
+ <span>미리보기 · 노무·사근복·고용장려금 · 실제 허브는 그대로</span>
  <span class="pvs" id="pvs">디자인 시안:
   <button type="button" data-k="">A 지금</button><button type="button" data-k="b">B 네이비·골드</button><button type="button" data-k="c">C 크림·테라코타</button><button type="button" data-k="d">D 화이트·블루</button><button type="button" data-k="e">E 세이지 그린</button>
  </span>
@@ -450,6 +450,33 @@ th{background:var(--panel2)}
   }
   document.getElementById('pvs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.k)});
   set(k);
+})();
+</script>
+
+<style id="pv-nav-css">
+aside #nav{display:none!important}
+.pvnav{display:flex;flex-direction:column;gap:3px}
+.pvnav .pvh{font-size:12px;letter-spacing:.04em;opacity:.7;padding:10px 12px 4px}
+.pvnav .pvfull{margin-top:14px;font-size:12.5px;opacity:.75;padding:0 12px}
+.pvnav .pvfull a{color:inherit}
+</style>
+<script>
+(function(){
+  var h=location.hash.replace('#','');
+  if(!h||h==='home')history.replaceState(null,'','#preview-changes');
+  function mount(){
+    var nav=document.getElementById('nav');if(!nav||document.querySelector('.pvnav'))return;
+    var d=document.createElement('div');d.className='pvnav';
+    d.innerHTML='<div class="pvh">이번 미리보기에서 바뀐 곳</div>'+"<a class=\"navl\" href=\"#preview-changes\">\uc774\ubc88\uc5d0 \ubc14\ub010 \uac83<span class=\"nd\">\uc5ec\uae30\ubd80\ud130 \ubcf4\uc138\uc694</span></a><a class=\"navl\" href=\"#dd3218ee5\">\uc0ac\uadfc\ubcf5 \ub418\ub294 \uac83\uacfc \uc548 \ub418\ub294 \uac83<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#d19cea4ac\">\uc0ac\uadfc\ubcf5 \uc124\ub9bd \uc808\ucc28\uc640 \ud574\ub9c8\ub2e4 \ud560 \uc77c<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#d82c3c0b8\">\uc0ac\uadfc\ubcf5 \ub300\ud45c\ub2d8\uc774 \uc790\uc8fc \ubb3b\ub294 \uc9c8\ubb38<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#dd493eb3a\">\uc0ac\uadfc\ubcf5, \uc9c0\uc810\uc6d0\uc774 \uba3c\uc800 \uc54c\uc544\ubcf4\ub294 \ubc95<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#d5071c863\">\uc0ac\uadfc\ubcf5, \ub178\ubb34\uc0ac\uac00 \uc2e4\ud589\ud558\ub294 \ubc95<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#de9629a67\">\uace0\uc6a9\uc7a5\ub824\uae08, \uc9c0\uc810\uc6d0\uc774 \uba3c\uc800 \uc54c\uc544\ubcf4\ub294 \ubc95<span class=\"nd\">\uc0c8\ub85c</span></a><a class=\"navl\" href=\"#d40f3191c\">\uc0ac\ub0b4\uadfc\ub85c\ubcf5\uc9c0\uae30\uae08 (\ub124 \uac08\ub798)<span class=\"nd\">\ubc14\ub01c</span></a><a class=\"navl\" href=\"#de2fc5a99\">\uace0\uc6a9\uc7a5\ub824\uae08 (2026)<span class=\"nd\">\ubc14\ub01c \u00b7 \uc608\uc804 \uace0\uc6a9\uc9c0\uc6d0\uae08</span></a><a class=\"navl\" href=\"#d1cc8510b\">\uc138\uc77c\uc988 \ud504\ub85c\uc138\uc2a4 \uc804\uccb4<span class=\"nd\">\ubc14\ub01c \u00b7 PC \uc0b0\ucd9c\ubb3c \uc608</span></a><a class=\"navl\" href=\"#tool-ap\">\uc5c5\uccb4 \ubd84\uc11d \u2192 \uc81c\uc548 \uc900\ube44<span class=\"nd\">\ubc14\ub01c \u00b7 \uc0ac\uadfc\ubcf5 \ubb38\uad6c 2\uacf3</span></a>"+
+      '<div class="pvfull">다른 메뉴는 실제 허브와 같습니다. <a href="https://xdrygv1-lab.github.io/4and7-next-hub/" target="_blank" rel="noopener">실제 허브 열기</a></div>';
+    nav.parentNode.insertBefore(d,nav);mark();
+  }
+  function mark(){
+    var cur=location.hash||'#preview-changes';
+    document.querySelectorAll('.pvnav .navl').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')===cur)});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+  window.addEventListener('hashchange',function(){var x=location.hash.replace('#','');if(!x||x==='home'){location.replace('#preview-changes');return}mark()});
 })();
 </script>
 </head>
