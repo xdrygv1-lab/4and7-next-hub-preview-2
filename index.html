@@ -393,13 +393,13 @@ th{background:var(--panel2)}
 
 </style>
 
-<style id="pv-skins">
-/* 미리보기 전용 디자인 시안. 시안 B~E 는 밝은 화면으로 고정해 비교한다. */
-.pvband{position:sticky;top:0;z-index:9999;background:#7c2d12;color:#fff;padding:7px 12px;font:600 13px/1.5 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:center}
-.pvband a{color:#fff;text-decoration:underline}
-.pvband .pvs{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-.pvband button{font:600 12.5px system-ui,sans-serif;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:999px;padding:3px 11px;cursor:pointer}
-.pvband button.on{background:#fff;color:#7c2d12}
+<!-- 디자인 시안 고르기 (11/11 상권: 실제 허브에서도 여러 버전을 골라 볼 수 있게. 고른 것은 그 기기에만 기억) -->
+<style id="hub-skins">
+.skinbar{background:#15181e;color:#e8eaee;padding:6px 12px;font:600 12.5px/1.5 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;justify-content:center;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+.skinbar button{font:600 12px system-ui,sans-serif;border:1px solid rgba(255,255,255,.35);background:transparent;color:#e8eaee;border-radius:999px;padding:2px 10px;cursor:pointer}
+.skinbar button.on{background:#fff;color:#15181e;border-color:#fff}
+.skinbar button:focus-visible{outline:2px solid #7ea2ff;outline-offset:2px}
+
 :root[data-skin]{--side-ink:#fff;--hero:#0a0b0d;--hero-ink:#fff}
 :root[data-skin] aside{color:var(--side-ink)}
 :root[data-skin] .brand b,:root[data-skin] .navl,:root[data-skin] .navs .navl:hover,:root[data-skin] .toggle,:root[data-skin] .navfoot a:hover{color:var(--side-ink)}
@@ -432,26 +432,29 @@ th{background:var(--panel2)}
 :root[data-skin="e"]{--bg:#f4f6f2;--panel:#fff;--ink:#1a2420;--sub:#5c6a64;--line:#dfe5df;--mute:#5c6a64;
  --accent:#2e6b57;--accent-bg:#2e6b57;--tint:#e5f0ea;--panel2:#eef2ee;--good:#2e6b57;
  --side:#e9efe9;--side-card:#d6e4da;--side-line:#d3ddd5;--side-sub:#5c6a64;--blue-l:#2e6b57;--side-ink:#1a2420;--hero:#1f3d33;--hero-em:#9fd3b8}
+
 </style>
-<div class="pvband">
- <span>미리보기 · 노무·사근복·고용장려금 · 실제 허브는 그대로</span>
- <span class="pvs" id="pvs">디자인 시안:
-  <button type="button" data-k="">A 지금</button><button type="button" data-k="b">B 네이비·골드</button><button type="button" data-k="c">C 크림·테라코타</button><button type="button" data-k="d">D 화이트·블루</button><button type="button" data-k="e">E 세이지 그린</button>
- </span>
+<div class="skinbar" id="skinbar" role="group" aria-label="디자인 시안">디자인 골라 보기:
+ <button type="button" data-k="">A 지금</button><button type="button" data-k="b">B 네이비·골드</button><button type="button" data-k="c">C 크림·테라코타</button><button type="button" data-k="d">D 화이트·블루</button><button type="button" data-k="e">E 세이지 그린</button>
 </div>
 <script>
 (function(){
   var r=document.documentElement,k='';
-  try{k=localStorage.getItem('pv-skin')||''}catch(e){}
+  try{k=localStorage.getItem('hub-skin')||''}catch(e){}
   function set(v){
     if(v){r.setAttribute('data-skin',v);r.setAttribute('data-theme','light')}else{r.removeAttribute('data-skin');r.removeAttribute('data-theme')}
-    document.querySelectorAll('#pvs button').forEach(function(b){b.classList.toggle('on',b.dataset.k===v)});
-    try{localStorage.setItem('pv-skin',v)}catch(e){}
+    document.querySelectorAll('#skinbar button').forEach(function(b){b.classList.toggle('on',b.dataset.k===v)});
+    try{localStorage.setItem('hub-skin',v)}catch(e){}
   }
-  document.getElementById('pvs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.k)});
+  document.getElementById('skinbar').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.k)});
   set(k);
 })();
 </script>
+<style id="pv-band">
+.pvband{position:sticky;top:0;z-index:9999;background:#7c2d12;color:#fff;padding:7px 12px;font:600 13px/1.5 system-ui,sans-serif;text-align:center}
+.pvband a{color:#fff;text-decoration:underline}
+</style>
+<div class="pvband"><span>미리보기 · 노무·사근복·고용장려금 · 실제 허브는 그대로</span></div>
 
 <style id="pv-nav-css">
 aside #nav{display:none!important}
